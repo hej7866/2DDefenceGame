@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems; // 추가: UI 클릭 감지를 위해 필요
 
 public class EntityController : MonoBehaviour
 {
     private Camera mainCamera;
 
     // 선택 관리
-    private List<Unit> selectedUnits = new List<Unit>();
+    public List<Unit> selectedUnits = new List<Unit>();
     private List<Spirit> selectedSpirits = new List<Spirit>();
     [SerializeField] private int maxSelectionCount = 12; // 최대 선택 가능 유닛 및 스피릿 수
 
@@ -25,7 +27,10 @@ public class EntityController : MonoBehaviour
     public Text unitAs;
 
     public GameObject multiUnitPanel; // 여러 유닛 선택 시 표시할 패널
-    public GameObject unitGridPrefab; // 개별 유닛 아이콘 프리팹
+    public GameObject unitGridPrefab; // 개별 유닛 아이콘 프리팹    
+    public Transform unitGridParent; // 유닛 아이콘의 부모 Transform
+
+
 
     void Start()
     {
@@ -35,7 +40,10 @@ public class EntityController : MonoBehaviour
     void Update()
     {
         HandleMouseInput();
-        UpdateSelectionUI();
+        if (HasSelectionChanged())
+        {
+            UpdateSelectionUI();
+        }
     }
 
     private void HandleMouseInput()
@@ -52,6 +60,15 @@ public class EntityController : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             isDragging = false;
+
+            // 추가 부분 시작:
+            // UI 클릭인지 확인, 만약 UI 위에서 마우스를 뗐다면 월드 선택 로직 실행 안 함
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+            {
+                // UI 위를 클릭한 경우이므로 월드 선택 로직을 패스하고 return
+                return;
+            }
+            // 추가 부분 끝
 
             // 드래그 박스가 작을 경우 단일 선택 처리
             if (Vector3.Distance(dragStartPos, mainCamera.ScreenToWorldPoint(Input.mousePosition)) < 0.1f)
@@ -234,26 +251,107 @@ public class EntityController : MonoBehaviour
     // UI 업데이트 메서드
    private void UpdateSelectionUI()
     {
-        // 선택된 유닛이 단일이면
-        if (selectedUnits.Count == 1 )
+        // 단일 선택
+        if (selectedUnits.Count == 1)
         {
-            unitInfoPanel.SetActive(true); // 패널 활성화
+            unitInfoPanel.SetActive(true);
+            multiUnitPanel.SetActive(false);
 
-            // 선택된 유닛 정보 표시
             Unit selectedUnit = selectedUnits[0];
             SpriteRenderer unitSprite = selectedUnit.GetComponent<SpriteRenderer>();
 
-            unitImage.sprite = unitSprite.sprite; // 유닛 이미지
-            unitName.text = selectedUnit.unitName; // 유닛 이름표시
-            unitValue.text = selectedUnit.unitValue; //유닛 등급표시
+            unitImage.sprite = unitSprite.sprite;
+            unitName.text = selectedUnit.unitName;
+            unitValue.text = selectedUnit.unitValue;
             unitAd.text = $"공격력: {selectedUnit.attackPower}";
-            unitAs.text = $"공격속도: {selectedUnit.attackCooldown}";//공격속도 표시 추가 해야함            
+            unitAs.text = $"공격속도: {selectedUnit.attackCooldown}";
         }
-        else if(selectedUnits.Count > 1)
+        // 다중 선택
+        else if (selectedUnits.Count > 1)
         {
+            unitInfoPanel.SetActive(false);
+            multiUnitPanel.SetActive(true);
 
+            // 기존 그리드 클리어
+            foreach (Transform child in unitGridParent)
+            {
+                Destroy(child.gameObject);
+            }
+
+            // 선택된 유닛을 UI에 추가
+            foreach (Unit unit in selectedUnits)
+            {
+                GameObject unitGridSlot = Instantiate(unitGridPrefab, unitGridParent);
+                Image unitImage = unitGridSlot.GetComponent<Image>();
+
+                SpriteRenderer unitSprite = unit.GetComponent<SpriteRenderer>();
+                if (unitSprite != null)
+                {
+                    unitImage.sprite = unitSprite.sprite;
+                }
+
+                Button unitButton = unitGridSlot.GetComponent<Button>();
+                if (unitButton != null)
+                {
+                    Unit selectedUnit = unit; // 로컬 캡처
+                    unitButton.onClick.AddListener(() =>
+                    {
+                        Debug.Log($"test1: {selectedUnits.Count}"); // test
+                        Debug.Log($"[클릭된 유닛]: {selectedUnit.unitName}");
+
+                        // 다중 선택 해제
+                        DeselectAllEntities();
+                        Debug.Log($"test2: {selectedUnits.Count}"); // test
+
+                        // 클릭된 유닛을 단일 선택
+                        AddUnitToSelection(selectedUnit);
+                        Debug.Log($"test3: {selectedUnits.Count}"); // test
+
+                        // 즉시 UI 갱신
+                        UpdateSelectionUI();
+                    });
+                }
+
+            }
+        }
+        else
+        {
+            unitInfoPanel.SetActive(false);
+            multiUnitPanel.SetActive(false);
         }
     }
+
+
+    // 선택 상태 변경 확인 메서드
+    private List<Unit> previousSelectedUnits = new List<Unit>();    
+    private bool HasSelectionChanged()
+    {
+        // 선택된 유닛의 수가 변경되었을 경우
+        if (previousSelectedUnits.Count != selectedUnits.Count)
+        {
+            UpdatePreviousSelection(); // 이전 선택 목록 갱신
+            return true;
+        }
+
+        // 선택된 유닛 리스트 내용이 변경되었을 경우
+        for (int i = 0; i < selectedUnits.Count; i++)
+        {
+            if (!selectedUnits[i].Equals(previousSelectedUnits[i])) // Equals로 정확히 비교
+            {
+                UpdatePreviousSelection(); // 이전 선택 목록 갱신
+                return true;
+            }
+        }
+
+        return false; // 변경되지 않음
+    }
+
+    private void UpdatePreviousSelection()
+    {
+        previousSelectedUnits.Clear(); // 기존 데이터를 지우고
+        previousSelectedUnits.AddRange(selectedUnits); // 새로운 데이터를 추가
+    }
+
 
     void OnDrawGizmos()
     {
