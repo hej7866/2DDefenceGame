@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3901023289516409056}
   m_Layer: 0
   m_Name: NormalUnit01
-  m_TagString: Untagged
+  m_TagString: Normal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,10 +138,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   unitName: "\uAD81\uC218"
-  unitValue: "\uB178\uB9D0"
+  unitValue: Normal
   attackPower: 5
   attackRange: 5
   attackCooldown: 0.7
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8
+  unitUpgrade: {fileID: 0}

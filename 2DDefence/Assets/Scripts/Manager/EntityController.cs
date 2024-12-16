@@ -25,6 +25,8 @@ public class EntityController : MonoBehaviour
     public Text unitValue;
     public Text unitAd;
     public Text unitAs;
+    public Text adUpgradeCount;
+    public Text asUpgradeCount;
 
     public GameObject multiUnitPanel; // 여러 유닛 선택 시 표시할 패널
     public GameObject unitGridPrefab; // 개별 유닛 아이콘 프리팹    
@@ -260,11 +262,18 @@ public class EntityController : MonoBehaviour
             Unit selectedUnit = selectedUnits[0];
             SpriteRenderer unitSprite = selectedUnit.GetComponent<SpriteRenderer>();
 
-            unitImage.sprite = unitSprite.sprite;
-            unitName.text = selectedUnit.unitName;
-            unitValue.text = selectedUnit.unitValue;
-            unitAd.text = $"공격력: {selectedUnit.attackPower}";
-            unitAs.text = $"공격속도: {selectedUnit.attackCooldown}";
+            unitImage.sprite = unitSprite.sprite; // 이미지
+            unitName.text = selectedUnit.unitName; // 유닛이름
+            unitValue.text = selectedUnit.unitValue; // 유닛 등급
+            unitAd.text = $"공격력: {selectedUnit.attackPower + UnitUpgrade.Instance.adUpgradeValue}"; // 유닛 기본공격력 + 업그레이드로 올라간 공격력 
+            adUpgradeCount.text = UnitUpgrade.Instance.adUpgradeCount.ToString(); // 공격력 업그레이드 횟수 UI 
+            
+            //유닛 공속
+            float asValue = selectedUnit.attackCooldown * UnitUpgrade.Instance.asUpgradeValue; // 유닛 기본 공속 * 업그레이드로 올라간 공속 밸류
+            string formattedAsValue = string.Format("{0:F2}", asValue); // 소숫점 두자리까지 나타내주는 로직
+            unitAs.text = $"공격속도: {formattedAsValue}";
+            asUpgradeCount.text = UnitUpgrade.Instance.asUpgradeCount.ToString(); // 공격속도 업그레이드 횟수 UI
+            
         }
         // 다중 선택
         else if (selectedUnits.Count > 1)

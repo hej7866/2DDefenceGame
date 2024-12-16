@@ -7,6 +7,11 @@ TagManager:
   - MoneyPortal
   - UnitPortal
   - Enemy
+  - Normal
+  - Rare
+  - Unique
+  - Legendary
+  - God
   layers:
   - Default
   - TransparentFX

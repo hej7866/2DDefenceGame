@@ -1,18 +1,24 @@
 using UnityEngine;
+using UnityEngine.UI; // Slider 사용을 위해 필요
 
 public class Enemy : MonoBehaviour
 {
     public float speed = 2f; // 적의 이동 속도
-    public int health = 100;
+
+    public float maxHealth = 100f;    // 최대 체력
+    public float currentHealth = 100f; // 현재 체력
+    public float armor;
+
+    public Slider healthBar; // 체력바 슬라이더 참조 (인스펙터에서 할당)
 
     private Transform target; // 현재 목표 웨이포인트
-    private int waypointIndex = 0; // 웨이포인트 인덱스 public int health = 100;
-
-
+    private int waypointIndex = 0; // 웨이포인트 인덱스
 
     void Start()
     {
         target = WayPointManager.Instance.waypoints[0]; // 첫 번째 웨이포인트 설정
+        currentHealth = maxHealth;
+        UpdateHealthBar();
     }
 
     void Update()
@@ -27,7 +33,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-
     void GetNextWaypoint()
     {
         waypointIndex = (waypointIndex + 1) % WayPointManager.Instance.waypoints.Length;
@@ -36,12 +41,25 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        health -= damage;
-        Debug.Log($"{gameObject.name}이(가) {damage}의 피해를 입었습니다. 남은 체력: {health}");
+        currentHealth -= damage;
+        if (currentHealth < 0) currentHealth = 0; // 체력이 0보다 내려가지 않도록 보정
 
-        if (health <= 0)
+        Debug.Log($"{gameObject.name}이(가) {damage}의 피해를 입었습니다. 남은 체력: {currentHealth}");
+
+        UpdateHealthBar(); // 체력바 갱신
+
+        if (currentHealth <= 0)
         {
             Die();
+        }
+    }
+
+    void UpdateHealthBar()
+    {
+        if (healthBar != null)
+        {
+            healthBar.maxValue = maxHealth;
+            healthBar.value = currentHealth;
         }
     }
 

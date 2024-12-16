@@ -14,6 +14,8 @@ public class Unit : Move
 
     private float lastAttackTime = 0f;
 
+
+    // Upgrade
      void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -26,7 +28,7 @@ public class Unit : Move
         base.Update();
 
         // 이후 공격 로직 실행
-        if (Time.time >= lastAttackTime + attackCooldown)
+        if (Time.time >= lastAttackTime + attackCooldown * UnitUpgrade.Instance.asUpgradeValue)
         {
             Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, attackRange, enemyLayer);
             if (hits.Length > 0)
@@ -43,8 +45,8 @@ public class Unit : Move
         Enemy enemy = enemyObj.GetComponent<Enemy>();
         if (enemy != null && !isMoving)
         {
-            enemy.TakeDamage(attackPower);
-            Debug.Log($"{gameObject.name}이(가) {enemyObj.name}을(를) 공격하여 {attackPower}만큼의 피해를 입혔습니다.");
+            enemy.TakeDamage(attackPower + UnitUpgrade.Instance.adUpgradeValue);
+            Debug.Log($"{gameObject.name}이(가) {enemyObj.name}을(를) 공격하여 {attackPower + UnitUpgrade.Instance.adUpgradeValue}만큼의 피해를 입혔습니다.");
         }
     }
 
