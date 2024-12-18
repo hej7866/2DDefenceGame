@@ -273,7 +273,6 @@ public class EntityController : MonoBehaviour
             string formattedAsValue = string.Format("{0:F2}", asValue); // 소숫점 두자리까지 나타내주는 로직
             unitAs.text = $"공격속도: {formattedAsValue}";
             asUpgradeCount.text = UnitUpgrade.Instance.asUpgradeCount.ToString(); // 공격속도 업그레이드 횟수 UI
-            
         }
         // 다중 선택
         else if (selectedUnits.Count > 1)

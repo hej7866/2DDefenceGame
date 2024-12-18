@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
         UpdateUnitCount();
     }
 
+    // 게임 첫 시작시 실행
     private IEnumerator StartGameWithInitialWait()
     {
         Debug.Log($"[게임 시작 대기] {initialWaitTime}초 동안 대기합니다.");

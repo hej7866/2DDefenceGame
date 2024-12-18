@@ -33,7 +33,7 @@ public class UnitUpgrade : MonoBehaviour
     {
         if(unit_Ad_Upgrade_btn != null)
         {
-            unit_Ad_Upgrade_btn.onClick.AddListener(ADUpgrade);
+            unit_Ad_Upgrade_btn.onClick.AddListener(ADUpgrade); // 공격력 버튼 누르기
         }
 
         if(unit_As_Upgrade_btn != null)

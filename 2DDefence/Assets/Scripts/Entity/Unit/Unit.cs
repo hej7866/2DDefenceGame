@@ -2,18 +2,19 @@ using UnityEngine;
 
 public class Unit : Move
 {
-    public string unitName;
-    public string unitValue;
-    public int attackPower = 10; 
-    public float attackRange = 1.5f;
-    public float attackCooldown = 1f;
+    public int unitId; // 유닛의 고유번호
+
+    public string unitName; // 유닛이름
+    public string unitValue; // 유닛등급
+    public int attackPower = 10; // 공격력
+    public float attackRange = 1.5f; // 공격 범위 / 사거리
+    public float attackCooldown = 1f; // 공격속도
     public LayerMask enemyLayer;
 
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
 
     private float lastAttackTime = 0f;
-
 
     // Upgrade
      void Start()

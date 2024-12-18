@@ -137,6 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  UnitId: 2
   unitName: "\uD574\uACE8"
   unitValue: Normal
   attackPower: 0
@@ -145,4 +146,3 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8
-  unitUpgrade: {fileID: 0}
