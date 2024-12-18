@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 337463188224277004}
   - component: {fileID: 3901023289516409056}
   m_Layer: 0
-  m_Name: RareUnit04
-  m_TagString: Rare
+  m_Name: LegendaryUnit03
+  m_TagString: Normal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,8 +76,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 1495797422, guid: 1a7deb0e723ec8c4d9a77da19bbe845b, type: 3}
-  m_Color: {r: 0.6132076, g: 0.37891603, b: 0.5982529, a: 1}
+  m_Sprite: {fileID: -492010325, guid: c40aa46fadde51c41800db3d0b260030, type: 3}
+  m_Color: {r: 0.9882353, g: 0.25882354, b: 0.25882354, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -137,12 +137,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  unitId: 4
-  unitName: "\uB9C8\uBC95\uC0AC"
-  unitValue: Rare
-  attackPower: 13
-  attackRange: 5
-  attackCooldown: 0.9
+  unitId: 3
+  unitName: "\uC804\uC0AC"
+  unitValue: Normal
+  attackPower: 10
+  attackRange: 3
+  attackCooldown: 1.5
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8

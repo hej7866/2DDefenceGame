@@ -1,6 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class UnitInventoryManager : MonoBehaviour
 {
@@ -9,58 +9,96 @@ public class UnitInventoryManager : MonoBehaviour
     public List<GameObject> uniqueUnits = new List<GameObject>();
     public List<GameObject> legendaryUnits = new List<GameObject>();
     public List<GameObject> godUnits = new List<GameObject>();
-    
+
+    public event Action OnInventoryUpdated; // 인벤토리 변경 이벤트
+
+    private int previousUnitCount = 0; // 이전 유닛 수 감지용
+
+    void Start()
+    {
+        UpdateUnitLists(); // 초기 업데이트
+    }
 
     void Update()
     {
-        UpdateUnitLists();
+        DetectUnitChanges();
     }
 
+    // 씬 내 유닛 상태 변화를 감지
+    private void DetectUnitChanges()
+    {
+        int currentUnitCount = CountAllUnits();
+
+        // 유닛 수가 변했으면 인벤토리 업데이트
+        if (currentUnitCount != previousUnitCount)
+        {
+            UpdateUnitLists();
+            previousUnitCount = currentUnitCount; // 이전 유닛 수 업데이트
+        }
+    }
+
+    // 씬에 존재하는 모든 유닛 수 계산
+    private int CountAllUnits()
+    {
+        return GameObject.FindGameObjectsWithTag("Normal").Length +
+               GameObject.FindGameObjectsWithTag("Rare").Length +
+               GameObject.FindGameObjectsWithTag("Unique").Length +
+               GameObject.FindGameObjectsWithTag("Legendary").Length +
+               GameObject.FindGameObjectsWithTag("God").Length;
+    }
+
+    // 유닛 리스트 업데이트
     private void UpdateUnitLists()
     {
-        // 리스트 초기화
         normalUnits.Clear();
         rareUnits.Clear();
         uniqueUnits.Clear();
         legendaryUnits.Clear();
-        godUnits.Clear();   
+        godUnits.Clear();
 
-        // 현재 씬에서 태그를 가진 모든 오브젝트 찾기
-        GameObject[] normalTaggedUnits = GameObject.FindGameObjectsWithTag("Normal");
-        GameObject[] rareTaggedUnits = GameObject.FindGameObjectsWithTag("Rare");
-        GameObject[] uniqueTaggedUnits = GameObject.FindGameObjectsWithTag("Unique");
-        GameObject[] legendaryTaggedUnits = GameObject.FindGameObjectsWithTag("Legendary");
-        GameObject[] godTaggedUnits = GameObject.FindGameObjectsWithTag("God");
+        AddUnitsByTag("Normal", normalUnits);
+        AddUnitsByTag("Rare", rareUnits);
+        AddUnitsByTag("Unique", uniqueUnits);
+        AddUnitsByTag("Legendary", legendaryUnits);
+        AddUnitsByTag("God", godUnits);
 
-        // Normal 태그 유닛 리스트에 추가
-        foreach (GameObject unit in normalTaggedUnits)
+        OnInventoryUpdated?.Invoke(); // 이벤트 발생 (UI 새로고침)
+    }
+
+    private void AddUnitsByTag(string tag, List<GameObject> unitList)
+    {
+        GameObject[] units = GameObject.FindGameObjectsWithTag(tag);
+        foreach (GameObject unit in units)
         {
-            normalUnits.Add(unit);
+            unitList.Add(unit);
         }
+    }
 
-        // Rare 태그 유닛 리스트에 추가
-        foreach (GameObject unit in rareTaggedUnits)
+    // 외부에서 수동으로 유닛 추가
+    public void AddUnit(GameObject unit, string grade)
+    {
+        switch (grade)
         {
-            rareUnits.Add(unit);
+            case "Normal": normalUnits.Add(unit); break;
+            case "Rare": rareUnits.Add(unit); break;
+            case "Unique": uniqueUnits.Add(unit); break;
+            case "Legendary": legendaryUnits.Add(unit); break;
+            case "God": godUnits.Add(unit); break;
         }
+        OnInventoryUpdated?.Invoke();
+    }
 
-        // unique 태그 유닛 리스트에 추가
-        foreach (GameObject unit in uniqueTaggedUnits)
+    // 외부에서 수동으로 유닛 삭제
+    public void RemoveUnit(GameObject unit, string grade)
+    {
+        switch (grade)
         {
-            uniqueUnits.Add(unit);
+            case "Normal": normalUnits.Remove(unit); break;
+            case "Rare": rareUnits.Remove(unit); break;
+            case "Unique": uniqueUnits.Remove(unit); break;
+            case "Legendary": legendaryUnits.Remove(unit); break;
+            case "God": godUnits.Remove(unit); break;
         }
-
-        // legendary 태그 유닛 리스트에 추가
-        foreach (GameObject unit in legendaryTaggedUnits)
-        {
-            legendaryUnits.Add(unit);
-        }
-
-        // gde 태그 유닛 리스트에 추가
-        foreach (GameObject unit in godTaggedUnits)
-        {
-            godUnits.Add(unit);
-        }
-
+        OnInventoryUpdated?.Invoke();
     }
 }

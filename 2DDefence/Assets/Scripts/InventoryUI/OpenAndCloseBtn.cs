@@ -17,6 +17,7 @@ public class OpenAndCloseBtn : MonoBehaviour
             {
                 unit_Inventory_Btn_Panel.SetActive(false);
                 unitInventory.SetActive(false);
+                
             }
             else
             {

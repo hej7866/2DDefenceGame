@@ -53,8 +53,8 @@ public class CameraController : MonoBehaviour
             newPosition.z = transform.position.z; // Z축 고정
 
             // // 카메라 이동 범위 제한 (선택 사항)
-            // newPosition.x = Mathf.Clamp(newPosition.x, minCameraPosition.x, maxCameraPosition.x);
-            // newPosition.y = Mathf.Clamp(newPosition.y, minCameraPosition.y, maxCameraPosition.y);
+            newPosition.x = Mathf.Clamp(newPosition.x, minCameraPosition.x, maxCameraPosition.x);
+            newPosition.y = Mathf.Clamp(newPosition.y, minCameraPosition.y, maxCameraPosition.y);
 
             transform.position = newPosition;
         }

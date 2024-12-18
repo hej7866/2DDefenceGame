@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: -492010325, guid: c40aa46fadde51c41800db3d0b260030, type: 3}
-  m_Color: {r: 1, g: 0.9202619, b: 0.24056602, a: 1}
+  m_Color: {r: 1, g: 0.76711166, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  UnitId: 3
+  unitId: 3
   unitName: "\uC804\uC0AC"
   unitValue: Unique
   attackPower: 10
