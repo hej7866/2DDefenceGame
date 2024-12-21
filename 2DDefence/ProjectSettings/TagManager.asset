@@ -12,6 +12,7 @@ TagManager:
   - Unique
   - Legendary
   - God
+  - IgnoreUI
   layers:
   - Default
   - TransparentFX

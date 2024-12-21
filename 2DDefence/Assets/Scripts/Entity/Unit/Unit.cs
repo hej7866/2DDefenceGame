@@ -12,14 +12,16 @@ public class Unit : Move
     public LayerMask enemyLayer;
 
     private SpriteRenderer spriteRenderer;
+    private LineRenderer lineRenderer;
     private Color originalColor;
 
     private float lastAttackTime = 0f;
 
     // Upgrade
-     void Start()
+    void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        lineRenderer = GetComponentInChildren<LineRenderer>();
         originalColor = spriteRenderer.color;
     }
 
@@ -46,19 +48,38 @@ public class Unit : Move
         Enemy enemy = enemyObj.GetComponent<Enemy>();
         if (enemy != null && !isMoving)
         {
+            // 적 위치에 따라 방향 전환
+            FaceTarget(enemyObj.transform.position);
+
             enemy.TakeDamage(attackPower + UnitUpgrade.Instance.adUpgradeValue);
             Debug.Log($"{gameObject.name}이(가) {enemyObj.name}을(를) 공격하여 {attackPower + UnitUpgrade.Instance.adUpgradeValue}만큼의 피해를 입혔습니다.");
         }
     }
 
+    private void FaceTarget(Vector3 targetPosition)
+    {
+        // 대상의 위치와 자신의 위치를 비교하여 방향 설정
+        if (targetPosition.x > transform.position.x)
+        {
+            spriteRenderer.flipX = false; // 오른쪽을 바라봄
+        }
+        else
+        {
+            spriteRenderer.flipX = true; // 왼쪽을 바라봄
+        }
+    }
+
     public void Select()
     {
-        spriteRenderer.color = Color.green; 
+        //spriteRenderer.color = Color.green;
+        lineRenderer.enabled = true;
+
     }
 
     public void Deselect()
     {
-        spriteRenderer.color = originalColor;
+        //spriteRenderer.color = originalColor;
+        lineRenderer.enabled = false;
     }
 
     private void OnDrawGizmosSelected()

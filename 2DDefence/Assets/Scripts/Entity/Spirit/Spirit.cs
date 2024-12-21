@@ -7,10 +7,13 @@ public class Spirit : Move
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
 
+    private LineRenderer lineRenderer; 
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        lineRenderer = GetComponentInChildren<LineRenderer>();
         originalColor = spriteRenderer.color;
     }
 
@@ -41,11 +44,14 @@ public class Spirit : Move
 
     public void Select()
     {
-        spriteRenderer.color = Color.green; // 선택 시 색상 변경
+        //spriteRenderer.color = Color.green;
+        lineRenderer.enabled = true;
+
     }
 
     public void Deselect()
     {
-        spriteRenderer.color = originalColor; // 선택 해제 시 원래 색상 복원
+        //spriteRenderer.color = originalColor;
+        lineRenderer.enabled = false;
     }
 }
