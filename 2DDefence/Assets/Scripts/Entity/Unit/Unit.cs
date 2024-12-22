@@ -52,7 +52,6 @@ public class Unit : Move
             FaceTarget(enemyObj.transform.position);
 
             enemy.TakeDamage(attackPower + UnitUpgrade.Instance.adUpgradeValue);
-            Debug.Log($"{gameObject.name}이(가) {enemyObj.name}을(를) 공격하여 {attackPower + UnitUpgrade.Instance.adUpgradeValue}만큼의 피해를 입혔습니다.");
         }
     }
 

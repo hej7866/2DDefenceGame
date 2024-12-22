@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1580482570187103014
+--- !u!1 &4200229112782186322
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6078092708162913857}
-  - component: {fileID: 33654167844360330}
-  - component: {fileID: 1629108123362873064}
+  - component: {fileID: 1288869586072621762}
+  - component: {fileID: 2646128553844085844}
+  - component: {fileID: 7449409960307293967}
   m_Layer: 0
   m_Name: UnitSelectLine
   m_TagString: Untagged
@@ -18,13 +18,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6078092708162913857
+--- !u!4 &1288869586072621762
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1580482570187103014}
+  m_GameObject: {fileID: 4200229112782186322}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.5, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -33,13 +33,13 @@ Transform:
   m_Father: {fileID: 1612654873043323607}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!120 &33654167844360330
+--- !u!120 &2646128553844085844
 LineRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1580482570187103014}
+  m_GameObject: {fileID: 4200229112782186322}
   m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -230,13 +230,13 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 1
---- !u!114 &1629108123362873064
+--- !u!114 &7449409960307293967
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1580482570187103014}
+  m_GameObject: {fileID: 4200229112782186322}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8cd08f15c8692d942926f86556351d5e, type: 3}
@@ -259,8 +259,8 @@ GameObject:
   - component: {fileID: 337463188224277004}
   - component: {fileID: 3901023289516409056}
   m_Layer: 0
-  m_Name: LegendaryUnit02
-  m_TagString: Legendary
+  m_Name: GodUnit04
+  m_TagString: God
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -277,7 +277,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6078092708162913857}
+  - {fileID: 1288869586072621762}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -322,8 +322,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -283181191, guid: c6250cccf94f0bd42aea93013df6ec7e, type: 3}
-  m_Color: {r: 0.9882353, g: 0.25882354, b: 0.25882354, a: 1}
+  m_Sprite: {fileID: 1495797422, guid: 1a7deb0e723ec8c4d9a77da19bbe845b, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -383,12 +383,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  unitId: 2
-  unitName: "\uD574\uACE8"
-  unitValue: Legendary
-  attackPower: 120
-  attackRange: 10
-  attackCooldown: 0.33
+  unitId: 4
+  unitName: "\uB9C8\uBC95\uC0AC"
+  unitValue: God
+  attackPower: 600
+  attackRange: 5
+  attackCooldown: 0.45
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8

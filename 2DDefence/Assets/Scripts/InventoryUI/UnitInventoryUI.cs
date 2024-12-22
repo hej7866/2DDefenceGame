@@ -176,6 +176,7 @@ public class UnitInventoryUI : MonoBehaviour
     {
         if (combineList.Count < 3)
         {
+            if(combineList.Contains(unit)) return;
             combineList.Add(unit);
             GameObject button = Instantiate(unitButtonPrefab, combineListParent);
             button.GetComponentInChildren<Image>().sprite = unit.GetComponent<SpriteRenderer>()?.sprite;

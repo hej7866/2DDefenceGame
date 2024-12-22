@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -14,6 +16,7 @@ public class EnemySpawner : MonoBehaviour
 
     private int waveNumber = 1; // 현재 웨이브 번호
     private bool isSpawning = false; // 스폰 중인지 여부
+
 
     private void Start()
     {
@@ -67,7 +70,6 @@ public class EnemySpawner : MonoBehaviour
         // 웨이브 번호에 따라 프리팹 선택
         int prefabIndex = (waveNumber - 1) % enemyPrefabs.Length; // 웨이브 번호에 맞는 프리팹 선택
         GameObject selectedPrefab = enemyPrefabs[prefabIndex];
-
         Instantiate(selectedPrefab, spawnPoint.position, spawnPoint.rotation);
         Debug.Log($"[스폰된 적] {selectedPrefab.name} (웨이브 {waveNumber})");
     }

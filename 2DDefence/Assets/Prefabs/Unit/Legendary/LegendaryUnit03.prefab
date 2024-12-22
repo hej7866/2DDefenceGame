@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3901023289516409056}
   m_Layer: 0
   m_Name: LegendaryUnit03
-  m_TagString: Normal
+  m_TagString: Legendary
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -140,10 +140,10 @@ MonoBehaviour:
   speed: 5
   unitId: 3
   unitName: "\uC804\uC0AC"
-  unitValue: Normal
-  attackPower: 10
+  unitValue: Legendary
+  attackPower: 100
   attackRange: 3
-  attackCooldown: 1.5
+  attackCooldown: 0.8
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8

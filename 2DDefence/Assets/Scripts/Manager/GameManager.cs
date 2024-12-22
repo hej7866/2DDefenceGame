@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float initialWaitTime; // 초기 대기 시간
     [SerializeField] private float waveDuration;
     [SerializeField] private float waveBreakDuration;
-    private int currentWave = 0;
+    public int currentWave = 0;
     private bool waveActive = false;
 
     // UI
@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
         {
             waveActive = true;
             currentWave++;
-
+    
             // UI 업데이트
             if (currentWaveText != null)
             {
@@ -131,7 +131,6 @@ public class GameManager : MonoBehaviour
     private IEnumerator WaveTimer()
     {
         float elapsedTime = 0f;
-
         while (elapsedTime < waveDuration)
         {
             if (waveTimerText != null)

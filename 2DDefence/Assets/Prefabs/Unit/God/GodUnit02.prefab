@@ -259,8 +259,8 @@ GameObject:
   - component: {fileID: 337463188224277004}
   - component: {fileID: 3901023289516409056}
   m_Layer: 0
-  m_Name: LegendaryUnit02
-  m_TagString: Legendary
+  m_Name: GodUnit02
+  m_TagString: God
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -323,7 +323,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: -283181191, guid: c6250cccf94f0bd42aea93013df6ec7e, type: 3}
-  m_Color: {r: 0.9882353, g: 0.25882354, b: 0.25882354, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -385,10 +385,10 @@ MonoBehaviour:
   speed: 5
   unitId: 2
   unitName: "\uD574\uACE8"
-  unitValue: Legendary
-  attackPower: 120
+  unitValue: God
+  attackPower: 1000
   attackRange: 10
-  attackCooldown: 0.33
+  attackCooldown: 0.25
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8

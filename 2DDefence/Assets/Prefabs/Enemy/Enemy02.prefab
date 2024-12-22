@@ -484,7 +484,7 @@ MonoBehaviour:
   speed: 2
   maxHealth: 120
   currentHealth: 120
-  armor: 0
+  armor: 1
   healthBar: {fileID: 4631199214323369194}
 --- !u!95 &1071171195857206980
 Animator:
