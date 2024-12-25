@@ -1,7 +1,12 @@
+using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Unit : Move
 {
+    public static Unit Instance;
+
     public int unitId; // 유닛의 고유번호
 
     public string unitName; // 유닛이름
@@ -11,18 +16,27 @@ public class Unit : Move
     public float attackCooldown = 1f; // 공격속도
     public LayerMask enemyLayer;
 
-    private SpriteRenderer spriteRenderer;
+    private Animator animator;
+
     private LineRenderer lineRenderer;
     private Color originalColor;
 
     private float lastAttackTime = 0f;
 
-    // Upgrade
+
+    //test
+    public bool test = false;
+
+    void Awake()
+    {
+        Instance = this;
+        
+    }
+
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponentInChildren<Animator>();
         lineRenderer = GetComponentInChildren<LineRenderer>();
-        originalColor = spriteRenderer.color;
     }
 
     protected override void Update()
@@ -45,12 +59,31 @@ public class Unit : Move
 
     private void AttackTarget(GameObject enemyObj)
     {
-        Enemy enemy = enemyObj.GetComponent<Enemy>();
-        if (enemy != null && !isMoving)
+        if (enemyObj != null && !isMoving)
         {
             // 적 위치에 따라 방향 전환
             FaceTarget(enemyObj.transform.position);
 
+            // 애니메이션 재생 속도 조절
+            float attackSpeedMultiplier = 1/attackCooldown * UnitUpgrade.Instance.asUpgradeValue;
+            animator.speed = attackSpeedMultiplier;
+
+            // 공격 애니메이션 실행
+            animator.SetTrigger("2_Attack");
+
+            // 일정 시간 후 데미지 적용
+            StartCoroutine(DelayedDamage(enemyObj));
+        }
+    }
+
+    private IEnumerator DelayedDamage(GameObject enemyObj)
+    {
+        float animationLength = 1.0f / animator.speed; // 현재 재생 속도에 따른 애니메이션 길이
+        yield return new WaitForSeconds(animationLength * 0.5f); // 공격 애니메이션 중간 타이밍에 데미지 적용
+
+        Enemy enemy = enemyObj.GetComponent<Enemy>();
+        if (enemy != null)
+        {
             enemy.TakeDamage(attackPower + UnitUpgrade.Instance.adUpgradeValue);
         }
     }
@@ -58,14 +91,16 @@ public class Unit : Move
     private void FaceTarget(Vector3 targetPosition)
     {
         // 대상의 위치와 자신의 위치를 비교하여 방향 설정
+        Vector3 scale = transform.localScale;
         if (targetPosition.x > transform.position.x)
         {
-            spriteRenderer.flipX = false; // 오른쪽을 바라봄
+            scale.x = -Mathf.Abs(scale.x); 
         }
         else
         {
-            spriteRenderer.flipX = true; // 왼쪽을 바라봄
+            scale.x = Mathf.Abs(scale.x); 
         }
+        transform.localScale = scale;
     }
 
     public void Select()

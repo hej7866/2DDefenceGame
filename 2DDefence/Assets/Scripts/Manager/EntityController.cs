@@ -174,12 +174,14 @@ public class EntityController : MonoBehaviour
 
             Vector3 newTargetPosition = targetPosition + randomOffset;
 
-            // 마우스 클릭 위치에 따라 유닛의 방향 변경
-            SpriteRenderer spriteRenderer = unit.GetComponent<SpriteRenderer>();
-            if (spriteRenderer != null)
-            {
-                spriteRenderer.flipX = newTargetPosition.x < unit.transform.position.x;
-            }
+            /// 마우스 클릭 위치에 따라 유닛의 방향 변경
+        if (unit != null)
+        {
+            Vector3 scale = unit.transform.localScale;
+
+            scale.x = newTargetPosition.x < unit.transform.position.x ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);
+            unit.transform.localScale = scale; // 스케일 적용
+        }
 
             unit.SetTargetPosition(newTargetPosition);
         }
@@ -188,7 +190,8 @@ public class EntityController : MonoBehaviour
         foreach (var spirit in selectedSpirits)
         {
             // 무작위 오프셋 생성
-            Vector3 randomOffset = new Vector3(
+            Vector3 randomOffset = new Vector3
+                (
                 Random.Range(-unitSpacing, unitSpacing),
                 Random.Range(-unitSpacing, unitSpacing),
                 0);
@@ -261,7 +264,7 @@ public class EntityController : MonoBehaviour
 
             Unit selectedUnit = selectedUnits[0];
             SpriteRenderer unitSprite = selectedUnit.GetComponent<SpriteRenderer>();
-
+                
             unitImage.sprite = unitSprite.sprite; // 이미지
             unitName.text = selectedUnit.unitName; // 유닛이름
             unitValue.text = selectedUnit.unitValue; // 유닛 등급
@@ -328,6 +331,8 @@ public class EntityController : MonoBehaviour
             multiUnitPanel.SetActive(false);
         }
     }
+
+    
 
 
     // 선택 상태 변경 확인 메서드
