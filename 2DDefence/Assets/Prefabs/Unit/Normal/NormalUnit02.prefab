@@ -2591,6 +2591,7 @@ GameObject:
   - component: {fileID: 8470366566006478481}
   - component: {fileID: 1758844287857421453}
   - component: {fileID: 4078590428793829159}
+  - component: {fileID: -1770386086210779104}
   m_Layer: 5
   m_Name: NormalUnit02
   m_TagString: Normal
@@ -5683,6 +5684,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   test: 0
+--- !u!114 &-1770386086210779104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4802905096647840942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b93121dd2f2faa49a1640c697f4ef96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationLength: 1
+  clipName: 0_Attack_Bow
 --- !u!1 &5179892668800440455
 GameObject:
   m_ObjectHideFlags: 0
@@ -7960,6 +7975,7 @@ GameObject:
   - component: {fileID: 5708738774757392444}
   - component: {fileID: 1888214733828418557}
   - component: {fileID: 5516618465832412747}
+  - component: {fileID: 8386495954636480487}
   m_Layer: 0
   m_Name: UnitRoot
   m_TagString: Untagged
@@ -8016,6 +8032,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8386495954636480487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8760399558775565422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ad3f7eaba82c244b1ea86fab94bc10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8798854910952953993
 GameObject:
   m_ObjectHideFlags: 0

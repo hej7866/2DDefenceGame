@@ -1501,6 +1501,7 @@ GameObject:
   - component: {fileID: 8488389096563921952}
   - component: {fileID: -1531170327080021929}
   - component: {fileID: -8968041040538806999}
+  - component: {fileID: 3502183450342964}
   m_Layer: 5
   m_Name: NormalUnit04
   m_TagString: Normal
@@ -4573,6 +4574,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   test: 0
+--- !u!114 &3502183450342964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2661833736949709387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b93121dd2f2faa49a1640c697f4ef96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationLength: 1
+  clipName: 0_Attack_Normal
 --- !u!1 &2692749107637711926
 GameObject:
   m_ObjectHideFlags: 0
@@ -5890,6 +5905,7 @@ GameObject:
   - component: {fileID: 3746938820722819101}
   - component: {fileID: 5964824602762634147}
   - component: {fileID: 262281428175433063}
+  - component: {fileID: 8645207722422747514}
   m_Layer: 0
   m_Name: UnitRoot
   m_TagString: Untagged
@@ -5946,6 +5962,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8645207722422747514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4648122711598324058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ad3f7eaba82c244b1ea86fab94bc10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4965094967783302313
 GameObject:
   m_ObjectHideFlags: 0

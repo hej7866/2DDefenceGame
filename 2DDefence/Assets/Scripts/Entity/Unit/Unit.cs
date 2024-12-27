@@ -1,7 +1,5 @@
-using System;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
+using System.Collections;
 
 public class Unit : Move
 {
@@ -57,36 +55,47 @@ public class Unit : Move
         }
     }
 
+    // 공격 로직 (공격 및 모션)
+    private GameObject currentTarget; // 현재 공격 대상
     private void AttackTarget(GameObject enemyObj)
     {
         if (enemyObj != null && !isMoving)
         {
+            // 현재 공격 대상을 저장
+            currentTarget = enemyObj;
+
             // 적 위치에 따라 방향 전환
             FaceTarget(enemyObj.transform.position);
 
             // 애니메이션 재생 속도 조절
-            float attackSpeedMultiplier = 1/attackCooldown * UnitUpgrade.Instance.asUpgradeValue;
+            float attackSpeedMultiplier = attackCooldown / (attackCooldown * UnitUpgrade.Instance.asUpgradeValue);
             animator.speed = attackSpeedMultiplier;
 
             // 공격 애니메이션 실행
             animator.SetTrigger("2_Attack");
-
-            // 일정 시간 후 데미지 적용
-            StartCoroutine(DelayedDamage(enemyObj));
         }
     }
 
-    private IEnumerator DelayedDamage(GameObject enemyObj)
+    // 애니메이션 이벤트로 호출될 메서드
+    public void ApplyDamage()
     {
-        float animationLength = 1.0f / animator.speed; // 현재 재생 속도에 따른 애니메이션 길이
-        yield return new WaitForSeconds(animationLength * 0.5f); // 공격 애니메이션 중간 타이밍에 데미지 적용
+        if (currentTarget == null)
+        {
+            return; // 공격 대상이 null이면 데미지 적용하지 않음
+        }
 
-        Enemy enemy = enemyObj.GetComponent<Enemy>();
+        Enemy enemy = currentTarget.GetComponent<Enemy>();
         if (enemy != null)
         {
             enemy.TakeDamage(attackPower + UnitUpgrade.Instance.adUpgradeValue);
         }
     }
+
+    public void ResetTarget()
+    {
+        currentTarget = null;
+    }
+
 
     private void FaceTarget(Vector3 targetPosition)
     {
