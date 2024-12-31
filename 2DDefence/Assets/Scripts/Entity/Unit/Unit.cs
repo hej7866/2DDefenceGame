@@ -40,8 +40,9 @@ public class Unit : Move
     protected override void Update()
     {
         // 먼저 부모 클래스의 Update() 호출로 이동 로직 실행
-        base.Update();
-
+        base.Update();  
+        animator.SetBool("1_Move",isMoving); // 이동 애니메이션 구현
+    
         // 이후 공격 로직 실행
         if (Time.time >= lastAttackTime + attackCooldown * UnitUpgrade.Instance.asUpgradeValue)
         {

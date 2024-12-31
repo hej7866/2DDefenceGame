@@ -1,30 +1,49 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public GameObject unitSpawner;
 
+    public int gold = 0;
+
+    // 게임 종료 관련
+    [SerializeField] private int enemyCountLimit;
+    [SerializeField] private GameObject gameoverPanel;
+
+
+    // 프리팹 및 스포너 세팅
     [SerializeField] private GameObject spiritPrefab;
     [SerializeField] private Transform spiritSpawnPoint;
     public GameObject[] unitPrefabs;
+    public GameObject unitSpawner;
 
-    private int gold = 0;
-
+    // 웨이브 관련
+    [Header("웨이브 세팅")]
     [SerializeField] private float initialWaitTime; // 초기 대기 시간
     [SerializeField] private float waveDuration;
     [SerializeField] private float waveBreakDuration;
     public int currentWave = 0;
     private bool waveActive = false;
 
-    // UI
-    public Text currentWaveText;
+    // 웨이브 UI 관련
+    [Header("웨이브 UI 세팅")]
+    public Text waveText;
+    public Text wavePanelText;
     public Text waveTimerText;
     public Text unitCount;
     private int enemyCount;
-    
+
+    // 재화 UI 관련
+    [Header("재화 UI 세팅")]
+    [SerializeField] Text goldText;
+
+
+    // 일반 웨이브 보스 웨이브 구분용
+    EnemySpawnSyetem enemySpawnSyetem;
+    BossSpawnSystem bossSpawnSystem;
 
     void Awake()
     {
@@ -33,12 +52,15 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        enemySpawnSyetem = GetComponent<EnemySpawnSyetem>();
+        bossSpawnSystem = GetComponent<BossSpawnSystem>(); 
         StartCoroutine(StartGameWithInitialWait());
     }
 
     void Update()
     {
         UpdateUnitCount();
+        if(enemyCount >= enemyCountLimit) OnGameOverPanel(); // 게임 종료조건 (유카사)
     }
 
     // 게임 첫 시작시 실행
@@ -49,6 +71,13 @@ public class GameManager : MonoBehaviour
         // 정령 소환
         SpawnInitialSpirits(5);
 
+        // UI 업데이트
+        if (waveText != null)
+        {
+            waveText.text = $"웨이브 대기";
+        }
+        if (wavePanelText != null)   wavePanelText.text = $"유닛카운트 {enemyCountLimit} = 패배";
+  
         // 초기 대기 타이머
         float elapsedTime = 0f;
         while (elapsedTime < initialWaitTime)
@@ -78,12 +107,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void AddGold(int amount) // 정령으로 돈 흭득
-    {
-        gold += amount;
-        Debug.Log($"골드: {gold}g");
-    }
-
     public void SpawnRandomUnit() // 정령으로 유닛 소환
     {
         if (unitPrefabs.Length == 0)
@@ -104,26 +127,80 @@ public class GameManager : MonoBehaviour
 
         Debug.Log($"랜덤 유닛이 소환되었습니다: {selectedUnitPrefab.name}");
     }
+    
+    public void AddGold(int amount) // 정령으로 돈 흭득
+    {
+        gold += amount;
+        // UI 업데이트
+        {
+            if(goldText != null)
+            {
+                goldText.text = gold.ToString();
+            }
+        }
+        Debug.Log($"골드: {gold}g");
+    }
+
+    public void UseGold(int amount) // 정령으로 돈 흭득
+    {
+        gold -= amount;
+        // UI 업데이트
+        {
+            if(goldText != null)
+            {
+                goldText.text = gold.ToString();
+            }
+        }
+        Debug.Log($"골드: {gold}g");
+    }
 
     // Wave System
     public void StartNextWave()
     {
-        if (!waveActive)
+        if (!waveActive && (currentWave + 1) % 10 != 0) // 일반 웨이브
         {
+            // 일반시스템에서 보스시스템으로 전환
+            if(enemySpawnSyetem.enabled == false) 
+            {
+                enemySpawnSyetem.enabled = true;
+                bossSpawnSystem.enabled = false;
+            }
             waveActive = true;
             currentWave++;
     
             // UI 업데이트
-            if (currentWaveText != null)
+            if (waveText != null)
             {
-                currentWaveText.text = currentWave.ToString();
+                waveText.text = $"현재 웨이브 : {currentWave}";
             }
             else
             {
                 Debug.LogWarning("currentWaveText가 설정되어 있지 않습니다.");
             }
 
-            Debug.Log($"[웨이브 시작] {currentWave} 웨이브가 시작되었습니다.");
+            // 게임 종료 조건 (보스사) 
+            GameObject bossObject = GameObject.FindGameObjectWithTag("Boss"); // "Boss" 태그를 가진 게임 오브젝트를 찾아오기
+            if (bossObject != null) OnGameOverPanel(); // Boss 게임 오브젝트가 일반 웨이브에 존재하면 패배
+
+            StartCoroutine(WaveTimer());
+        }
+        else if(!waveActive && (currentWave + 1) % 10 == 0) // 보스웨이브
+        {
+            // 보스시스템에서 일반시스템으로 전환
+            if(bossSpawnSystem.enabled == false) 
+            {
+                enemySpawnSyetem.enabled = false;
+                bossSpawnSystem.enabled = true;
+            }
+            waveActive = true;
+            currentWave++;
+
+            // UI 업데이트
+            if (waveText != null)
+            {
+                waveText.text = $"현재 웨이브 : {currentWave}";
+            }
+            Debug.Log("보스 웨이브 시작");
             StartCoroutine(WaveTimer());
         }
     }
@@ -137,8 +214,6 @@ public class GameManager : MonoBehaviour
             {
                 waveTimerText.text = FormatTime(waveDuration - elapsedTime);
             }
-
-            Debug.Log($"[웨이브 진행 중] {currentWave} 웨이브, 남은 시간: {waveDuration - elapsedTime:F1}초");
             elapsedTime += 1f;
             yield return new WaitForSeconds(1f);
         }
@@ -151,6 +226,11 @@ public class GameManager : MonoBehaviour
     private IEnumerator WaveBreakTimer()
     {
         Debug.Log($"[웨이브 대기] {currentWave} 웨이브가 완료되었습니다. {waveBreakDuration}초 동안 대기합니다.");
+        // UI 업데이트
+        if (waveText != null)
+        {
+            waveText.text = $"웨이브 대기";
+        }
         SpawnInitialSpirits(5);
         float elapsedTime = 0f;
 
@@ -161,7 +241,6 @@ public class GameManager : MonoBehaviour
                 waveTimerText.text = FormatTime(waveBreakDuration - elapsedTime);
             }
 
-            Debug.Log($"[웨이브 대기] 대기 시간 남음: {waveBreakDuration - elapsedTime:F1}초");
             elapsedTime += 1f;
             yield return new WaitForSeconds(1f);
         }
@@ -205,5 +284,24 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning("UnitCountText가 설정되지 않았습니다.");
         }
+    }
+
+    // 게임 종료 관련 로직
+    private void OnGameOverPanel() // 게임 종료시 패널 띄우기
+    {        
+        gameoverPanel.SetActive(true);
+    }
+
+
+    // 다시하기 버튼
+    public void RetryGame()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    // 돌아가기 버튼
+    public void EndGame()
+    {
+        SceneManager.LoadScene(1); 
     }
 }

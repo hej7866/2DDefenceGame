@@ -13,6 +13,7 @@ TagManager:
   - Legendary
   - God
   - IgnoreUI
+  - Boss
   layers:
   - Default
   - TransparentFX

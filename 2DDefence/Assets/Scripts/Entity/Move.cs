@@ -12,6 +12,8 @@ public class Move : MonoBehaviour
         HandleMovement();
     }
 
+ 
+
     public virtual void SetTargetPosition(Vector3 position)
     {
         targetPosition = position;
@@ -23,7 +25,6 @@ public class Move : MonoBehaviour
         if (isMoving)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-
             // 목표 위치에 도달하면 멈춤
             if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
             {

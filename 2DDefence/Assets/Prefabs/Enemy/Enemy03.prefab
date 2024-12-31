@@ -404,8 +404,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  maxHealth: 170
-  currentHealth: 170
+  maxHealth: 100
+  currentHealth: 100
   armor: 1
   healthBar: {fileID: 3191243347270372723}
 --- !u!95 &1071171195857206980
