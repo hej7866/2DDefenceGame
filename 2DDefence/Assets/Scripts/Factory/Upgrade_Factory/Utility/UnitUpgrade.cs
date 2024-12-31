@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,11 +36,11 @@ public class UnitUpgrade : MonoBehaviour
     {
         upgradeData = new Dictionary<string, UpgradeData>
         {
-            { "Normal", new UpgradeData { adCost = 100, asCost = 100, adIncrement = 1, asDecrement = 0.01f } },
-            { "Rare", new UpgradeData { adCost = 200, asCost = 200, adIncrement = 3, asDecrement = 0.015f } },
-            { "Unique", new UpgradeData { adCost = 300, asCost = 300, adIncrement = 5, asDecrement = 0.02f } },
-            { "Legendary", new UpgradeData { adCost = 400, asCost = 400, adIncrement = 7, asDecrement = 0.03f } },
-            { "God", new UpgradeData { adCost = 500, asCost = 500, adIncrement = 10, asDecrement = 0.05f } }
+            { "Normal", new UpgradeData { adCost = 0, asCost = 100, adIncrement = 1, asDecrement = 0.02f } },
+            { "Rare", new UpgradeData { adCost = 200, asCost = 200, adIncrement = 3, asDecrement = 0.03f } },
+            { "Unique", new UpgradeData { adCost = 300, asCost = 300, adIncrement = 5, asDecrement = 0.05f } },
+            { "Legendary", new UpgradeData { adCost = 400, asCost = 400, adIncrement = 7, asDecrement = 0.075f } },
+            { "God", new UpgradeData { adCost = 500, asCost = 500, adIncrement = 10, asDecrement = 0.1f } }
         };
     }
 
@@ -52,7 +53,7 @@ public class UnitUpgrade : MonoBehaviour
         if (GameManager.Instance.gold >= data.adCost)
         {
             GameManager.Instance.UseGold(data.adCost);
-            data.adCost += 10;
+            data.adCost += 0;
             data.adUpgradeCount++;
             data.adUpgradeValue += data.adIncrement; // 등급별 공격력 증가량 적용
 
