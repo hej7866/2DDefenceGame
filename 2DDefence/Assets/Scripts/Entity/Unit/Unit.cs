@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class Unit : Move
 {
@@ -19,7 +20,10 @@ public class Unit : Move
     private LineRenderer lineRenderer;
     private Color originalColor;
 
+
     private float lastAttackTime = 0f;
+
+    
 
 
     //test
@@ -28,13 +32,30 @@ public class Unit : Move
     void Awake()
     {
         Instance = this;
-        
     }
 
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
         lineRenderer = GetComponentInChildren<LineRenderer>();
+    }
+
+    // **현재 공격력**: 기본 공격력 + 업그레이드 공격력
+    public int CurrentAttackPower
+    {
+        get
+        {
+            return attackPower + UnitUpgrade.Instance.GetUpgradeData(unitValue).adUpgradeValue;
+        }
+    }
+
+    // **현재 공격 속도**: 기본 공격 속도 * 업그레이드 공속 계수
+    public float CurrentAttackCooldown
+    {
+        get
+        {
+            return attackCooldown * UnitUpgrade.Instance.GetUpgradeData(unitValue).asUpgradeValue;
+        }
     }
 
     protected override void Update()
@@ -44,7 +65,7 @@ public class Unit : Move
         animator.SetBool("1_Move",isMoving); // 이동 애니메이션 구현
     
         // 이후 공격 로직 실행
-        if (Time.time >= lastAttackTime + attackCooldown * UnitUpgrade.Instance.asUpgradeValue)
+        if (Time.time >= lastAttackTime + CurrentAttackCooldown)
         {
             Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, attackRange, enemyLayer);
             if (hits.Length > 0)
@@ -56,7 +77,6 @@ public class Unit : Move
         }
     }
 
-    // 공격 로직 (공격 및 모션)
     private GameObject currentTarget; // 현재 공격 대상
     private void AttackTarget(GameObject enemyObj)
     {
@@ -69,7 +89,7 @@ public class Unit : Move
             FaceTarget(enemyObj.transform.position);
 
             // 애니메이션 재생 속도 조절
-            float attackSpeedMultiplier = attackCooldown / (attackCooldown * UnitUpgrade.Instance.asUpgradeValue);
+            float attackSpeedMultiplier = attackCooldown / CurrentAttackCooldown;
             animator.speed = attackSpeedMultiplier;
 
             // 공격 애니메이션 실행
@@ -88,7 +108,7 @@ public class Unit : Move
         Enemy enemy = currentTarget.GetComponent<Enemy>();
         if (enemy != null)
         {
-            enemy.TakeDamage(attackPower + UnitUpgrade.Instance.adUpgradeValue);
+            enemy.TakeDamage(CurrentAttackPower);
         }
     }
 

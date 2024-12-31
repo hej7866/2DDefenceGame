@@ -264,18 +264,21 @@ public class EntityController : MonoBehaviour
 
             Unit selectedUnit = selectedUnits[0];
             SpriteRenderer unitSprite = selectedUnit.GetComponent<SpriteRenderer>();
-                
+
             unitImage.sprite = unitSprite.sprite; // 이미지
-            unitName.text = selectedUnit.unitName; // 유닛이름
+            unitName.text = selectedUnit.unitName; // 유닛 이름
             unitValue.text = selectedUnit.unitValue; // 유닛 등급
-            unitAd.text = $"공격력: {selectedUnit.attackPower + UnitUpgrade.Instance.adUpgradeValue}"; // 유닛 기본공격력 + 업그레이드로 올라간 공격력 
-            adUpgradeCount.text = UnitUpgrade.Instance.adUpgradeCount.ToString(); // 공격력 업그레이드 횟수 UI 
-            
-            //유닛 공속
-            float asValue = selectedUnit.attackCooldown * UnitUpgrade.Instance.asUpgradeValue; // 유닛 기본 공속 * 업그레이드로 올라간 공속 밸류
-            string formattedAsValue = string.Format("{0:F2}", asValue); // 소숫점 두자리까지 나타내주는 로직
-            unitAs.text = $"공격속도: {formattedAsValue}";
-            asUpgradeCount.text = UnitUpgrade.Instance.asUpgradeCount.ToString(); // 공격속도 업그레이드 횟수 UI
+
+            // UnitUpgrade에서 해당 등급의 업그레이드 데이터 가져오기
+            UpgradeData upgradeData = UnitUpgrade.Instance.GetUpgradeData(selectedUnit.unitValue);
+
+            if (upgradeData != null)
+            {
+                unitAd.text = $"공격력: {selectedUnit.attackPower + upgradeData.adUpgradeValue}";
+                adUpgradeCount.text = $"{upgradeData.adUpgradeCount}강"; // 공격력 업그레이드 횟수
+                unitAs.text = $"공격속도: {selectedUnit.attackCooldown * upgradeData.asUpgradeValue:F2}";
+                asUpgradeCount.text = $"{upgradeData.asUpgradeCount}강"; // 공격 속도 업그레이드 횟수
+            }
         }
         // 다중 선택
         else if (selectedUnits.Count > 1)
@@ -307,22 +310,11 @@ public class EntityController : MonoBehaviour
                     Unit selectedUnit = unit; // 로컬 캡처
                     unitButton.onClick.AddListener(() =>
                     {
-                        Debug.Log($"test1: {selectedUnits.Count}"); // test
-                        Debug.Log($"[클릭된 유닛]: {selectedUnit.unitName}");
-
-                        // 다중 선택 해제
                         DeselectAllEntities();
-                        Debug.Log($"test2: {selectedUnits.Count}"); // test
-
-                        // 클릭된 유닛을 단일 선택
                         AddUnitToSelection(selectedUnit);
-                        Debug.Log($"test3: {selectedUnits.Count}"); // test
-
-                        // 즉시 UI 갱신
                         UpdateSelectionUI();
                     });
                 }
-
             }
         }
         else
@@ -331,6 +323,7 @@ public class EntityController : MonoBehaviour
             multiUnitPanel.SetActive(false);
         }
     }
+
 
     
 
