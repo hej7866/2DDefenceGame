@@ -6,6 +6,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class Funtion_Btn : MonoBehaviour
 {
@@ -36,5 +39,16 @@ public class Funtion_Btn : MonoBehaviour
     {
         setting_panel.SetActive(false);
         title_panel_hide.SetActive(false);
+    }
+
+
+    // 2. 게임종료 버튼
+    public void GameQuit()
+    {
+        #if UNITY_EDITOR
+        EditorApplication.isPlaying = false; // 에디터에서 실행 중지
+        #else
+        Application.Quit(); // 빌드된 게임 종료
+        #endif
     }
 }
