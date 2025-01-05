@@ -37,7 +37,7 @@ public class Spirit : Move
         }
         else if (collision.CompareTag("UnitPortal"))
         {
-            GameManager.Instance.SpawnRandomUnit();
+            UnitSpawnManager.Instance.ExecuteRandomFunction();
             Destroy(gameObject);
         }
     }

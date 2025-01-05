@@ -43,12 +43,27 @@ public class Funtion_Btn : MonoBehaviour
 
 
     // 2. 게임종료 버튼
-    public void GameQuit()
+    public GameObject gamequit_panel;
+    public void ShowGameQuitPanel()
+    {
+        gamequit_panel.SetActive(true);
+        title_panel_hide.SetActive(true);
+    }
+
+    // 2.1 나가기 버튼 클릭
+    public void GameQuit() // Yes_Btn
     {
         #if UNITY_EDITOR
         EditorApplication.isPlaying = false; // 에디터에서 실행 중지
         #else
         Application.Quit(); // 빌드된 게임 종료
         #endif
+    }
+
+    // 2.2 돌아가기 버튼 클릭
+    public void HideGameQuitPanel() // No_Btn
+    {
+        gamequit_panel.SetActive(false);
+        title_panel_hide.SetActive(false);
     }
 }

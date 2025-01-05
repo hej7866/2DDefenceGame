@@ -14,11 +14,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gameoverPanel;
 
 
-    // 프리팹 및 스포너 세팅
+    // 정령 프리팹 및 스포너 세팅
     [SerializeField] private GameObject spiritPrefab;
     [SerializeField] private Transform spiritSpawnPoint;
-    public GameObject[] unitPrefabs;
-    public GameObject unitSpawner;
 
     // 웨이브 관련
     [Header("웨이브 세팅")]
@@ -107,26 +105,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SpawnRandomUnit() // 정령으로 유닛 소환
-    {
-        if (unitPrefabs.Length == 0)
-        {
-            Debug.LogError("유닛 프리팹 배열이 비어있습니다.");
-            return;
-        }
 
-        // 랜덤으로 유닛 선택
-        int randomIndex = Random.Range(0, unitPrefabs.Length);
-        GameObject selectedUnitPrefab = unitPrefabs[randomIndex];
-
-        // UnitSpawner 위치
-        Vector3 spawnPosition = unitSpawner.transform.position;
-        // 스폰 위치를 약간 랜덤하게 설정
-        Vector3 randomOffset = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0);
-        Instantiate(selectedUnitPrefab, spawnPosition + randomOffset, Quaternion.identity);
-
-        Debug.Log($"랜덤 유닛이 소환되었습니다: {selectedUnitPrefab.name}");
-    }
     
     public void AddGold(int amount) // 정령으로 돈 흭득
     {
@@ -141,7 +120,7 @@ public class GameManager : MonoBehaviour
         Debug.Log($"골드: {gold}g");
     }
 
-    public void UseGold(int amount) // 정령으로 돈 흭득
+    public void UseGold(int amount) // 돈 소모
     {
         gold -= amount;
         // UI 업데이트

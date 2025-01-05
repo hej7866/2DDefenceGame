@@ -359,47 +359,46 @@ public class EntityController : MonoBehaviour
     }
 
 
-    void OnDrawGizmos()
-    {
-        // 드래그 박스 시각화
-        if (isDragging)
-        {
-            Gizmos.color = Color.green;
+    // 기즈모 모드에서 드래그박스 구현 (GUI로 게임화면으로 구현완료 => 주석처리)
+    // void OnDrawGizmos() 
+    // {
+    //     // 드래그 박스 시각화
+    //     if (isDragging)
+    //     {
+    //         Gizmos.color = Color.green;
 
-            // 현재 마우스 위치 가져오기
-            Vector3 currentMousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            currentMousePos.z = 0;
+    //         // 현재 마우스 위치 가져오기
+    //         Vector3 currentMousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+    //         currentMousePos.z = 0;
 
-            // 드래그 시작 위치와 현재 마우스 위치를 사용해 사각형의 네 모서리 계산
-            Vector3 topLeft = new Vector3(Mathf.Min(dragStartPos.x, currentMousePos.x), Mathf.Max(dragStartPos.y, currentMousePos.y), 0);
-            Vector3 topRight = new Vector3(Mathf.Max(dragStartPos.x, currentMousePos.x), Mathf.Max(dragStartPos.y, currentMousePos.y), 0);
-            Vector3 bottomLeft = new Vector3(Mathf.Min(dragStartPos.x, currentMousePos.x), Mathf.Min(dragStartPos.y, currentMousePos.y), 0);
-            Vector3 bottomRight = new Vector3(Mathf.Max(dragStartPos.x, currentMousePos.x), Mathf.Min(dragStartPos.y, currentMousePos.y), 0);
+    //         // 드래그 시작 위치와 현재 마우스 위치를 사용해 사각형의 네 모서리 계산
+    //         Vector3 topLeft = new Vector3(Mathf.Min(dragStartPos.x, currentMousePos.x), Mathf.Max(dragStartPos.y, currentMousePos.y), 0);
+    //         Vector3 topRight = new Vector3(Mathf.Max(dragStartPos.x, currentMousePos.x), Mathf.Max(dragStartPos.y, currentMousePos.y), 0);
+    //         Vector3 bottomLeft = new Vector3(Mathf.Min(dragStartPos.x, currentMousePos.x), Mathf.Min(dragStartPos.y, currentMousePos.y), 0);
+    //         Vector3 bottomRight = new Vector3(Mathf.Max(dragStartPos.x, currentMousePos.x), Mathf.Min(dragStartPos.y, currentMousePos.y), 0);
 
-            // 선 두께 설정
-            float lineThickness = 0.05f; // 선의 두께
+    //         // 선 두께 설정
+    //         float lineThickness = 0.05f; // 선의 두께
 
-            // 상단
-            Vector3 topLineCenter = (topLeft + topRight) / 2;
-            Vector3 topLineSize = new Vector3(Vector3.Distance(topLeft, topRight), lineThickness, 0);
-            Gizmos.DrawCube(topLineCenter, topLineSize);
+    //         // 상단
+    //         Vector3 topLineCenter = (topLeft + topRight) / 2;
+    //         Vector3 topLineSize = new Vector3(Vector3.Distance(topLeft, topRight), lineThickness, 0);
+    //         Gizmos.DrawCube(topLineCenter, topLineSize);
 
-            // 하단
-            Vector3 bottomLineCenter = (bottomLeft + bottomRight) / 2;
-            Vector3 bottomLineSize = new Vector3(Vector3.Distance(bottomLeft, bottomRight), lineThickness, 0);
-            Gizmos.DrawCube(bottomLineCenter, bottomLineSize);
+    //         // 하단
+    //         Vector3 bottomLineCenter = (bottomLeft + bottomRight) / 2;
+    //         Vector3 bottomLineSize = new Vector3(Vector3.Distance(bottomLeft, bottomRight), lineThickness, 0);
+    //         Gizmos.DrawCube(bottomLineCenter, bottomLineSize);
 
-            // 왼쪽
-            Vector3 leftLineCenter = (topLeft + bottomLeft) / 2;
-            Vector3 leftLineSize = new Vector3(lineThickness, Vector3.Distance(topLeft, bottomLeft), 0);
-            Gizmos.DrawCube(leftLineCenter, leftLineSize);
+    //         // 왼쪽
+    //         Vector3 leftLineCenter = (topLeft + bottomLeft) / 2;
+    //         Vector3 leftLineSize = new Vector3(lineThickness, Vector3.Distance(topLeft, bottomLeft), 0);
+    //         Gizmos.DrawCube(leftLineCenter, leftLineSize);
 
-            // 오른쪽
-            Vector3 rightLineCenter = (topRight + bottomRight) / 2;
-            Vector3 rightLineSize = new Vector3(lineThickness, Vector3.Distance(topRight, bottomRight), 0);
-            Gizmos.DrawCube(rightLineCenter, rightLineSize);
-        }
-    }
-
-
+    //         // 오른쪽
+    //         Vector3 rightLineCenter = (topRight + bottomRight) / 2;
+    //         Vector3 rightLineSize = new Vector3(lineThickness, Vector3.Distance(topRight, bottomRight), 0);
+    //         Gizmos.DrawCube(rightLineCenter, rightLineSize);
+    //     }
+    // }
 }
