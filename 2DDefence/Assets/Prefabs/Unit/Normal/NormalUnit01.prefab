@@ -4703,9 +4703,10 @@ MonoBehaviour:
   unitId: 1
   unitName: "\uC804\uC0AC"
   unitValue: Normal
-  attackPower: 10
+  attackPower: 15
   attackRange: 2
   attackCooldown: 1.5
+  criticalProb: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8

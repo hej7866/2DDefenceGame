@@ -4001,9 +4001,10 @@ MonoBehaviour:
   unitId: 2
   unitName: "\uAD81\uC218"
   unitValue: Unique
-  attackPower: 27
+  attackPower: 60
   attackRange: 5
   attackCooldown: 0.6
+  criticalProb: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8

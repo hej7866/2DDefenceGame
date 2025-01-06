@@ -7998,9 +7998,10 @@ MonoBehaviour:
   unitId: 3
   unitName: "\uB9C8\uBC95\uC0AC"
   unitValue: God
-  attackPower: 200
+  attackPower: 300
   attackRange: 3.5
   attackCooldown: 0.45
+  criticalProb: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8

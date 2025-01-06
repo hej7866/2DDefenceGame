@@ -65,7 +65,7 @@ public class Unit : Move
     {
         get
         {
-            return criticalProb + UnitUpgrade.Instance.GetUpgradeData(unitValue).cpUpgradeValue;
+            return (criticalProb + UnitUpgrade.Instance.GetUpgradeData(unitValue).cpUpgradeValue) * 100;
         }
     }
 
@@ -108,7 +108,7 @@ public class Unit : Move
             // 0 ~ 100 사이의 랜덤 값 생성
             float randomValue = Random.Range(0f, 100f);
 
-            if (randomValue < CurrentCriticalProp * 100)
+            if (randomValue < CurrentCriticalProp)
             {
                 // 크리티컬 확률에 해당
                 animator.SetTrigger("2_1_CriticalAttack");

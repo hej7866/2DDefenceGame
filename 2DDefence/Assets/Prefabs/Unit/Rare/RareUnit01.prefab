@@ -4943,9 +4943,10 @@ MonoBehaviour:
   unitId: 1
   unitName: "\uC804\uC0AC"
   unitValue: Rare
-  attackPower: 21
+  attackPower: 32
   attackRange: 2
   attackCooldown: 0.9
+  criticalProb: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8

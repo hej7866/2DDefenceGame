@@ -3179,9 +3179,10 @@ MonoBehaviour:
   unitId: 1
   unitName: "\uC804\uC0AC"
   unitValue: Legendary
-  attackPower: 102
+  attackPower: 150
   attackRange: 2
   attackCooldown: 0.55
+  criticalProb: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8
