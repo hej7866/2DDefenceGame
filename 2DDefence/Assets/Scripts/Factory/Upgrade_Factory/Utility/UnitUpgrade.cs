@@ -12,10 +12,14 @@ public class UpgradeData
     public int adUpgradeValue = 0; // 현재 공격력 증가량
     public int asUpgradeCount = 0; // 공격 속도 업그레이드 횟수
     public float asUpgradeValue = 1.0f; // 현재 공격 속도 계수
+    public int cpUpgradeCount = 0; // 치명타 확률 업그레이드 횟수
+    public float cpUpgradeValue = 0f; // 현재 치명타 증가량
     public int adCost = 100; // 공격력 업그레이드 비용
     public int asCost = 100; // 공격 속도 업그레이드 비용
+    public int cpCost = 100; // 치명타 확률 업그레이드 비용
     public int adIncrement = 1; // 등급별 공격력 증가량
     public float asDecrement = 0.03f; // 등급별 공속 감소량
+    public float cpIncrement = 0.05f;
 }
 
 public class UnitUpgrade : MonoBehaviour
@@ -36,11 +40,11 @@ public class UnitUpgrade : MonoBehaviour
     {
         upgradeData = new Dictionary<string, UpgradeData>
         {
-            { "Normal", new UpgradeData { adCost = 0, asCost = 100, adIncrement = 1, asDecrement = 0.02f } },
-            { "Rare", new UpgradeData { adCost = 200, asCost = 200, adIncrement = 3, asDecrement = 0.03f } },
-            { "Unique", new UpgradeData { adCost = 300, asCost = 300, adIncrement = 5, asDecrement = 0.05f } },
-            { "Legendary", new UpgradeData { adCost = 400, asCost = 400, adIncrement = 7, asDecrement = 0.075f } },
-            { "God", new UpgradeData { adCost = 500, asCost = 500, adIncrement = 10, asDecrement = 0.1f } }
+            { "Normal", new UpgradeData { adCost = 10, asCost = 10, cpCost = 10, adIncrement = 1, asDecrement = 0.02f, cpIncrement = 0.05f } },
+            { "Rare", new UpgradeData { adCost = 30, asCost = 30, cpCost = 30, adIncrement = 3, asDecrement = 0.03f, cpIncrement = 0.075f } },
+            { "Unique", new UpgradeData { adCost = 100, asCost = 100, cpCost = 100, adIncrement = 5, asDecrement = 0.05f, cpIncrement = 0.1f } },
+            { "Legendary", new UpgradeData { adCost = 300, asCost = 300, cpCost = 300, adIncrement = 7, asDecrement = 0.075f, cpIncrement = 0.15f } },
+            { "God", new UpgradeData { adCost = 500, asCost = 500, cpCost = 500, adIncrement = 10, asDecrement = 0.1f, cpIncrement = 0.25f } }
         };
     }
 
@@ -53,7 +57,7 @@ public class UnitUpgrade : MonoBehaviour
         if (GameManager.Instance.gold >= data.adCost)
         {
             GameManager.Instance.UseGold(data.adCost);
-            data.adCost += 0;
+            data.adCost += 10;
             data.adUpgradeCount++;
             data.adUpgradeValue += data.adIncrement; // 등급별 공격력 증가량 적용
 
@@ -83,6 +87,25 @@ public class UnitUpgrade : MonoBehaviour
         }
     }
 
+    // 치명타 확률 업그레이드
+    public void UpgradeCriticalProb(string grade)
+    {
+        if (!upgradeData.ContainsKey(grade)) return;
+
+        UpgradeData data = upgradeData[grade];
+        if (GameManager.Instance.gold >= data.cpCost)
+        {
+            GameManager.Instance.UseGold(data.cpCost);
+            data.cpCost += 10;
+            data.cpUpgradeCount++;
+            data.cpUpgradeValue += data.cpIncrement; // 등급별 치명타 확률 증가량 적용
+        }
+        else
+        {
+            Debug.Log("재화가 부족합니다.");
+        }
+    }
+
     // 업그레이드 데이터를 반환
     public UpgradeData GetUpgradeData(string grade)
     {
@@ -105,6 +128,10 @@ public class UnitUpgrade : MonoBehaviour
     {
         UpgradeAttackSpeed("Normal");
     }
+    public void OnNormalCPUpgradeButtonClicked()
+    {
+        UpgradeCriticalProb("Normal");
+    }
 
     // 레어
     public void OnRareADUpgradeButtonClicked()
@@ -114,6 +141,10 @@ public class UnitUpgrade : MonoBehaviour
     public void OnRareASUpgradeButtonClicked()
     {
         UpgradeAttackSpeed("Rare");
+    }
+    public void OnRareCPUpgradeButtonClicked()
+    {
+        UpgradeCriticalProb("Rare");
     }
 
     // 유니크
@@ -125,6 +156,10 @@ public class UnitUpgrade : MonoBehaviour
     {
         UpgradeAttackSpeed("Unique");
     }
+    public void OnUniqueCPUpgradeButtonClicked()
+    {
+        UpgradeCriticalProb("Unique");
+    }
 
     // 레전더리
     public void OnLegendaryADUpgradeButtonClicked()
@@ -135,6 +170,10 @@ public class UnitUpgrade : MonoBehaviour
     {
         UpgradeAttackSpeed("Legendary");
     }
+    public void OnLegendaryCPUpgradeButtonClicked()
+    {
+        UpgradeCriticalProb("Legendary");
+    }
 
     // 갓
     public void OnGodADUpgradeButtonClicked()
@@ -144,5 +183,9 @@ public class UnitUpgrade : MonoBehaviour
     public void OnGodASUpgradeButtonClicked()
     {
         UpgradeAttackSpeed("God");
+    }
+    public void OnGodCPUpgradeButtonClicked()
+    {
+        UpgradeCriticalProb("God");
     }
 }

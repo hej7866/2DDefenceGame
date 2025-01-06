@@ -29,10 +29,10 @@ public class UnitValue_Panel_UI : MonoBehaviour
 
     public void ShowUnitProb()
     {
-        normalUnitProb.text = $"{UnitSpawnManager.Instance.weights[0]}%";
-        rareUnitProb.text = $"{UnitSpawnManager.Instance.weights[1]}%";
-        uniqueUnitProb.text = $"{UnitSpawnManager.Instance.weights[2]}%";
-        legendaryUnitProb.text = $"{UnitSpawnManager.Instance.weights[3]}%";
-        godUnitProb.text = $"{UnitSpawnManager.Instance.weights[4]}%";
+        normalUnitProb.text = $"노말 {UnitSpawnManager.Instance.weights[0]}%";
+        rareUnitProb.text = $"레어 {UnitSpawnManager.Instance.weights[1]}%";
+        uniqueUnitProb.text = $"유니크 {UnitSpawnManager.Instance.weights[2]}%";
+        legendaryUnitProb.text = $"레전더리 {UnitSpawnManager.Instance.weights[3]}%";
+        godUnitProb.text = $"갓 {UnitSpawnManager.Instance.weights[4]}%";
     }
 }

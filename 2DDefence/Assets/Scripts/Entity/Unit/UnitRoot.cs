@@ -16,6 +16,14 @@ public class UnitRoot : MonoBehaviour
         }
     }
 
+    public void ApplyCriticalDamageEvent()
+    {
+        if (parentUnit != null)
+        {
+            parentUnit.ApplyCriticalDamage();
+        }
+    }
+
     public void ResetTargetEvent()
     {
         if (parentUnit != null)

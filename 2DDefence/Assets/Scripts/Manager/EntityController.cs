@@ -25,6 +25,7 @@ public class EntityController : MonoBehaviour
     public Text unitValue;
     public Text unitAd;
     public Text unitAs;
+    public Text unitCp;
     public Text adUpgradeCount;
     public Text asUpgradeCount;
 
@@ -275,9 +276,10 @@ public class EntityController : MonoBehaviour
             if (upgradeData != null)
             {
                 unitAd.text = $"공격력: {selectedUnit.attackPower + upgradeData.adUpgradeValue}";
-                adUpgradeCount.text = $"{upgradeData.adUpgradeCount}강"; // 공격력 업그레이드 횟수
+                adUpgradeCount.text = $"{upgradeData.adUpgradeCount}"; // 공격력 업그레이드 횟수
                 unitAs.text = $"공격속도: {selectedUnit.attackCooldown * upgradeData.asUpgradeValue:F2}";
-                asUpgradeCount.text = $"{upgradeData.asUpgradeCount}강"; // 공격 속도 업그레이드 횟수
+                asUpgradeCount.text = $"{upgradeData.asUpgradeCount}"; // 공격 속도 업그레이드 횟수
+                unitCp.text = $"치명타확룔: {(selectedUnit.criticalProb + upgradeData.cpUpgradeValue) * 100:F0} %";
             }
         }
         // 다중 선택

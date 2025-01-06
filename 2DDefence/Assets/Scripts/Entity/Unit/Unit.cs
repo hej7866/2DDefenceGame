@@ -13,6 +13,8 @@ public class Unit : Move
     public int attackPower = 10; // 공격력
     public float attackRange = 1.5f; // 공격 범위 / 사거리
     public float attackCooldown = 1f; // 공격속도
+    public float criticalProb = 0f; // 치명타 확률
+
     public LayerMask enemyLayer;
 
     private Animator animator;
@@ -58,6 +60,15 @@ public class Unit : Move
         }
     }
 
+    // **현재 치명타 확률**: 기본 치명타 확률 + 업그레이드 치명타 확률
+    public float CurrentCriticalProp
+    {
+        get
+        {
+            return criticalProb + UnitUpgrade.Instance.GetUpgradeData(unitValue).cpUpgradeValue;
+        }
+    }
+
     protected override void Update()
     {
         // 먼저 부모 클래스의 Update() 호출로 이동 로직 실행
@@ -92,13 +103,26 @@ public class Unit : Move
             float attackSpeedMultiplier = attackCooldown / CurrentAttackCooldown;
             animator.speed = attackSpeedMultiplier;
 
-            // 공격 애니메이션 실행
-            animator.SetTrigger("2_Attack");
+            Debug.Log($"CurrentCriticalProp: {CurrentCriticalProp}");
+
+            // 0 ~ 100 사이의 랜덤 값 생성
+            float randomValue = Random.Range(0f, 100f);
+
+            if (randomValue < CurrentCriticalProp * 100)
+            {
+                // 크리티컬 확률에 해당
+                animator.SetTrigger("2_1_CriticalAttack");
+            }
+            else
+            {
+                // 일반 공격
+                animator.SetTrigger("2_Attack");
+            }
         }
     }
 
     // 애니메이션 이벤트로 호출될 메서드
-    public void ApplyDamage()
+    public void ApplyDamage() // 일반공격
     {
         if (currentTarget == null)
         {
@@ -109,6 +133,20 @@ public class Unit : Move
         if (enemy != null)
         {
             enemy.TakeDamage(CurrentAttackPower);
+        }
+    }
+
+    public void ApplyCriticalDamage() // 크리티컬 공격
+    {
+        if (currentTarget == null)
+        {
+            return; // 공격 대상이 null이면 데미지 적용하지 않음
+        }
+
+        Enemy enemy = currentTarget.GetComponent<Enemy>();
+        if (enemy != null)
+        {
+            enemy.TakeDamage(CurrentAttackPower * 2);
         }
     }
 

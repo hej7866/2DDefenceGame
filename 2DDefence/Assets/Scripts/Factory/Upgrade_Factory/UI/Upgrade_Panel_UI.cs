@@ -26,24 +26,34 @@ public class Upgrade_Panel_UI : MonoBehaviour
     [Header("UI")]
     [SerializeField] Text normal_upgrade_ad_count_txt;
     [SerializeField] Text normal_upgrade_as_count_txt;
+    [SerializeField] Text normal_upgrade_cp_count_txt;
     [SerializeField] Text Normal_UpgradeAdCostText;
     [SerializeField] Text Normal_UpgradeAsCostText;
+    [SerializeField] Text Normal_UpgradeCpCostText;
     [SerializeField] Text rare_upgrade_ad_count_txt;
     [SerializeField] Text rare_upgrade_as_count_txt;
+    [SerializeField] Text rare_upgrade_cp_count_txt;
     [SerializeField] Text Rare_UpgradeAdCostText;
     [SerializeField] Text Rare_UpgradeAsCostText;
+    [SerializeField] Text Rare_UpgradeCpCostText;
     [SerializeField] Text unique_upgrade_ad_count_txt;
     [SerializeField] Text unique_upgrade_as_count_txt;
+    [SerializeField] Text unique_upgrade_cp_count_txt;
     [SerializeField] Text Unique_UpgradeAdCostText;
     [SerializeField] Text Unique_UpgradeAsCostText;
+    [SerializeField] Text Unique_UpgradeCpCostText;
     [SerializeField] Text legendary_upgrade_ad_count_txt;
     [SerializeField] Text legendary_upgrade_as_count_txt;
+    [SerializeField] Text legendary_upgrade_cp_count_txt;
     [SerializeField] Text Legendary_UpgradeAdCostText;
     [SerializeField] Text Legendary_UpgradeAsCostText;
+    [SerializeField] Text Legendary_UpgradeCpCostText;
     [SerializeField] Text god_upgrade_ad_count_txt;
     [SerializeField] Text god_upgrade_as_count_txt;
+    [SerializeField] Text god_upgrade_cp_count_txt;
     [SerializeField] Text God_UpgradeAdCostText;
     [SerializeField] Text God_UpgradeAsCostText;
+    [SerializeField] Text God_UpgradeCpCostText;
 
     private string currentGrade; // 현재 선택된 유닛 등급
 
@@ -73,6 +83,9 @@ public class Upgrade_Panel_UI : MonoBehaviour
 
             normal_upgrade_as_count_txt.text = $"+{data.asUpgradeCount}강";
             Normal_UpgradeAsCostText.text = $"+ {data.asCost}G";
+
+            normal_upgrade_cp_count_txt.text = $"+{data.cpUpgradeCount}강";
+            Normal_UpgradeCpCostText.text = $"+ {data.cpCost}G";
         }
         else if(currentGrade == "Rare")
         {
@@ -81,6 +94,9 @@ public class Upgrade_Panel_UI : MonoBehaviour
 
             rare_upgrade_as_count_txt.text = $"+{data.asUpgradeCount}강";
             Rare_UpgradeAsCostText.text = $"+ {data.asCost}G";
+
+            rare_upgrade_cp_count_txt.text = $"+{data.cpUpgradeCount}강";
+            Rare_UpgradeCpCostText.text = $"+ {data.cpCost}G";
         }
         else if(currentGrade == "Unique")
         {
@@ -89,6 +105,9 @@ public class Upgrade_Panel_UI : MonoBehaviour
 
             unique_upgrade_as_count_txt.text = $"+{data.asUpgradeCount}강";
             Unique_UpgradeAsCostText.text = $"+ {data.asCost}G";
+
+            unique_upgrade_cp_count_txt.text = $"+{data.cpUpgradeCount}강";
+            Unique_UpgradeCpCostText.text = $"+ {data.cpCost}G";
         }
         else if(currentGrade == "Legendary")
         {
@@ -97,6 +116,9 @@ public class Upgrade_Panel_UI : MonoBehaviour
 
             legendary_upgrade_as_count_txt.text = $"+{data.asUpgradeCount}강";
             Legendary_UpgradeAsCostText.text = $"+ {data.asCost}G";
+
+            legendary_upgrade_cp_count_txt.text = $"+{data.cpUpgradeCount}강";
+            Legendary_UpgradeCpCostText.text = $"+ {data.cpCost}G";
         }
         else if(currentGrade == "God")
         {
@@ -105,6 +127,9 @@ public class Upgrade_Panel_UI : MonoBehaviour
 
             god_upgrade_as_count_txt.text = $"+{data.asUpgradeCount}강";
             God_UpgradeAsCostText.text = $"+ {data.asCost}G";
+
+            god_upgrade_cp_count_txt.text = $"+{data.cpUpgradeCount}강";
+            God_UpgradeCpCostText.text = $"+ {data.cpCost}G";
         }
         else
         {
