@@ -3389,6 +3389,8 @@ GameObject:
   - component: {fileID: 808304149348577655}
   - component: {fileID: 1544984734402421533}
   - component: {fileID: -8182073138739090961}
+  - component: {fileID: 4725213198826828089}
+  - component: {fileID: -1053445680022165589}
   m_Layer: 5
   m_Name: LegendaryUnit03
   m_TagString: Legendary
@@ -6571,7 +6573,39 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8
-  test: 0
+  isWarrior: 0
+  isRanger: 0
+  isMagician: 1
+  isShielder: 0
+  currentTarget: {fileID: 0}
+--- !u!114 &4725213198826828089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6809790029846720163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a05c7bae1d99d42429a9e1138a9ddde0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-1053445680022165589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6809790029846720163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b93121dd2f2faa49a1640c697f4ef96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalAttackLength: 1
+  criticalAttackLength: 1
+  normalClipName: 0_Attack_Magic
+  criticalClipName: 1_Skill_Magic
 --- !u!1 &6845107331901229020
 GameObject:
   m_ObjectHideFlags: 0

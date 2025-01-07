@@ -4963,6 +4963,8 @@ GameObject:
   - component: {fileID: -1782212235032040705}
   - component: {fileID: -417495313875481423}
   - component: {fileID: 4345410813028349601}
+  - component: {fileID: 6052900996260176182}
+  - component: {fileID: -5160945991688121464}
   m_Layer: 5
   m_Name: GodUnit01
   m_TagString: God
@@ -8145,7 +8147,39 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8
-  test: 0
+  isWarrior: 1
+  isRanger: 0
+  isMagician: 0
+  isShielder: 0
+  currentTarget: {fileID: 0}
+--- !u!114 &6052900996260176182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9032279248542037338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab607511bf9638e44becdace88528de6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-5160945991688121464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9032279248542037338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b93121dd2f2faa49a1640c697f4ef96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalAttackLength: 1
+  criticalAttackLength: 1
+  normalClipName: 0_Attack_Normal
+  criticalClipName: 1_Skill_Normal
 --- !u!1 &9066989623973929966
 GameObject:
   m_ObjectHideFlags: 0

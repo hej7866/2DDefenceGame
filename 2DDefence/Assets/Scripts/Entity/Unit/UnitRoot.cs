@@ -24,6 +24,14 @@ public class UnitRoot : MonoBehaviour
         }
     }
 
+    public void ShootArrowEvent()
+    {
+        if (parentUnit != null)
+        {
+            parentUnit.ShootArrow(parentUnit.currentTarget);
+        }
+    }
+
     public void ResetTargetEvent()
     {
         if (parentUnit != null)

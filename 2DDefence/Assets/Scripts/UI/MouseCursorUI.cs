@@ -1,40 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MouseCursorUI : MonoBehaviour
 {
     private Camera mainCamera;
-    public Sprite cursorSprite;
+    public Image cursorImage;
+    private RectTransform cursorRect;
     public bool useCustomCursor = true; // 커서 변경 활성화 여부
 
+    public Vector2 cursorOffset = new Vector2(10f, -10f); // 인스펙터에서 조정 가능
 
-    private GameObject cursor; // 마우스를 따라다니는 스프라이트
+
     [SerializeField] GameObject marker;
 
     void Start()
     {
         mainCamera = Camera.main;
 
-        // Unity 커서를 숨김
-        if (useCustomCursor)
-        {
-            Cursor.visible = false; // 기본 커서를 숨김
-            Cursor.lockState = CursorLockMode.Confined; // 커서를 화면 내부로 제한 (선택 사항)
-        }
-
-        // 커서 스프라이트 생성
-        cursor = new GameObject("Cursor");
-        SpriteRenderer cursorRenderer = cursor.AddComponent<SpriteRenderer>();
-        cursorRenderer.sprite = cursorSprite;
-        cursorRenderer.sortingOrder = 10; // UI보다 위에 렌더링되도록 설정
+        // 하드웨어 커서 숨기기
+        Cursor.visible = false;
+        cursorRect = cursorImage.GetComponent<RectTransform>();
     }
 
     void Update()
     {
-        // 마우스 위치에 커서 스프라이트를 따라가게 설정
-        Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        cursor.transform.position = new Vector3(mousePosition.x + 0.25f, mousePosition.y - 0.3f, 0f); // +0.25f, - 0.3f => 세부 위치 조정
+        Vector2 pos;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            cursorRect.parent as RectTransform, 
+            Input.mousePosition, 
+            null, 
+            out pos
+        );
+        cursorRect.localPosition = pos + cursorOffset;
 
         // 우클릭하면 마커를 표시
         if (Input.GetMouseButtonDown(1))

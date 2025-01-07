@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using Unity.VisualScripting;
+using UnityEditor.ShaderGraph.Internal;
+
 
 public class Unit : Move
 {
@@ -25,11 +27,19 @@ public class Unit : Move
 
     private float lastAttackTime = 0f;
 
-    
+    [Header("직업")]
+    public bool isWarrior = false;
+    public bool isRanger = false;
+    public bool isMagician = false;
+    public bool isShielder = false;
+    private Warrior warrior;
+    private Ranger ranger;
+    private Magician magician;
+    private Shielder shielder;
 
+    private float targetSearchInterval = 0.1f; // 적 탐색 주기
+    private float lastTargetSearchTime = 0f; // 마지막 탐색 시간
 
-    //test
-    public bool test = false;
 
     void Awake()
     {
@@ -40,6 +50,11 @@ public class Unit : Move
     {
         animator = GetComponentInChildren<Animator>();
         lineRenderer = GetComponentInChildren<LineRenderer>();
+
+        if(isWarrior) warrior = GetComponent<Warrior>();
+        else if(isRanger) ranger = GetComponent<Ranger>();
+        else if(isMagician) magician = GetComponent<Magician>();
+        else if(isShielder) shielder = GetComponent<Shielder>();
     }
 
     // **현재 공격력**: 기본 공격력 + 업그레이드 공격력
@@ -69,26 +84,35 @@ public class Unit : Move
         }
     }
 
+
+
     protected override void Update()
     {
-        // 먼저 부모 클래스의 Update() 호출로 이동 로직 실행
-        base.Update();  
-        animator.SetBool("1_Move",isMoving); // 이동 애니메이션 구현
-    
-        // 이후 공격 로직 실행
-        if (Time.time >= lastAttackTime + CurrentAttackCooldown)
+        base.Update();
+        animator.SetBool("1_Move", isMoving); // 이동 애니메이션 구현
+
+        // 일정 간격으로 적 탐색
+        if (Time.time >= lastTargetSearchTime + targetSearchInterval) // 0.1 초마다 탐색
         {
+            lastTargetSearchTime = Time.time;
+
             Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, attackRange, enemyLayer);
-            if (hits.Length > 0)
+            GameObject target = GetClosestTarget(hits);
+            if (target != null)
             {
-                // 첫 번째로 감지된 적 공격
-                AttackTarget(hits[0].gameObject);
-                lastAttackTime = Time.time;
+                currentTarget = target;
             }
+        }
+
+        // 공격 로직
+        if (!isMoving && currentTarget != null && Time.time >= lastAttackTime + CurrentAttackCooldown)
+        {
+            lastAttackTime = Time.time;
+            AttackTarget(currentTarget);
         }
     }
 
-    private GameObject currentTarget; // 현재 공격 대상
+    public GameObject currentTarget; // 현재 공격 대상
     private void AttackTarget(GameObject enemyObj)
     {
         if (enemyObj != null && !isMoving)
@@ -99,30 +123,61 @@ public class Unit : Move
             // 적 위치에 따라 방향 전환
             FaceTarget(enemyObj.transform.position);
 
-            // 애니메이션 재생 속도 조절
-            float attackSpeedMultiplier = attackCooldown / CurrentAttackCooldown;
-            animator.speed = attackSpeedMultiplier;
+            // 공격 애니메이션 실행
+            PlayAttackAnimation();
 
             Debug.Log($"CurrentCriticalProp: {CurrentCriticalProp}");
-
-            // 0 ~ 100 사이의 랜덤 값 생성
-            float randomValue = Random.Range(0f, 100f);
-
-            if (randomValue < CurrentCriticalProp)
-            {
-                // 크리티컬 확률에 해당
-                animator.SetTrigger("2_1_CriticalAttack");
-            }
-            else
-            {
-                // 일반 공격
-                animator.SetTrigger("2_Attack");
-            }
         }
     }
 
-    // 애니메이션 이벤트로 호출될 메서드
-    public void ApplyDamage() // 일반공격
+    private GameObject GetClosestTarget(Collider2D[] hits)
+    {
+        float minDistance = float.MaxValue;
+        GameObject closestTarget = null;
+
+        foreach (Collider2D hit in hits)
+        {
+            float distance = Vector2.Distance(transform.position, hit.transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                closestTarget = hit.gameObject;
+            }
+        }
+        return closestTarget;
+    }
+
+
+    private void PlayAttackAnimation()
+    {
+        float randomValue = Random.Range(0f, 100f);
+        // 공격 속도 설정
+        if (randomValue < CurrentCriticalProp)
+        {
+            animator.SetFloat("AttackSpeedMultiplier", AnimationLengthFetcher.Instance.criticalAttackLength / CurrentAttackCooldown);
+        }
+        else
+        {
+            animator.SetFloat("AttackSpeedMultiplier", AnimationLengthFetcher.Instance.normalAttackLength / CurrentAttackCooldown);
+        }
+
+        // 크리티컬 여부에 따라 애니메이션 트리거 설정
+        if (randomValue < CurrentCriticalProp)
+        {
+            // 크리티컬 공격
+            animator.SetTrigger("2_1_CriticalAttack");
+        }
+        else
+        {
+            // 일반 공격
+            animator.SetTrigger("2_Attack");
+        }
+    }
+
+
+
+   // 애니메이션 이벤트로 호출될 메서드
+    public void ApplyDamage() // 근접직업 일반공격
     {
         if (currentTarget == null)
         {
@@ -136,7 +191,7 @@ public class Unit : Move
         }
     }
 
-    public void ApplyCriticalDamage() // 크리티컬 공격
+    public void ApplyCriticalDamage() // 근접직업 크리티컬 공격
     {
         if (currentTarget == null)
         {
@@ -147,6 +202,30 @@ public class Unit : Move
         if (enemy != null)
         {
             enemy.TakeDamage(CurrentAttackPower * 2);
+        }
+    }
+
+    public void ShootArrow(GameObject enemyObj)
+    {
+        if (ranger.arrowPrefab != null)
+        {
+            // 화살 생성
+            GameObject arrow = Instantiate(ranger.arrowPrefab, transform.position, Quaternion.identity);
+
+            // 화살 초기화
+            Arrow arrowScript = arrow.GetComponent<Arrow>();
+            if (arrowScript != null)
+            {
+                int damage = animator.GetCurrentAnimatorStateInfo(0).IsName("2_1_CriticalAttack")
+                    ? CurrentAttackPower * 2 // 크리티컬 데미지
+                    : CurrentAttackPower;   // 일반 데미지
+
+                arrowScript.Initialize(enemyObj.transform, damage);
+            }
+        }
+        else
+        {
+            Debug.LogError("ArrowPrefab 또는 ArrowSpawnPoint가 설정되지 않았습니다.");
         }
     }
 

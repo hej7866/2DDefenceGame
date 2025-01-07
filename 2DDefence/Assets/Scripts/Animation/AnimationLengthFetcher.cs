@@ -7,8 +7,10 @@ public class AnimationLengthFetcher : MonoBehaviour
     public static AnimationLengthFetcher Instance;
 
     private Animator animator;
-    public float animationLength = 1.0f;
-    public string clipName;
+    public float normalAttackLength = 1.0f;
+    public float criticalAttackLength = 1.0f;
+    public string normalClipName;
+    public string criticalClipName;
 
     void Awake()
     {
@@ -19,7 +21,8 @@ public class AnimationLengthFetcher : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         // 현재 재생 중인 애니메이션의 길이 가져오기
-        animationLength = GetAnimationLength(clipName); // 애니메이션 클립 이름 입력
+        normalAttackLength = GetAnimationLength(normalClipName); // 애니메이션 클립 이름 입력
+        criticalAttackLength = GetAnimationLength(criticalClipName);
     }
 
     private float GetAnimationLength(string clipName)

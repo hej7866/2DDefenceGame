@@ -32,7 +32,7 @@ public class Spirit : Move
     {
         if (collision.CompareTag("MoneyPortal"))
         {
-            GameManager.Instance.AddGold(100); // 돈 추가
+            GameManager.Instance.AddGold(10000); // 돈 추가
             Destroy(gameObject);
         }
         else if (collision.CompareTag("UnitPortal"))

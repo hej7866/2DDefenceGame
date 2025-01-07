@@ -3962,6 +3962,8 @@ GameObject:
   - component: {fileID: 735379449172691500}
   - component: {fileID: 2080950942810931277}
   - component: {fileID: 7045531228761872842}
+  - component: {fileID: 7395149181798957295}
+  - component: {fileID: 8734375756560195710}
   m_Layer: 5
   m_Name: RareUnit04
   m_TagString: Rare
@@ -7100,10 +7102,43 @@ MonoBehaviour:
   attackPower: 1
   attackRange: 2
   attackCooldown: 1
+  criticalProb: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8
-  test: 0
+  isWarrior: 0
+  isRanger: 0
+  isMagician: 0
+  isShielder: 1
+  currentTarget: {fileID: 0}
+--- !u!114 &7395149181798957295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7278318896852410138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbcb331ee39d24941a75c7bfd9892917, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8734375756560195710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7278318896852410138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b93121dd2f2faa49a1640c697f4ef96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalAttackLength: 1
+  criticalAttackLength: 1
+  normalClipName: 0_Attack_Normal
+  criticalClipName: 1_Skill_Normal
 --- !u!1 &7278320219490301844
 GameObject:
   m_ObjectHideFlags: 0

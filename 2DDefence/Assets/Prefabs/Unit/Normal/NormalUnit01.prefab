@@ -1617,6 +1617,7 @@ GameObject:
   - component: {fileID: 2731638934654911818}
   - component: {fileID: -8249268495463329847}
   - component: {fileID: -2384755211660580595}
+  - component: {fileID: 3980892230610238162}
   - component: {fileID: 9006048954659929255}
   m_Layer: 5
   m_Name: NormalUnit01
@@ -4705,12 +4706,28 @@ MonoBehaviour:
   unitValue: Normal
   attackPower: 15
   attackRange: 2
-  attackCooldown: 1.5
+  attackCooldown: 1
   criticalProb: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8
-  test: 0
+  isWarrior: 1
+  isRanger: 0
+  isMagician: 0
+  isShielder: 0
+  currentTarget: {fileID: 0}
+--- !u!114 &3980892230610238162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960770182142683616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab607511bf9638e44becdace88528de6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &9006048954659929255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4723,8 +4740,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b93121dd2f2faa49a1640c697f4ef96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationLength: 1
-  clipName: 0_Attack_Normal
+  normalAttackLength: 1
+  criticalAttackLength: 1
+  normalClipName: 0_Attack_Normal
+  criticalClipName: 1_Skill_Normal
 --- !u!1 &2013773059107689656
 GameObject:
   m_ObjectHideFlags: 0
