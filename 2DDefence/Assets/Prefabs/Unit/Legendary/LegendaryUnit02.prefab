@@ -4851,6 +4851,7 @@ GameObject:
   - component: {fileID: 3646488098778080225}
   - component: {fileID: 308159158910753796}
   - component: {fileID: 1312617898572541395}
+  - component: {fileID: 5232182928628352729}
   m_Layer: 5
   m_Name: LegendaryUnit02
   m_TagString: Legendary
@@ -8007,6 +8008,7 @@ MonoBehaviour:
   isRanger: 1
   isMagician: 0
   isShielder: 0
+  skillAttackMultiplier: 1
   currentTarget: {fileID: 0}
 --- !u!114 &308159158910753796
 MonoBehaviour:
@@ -8037,6 +8039,21 @@ MonoBehaviour:
   criticalAttackLength: 1
   normalClipName: 0_Attack_Bow
   criticalClipName: 1_Skill_Bow
+--- !u!114 &5232182928628352729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8684223511394290062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82ae9c35a19d04498df799b6110a889, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxMana: 10
+  currMana: 0
+  chargeMana: 5
 --- !u!1 &8714893644501529904
 GameObject:
   m_ObjectHideFlags: 0

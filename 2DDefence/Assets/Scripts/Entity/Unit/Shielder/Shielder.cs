@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shielder : MonoBehaviour
+public class Shielder : UnitClass
 {
     // Start is called before the first frame update
     void Start()

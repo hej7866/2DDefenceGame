@@ -84,8 +84,6 @@ public class GameManager : MonoBehaviour
             {
                 waveTimerText.text = FormatTime(initialWaitTime - elapsedTime);
             }
-
-            Debug.Log($"[게임 시작 대기] 남은 시간: {initialWaitTime - elapsedTime:F1}초");
             elapsedTime += 1f;
             yield return new WaitForSeconds(1f);
         }

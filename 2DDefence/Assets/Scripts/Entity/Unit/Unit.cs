@@ -41,6 +41,10 @@ public class Unit : Move
     private float lastTargetSearchTime = 0f; // 마지막 탐색 시간
 
 
+    // 액티브
+    private ManaSystem manaSystem;
+
+
     void Awake()
     {
         Instance = this;
@@ -50,6 +54,7 @@ public class Unit : Move
     {
         animator = GetComponentInChildren<Animator>();
         lineRenderer = GetComponentInChildren<LineRenderer>();
+        manaSystem = GetComponent<ManaSystem>();
 
         if(isWarrior) warrior = GetComponent<Warrior>();
         else if(isRanger) ranger = GetComponent<Ranger>();
@@ -57,21 +62,25 @@ public class Unit : Move
         else if(isShielder) shielder = GetComponent<Shielder>();
     }
 
-    // **현재 공격력**: 기본 공격력 + 업그레이드 공격력
+    // **현재 공격력**: (기본 공격력 + 업그레이드 공격력)
+    // **현재 공격력(패시브 활성화시)**: (기본 공격력 + 업그레이드 공격력) * 패시브 스킬 배수
+    public int AttackPowerMultiplier = 1;
     public int CurrentAttackPower
     {
         get
         {
-            return attackPower + UnitUpgrade.Instance.GetUpgradeData(unitValue).adUpgradeValue;
+            return (attackPower + UnitUpgrade.Instance.GetUpgradeData(unitValue).adUpgradeValue) * AttackPowerMultiplier;
         }
     }
 
     // **현재 공격 속도**: 기본 공격 속도 * 업그레이드 공속 계수
+    // **현재 공격 속도(패시브 활성화시)**: (기본 공격속도 * 업그레이드 공격계수) * 스킬배수
+    public float AttackCooldownMultiplier = 1f;
     public float CurrentAttackCooldown
     {
         get
         {
-            return attackCooldown * UnitUpgrade.Instance.GetUpgradeData(unitValue).asUpgradeValue;
+            return (attackCooldown * UnitUpgrade.Instance.GetUpgradeData(unitValue).asUpgradeValue) * AttackCooldownMultiplier;
         }
     }
 
@@ -90,6 +99,8 @@ public class Unit : Move
     {
         base.Update();
         animator.SetBool("1_Move", isMoving); // 이동 애니메이션 구현
+
+        OnPassiveSkill();
 
         // 일정 간격으로 적 탐색
         if (Time.time >= lastTargetSearchTime + targetSearchInterval) // 0.1 초마다 탐색
@@ -179,6 +190,7 @@ public class Unit : Move
    // 애니메이션 이벤트로 호출될 메서드
     public void ApplyDamage() // 근접직업 일반공격
     {
+        manaSystem.currMana += manaSystem.chargeMana;
         if (currentTarget == null)
         {
             return; // 공격 대상이 null이면 데미지 적용하지 않음
@@ -191,8 +203,11 @@ public class Unit : Move
         }
     }
 
+    [Header("크리티컬 데미지 배율")]
+    public float criticalValue = 2f;
     public void ApplyCriticalDamage() // 근접직업 크리티컬 공격
     {
+        manaSystem.currMana += manaSystem.chargeMana;
         if (currentTarget == null)
         {
             return; // 공격 대상이 null이면 데미지 적용하지 않음
@@ -201,12 +216,13 @@ public class Unit : Move
         Enemy enemy = currentTarget.GetComponent<Enemy>();
         if (enemy != null)
         {
-            enemy.TakeDamage(CurrentAttackPower * 2);
+            enemy.TakeDamage(CurrentAttackPower * criticalValue);
         }
     }
 
     public void ShootArrow(GameObject enemyObj)
     {
+        manaSystem.currMana += manaSystem.chargeMana;
         if (ranger.arrowPrefab != null)
         {
             // 화살 생성
@@ -216,10 +232,10 @@ public class Unit : Move
             Arrow arrowScript = arrow.GetComponent<Arrow>();
             if (arrowScript != null)
             {
-                int damage = animator.GetCurrentAnimatorStateInfo(0).IsName("2_1_CriticalAttack")
-                    ? CurrentAttackPower * 2 // 크리티컬 데미지
+                float damage = animator.GetCurrentAnimatorStateInfo(0).IsName("CRITICAL_ATTACK")
+                    ? CurrentAttackPower * criticalValue // 크리티컬 데미지
                     : CurrentAttackPower;   // 일반 데미지
-
+                Debug.Log(damage);
                 arrowScript.Initialize(enemyObj.transform, damage);
             }
         }
@@ -248,6 +264,26 @@ public class Unit : Move
             scale.x = Mathf.Abs(scale.x); 
         }
         transform.localScale = scale;
+    }
+
+    // 패시브 스킬 활성화
+    private void OnPassiveSkill()
+    {
+        if(SkillManager.Instance.skill_01) 
+        {
+            SkillManager.Instance.P_Skill_01(this);
+            SkillManager.Instance.P_Skill_UI();
+        }
+        if(SkillManager.Instance.skill_02)
+        {
+            SkillManager.Instance.P_Skill_02(this);
+            SkillManager.Instance.P_Skill_UI();
+        }
+        if(SkillManager.Instance.skill_03)
+        {
+            SkillManager.Instance.P_Skill_03(this);
+            SkillManager.Instance.P_Skill_UI();
+        } 
     }
 
     public void Select()

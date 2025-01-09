@@ -4407,6 +4407,7 @@ GameObject:
   - component: {fileID: 132901023153392471}
   - component: {fileID: -5769821181275689258}
   - component: {fileID: -5420285736652341099}
+  - component: {fileID: -6627220845412072971}
   m_Layer: 5
   m_Name: UniqueUnit03
   m_TagString: Unique
@@ -7563,6 +7564,7 @@ MonoBehaviour:
   isRanger: 0
   isMagician: 1
   isShielder: 0
+  skillAttackMultiplier: 1
   currentTarget: {fileID: 0}
 --- !u!114 &-5769821181275689258
 MonoBehaviour:
@@ -7592,6 +7594,21 @@ MonoBehaviour:
   criticalAttackLength: 1
   normalClipName: 0_Attack_Magic
   criticalClipName: 1_Skill_Magic
+--- !u!114 &-6627220845412072971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7596635353890577545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82ae9c35a19d04498df799b6110a889, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxMana: 10
+  currMana: 0
+  chargeMana: 5
 --- !u!1 &7709303187886370017
 GameObject:
   m_ObjectHideFlags: 0

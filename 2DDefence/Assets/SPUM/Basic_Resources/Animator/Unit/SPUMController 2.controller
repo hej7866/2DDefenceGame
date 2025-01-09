@@ -114,7 +114,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CRITICALATTACK
+  m_Name: CRITICAL_ATTACK
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -395,7 +395,7 @@ AnimatorStateMachine:
     m_Position: {x: 75, y: -175, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5779537851392380381}
-    m_Position: {x: 40, y: -450, z: 0}
+    m_Position: {x: 40, y: -440, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: -4357998962004084726}

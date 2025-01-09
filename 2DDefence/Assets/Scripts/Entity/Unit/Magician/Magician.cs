@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Magician : MonoBehaviour
+public class Magician : UnitClass
 {
     // Start is called before the first frame update
     void Start()

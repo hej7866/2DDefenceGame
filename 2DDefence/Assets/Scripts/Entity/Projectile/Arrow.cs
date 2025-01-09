@@ -1,13 +1,14 @@
 using UnityEngine;
 
+
 public class Arrow : MonoBehaviour
 {
-    public float speed = 50f; // 화살의 이동 속도
+    public float speed = 10f; // 화살의 이동 속도
     private Transform target; // 목표 대상
-    private int damage; // 화살 데미지
+    private float damage; // 화살 데미지
 
     // 화살 초기화
-    public void Initialize(Transform target, int damage)
+    public void Initialize(Transform target, float damage)
     {
         this.target = target;
         this.damage = damage;

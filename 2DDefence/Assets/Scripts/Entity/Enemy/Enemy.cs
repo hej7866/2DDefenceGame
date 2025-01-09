@@ -74,10 +74,11 @@ public class Enemy : MonoBehaviour
         EnemyArmor(currentWave);
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         currentHealth -= damage/armor;
         Debug.Log($"적이 {damage/armor}만큼 데미지를 받았다");
+
         if (currentHealth < 0) currentHealth = 0; // 체력이 0보다 내려가지 않도록 보정
 
         UpdateHealthBar(); // 체력바 갱신

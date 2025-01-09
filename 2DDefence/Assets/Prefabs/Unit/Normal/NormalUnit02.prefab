@@ -2593,6 +2593,7 @@ GameObject:
   - component: {fileID: 4078590428793829159}
   - component: {fileID: 861880441153998899}
   - component: {fileID: -1770386086210779104}
+  - component: {fileID: -4235492468246859562}
   m_Layer: 5
   m_Name: NormalUnit02
   m_TagString: Normal
@@ -5689,7 +5690,10 @@ MonoBehaviour:
   isRanger: 1
   isMagician: 0
   isShielder: 0
+  AttackPowerMultiplier: 1
+  AttackCooldownMultiplier: 1
   currentTarget: {fileID: 0}
+  criticalValue: 2
 --- !u!114 &861880441153998899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5703,6 +5707,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowPrefab: {fileID: 7051063880171958710, guid: 3abb28f61be7ac14e887baefda23f5b9, type: 3}
+  skillArrowPrefab: {fileID: 4118627563225771851, guid: 19f2adfef8d45154694f001bf348e04f, type: 3}
 --- !u!114 &-1770386086210779104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5719,6 +5724,21 @@ MonoBehaviour:
   criticalAttackLength: 1
   normalClipName: 0_Attack_Bow
   criticalClipName: 1_Skill_Bow
+--- !u!114 &-4235492468246859562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4802905096647840942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82ae9c35a19d04498df799b6110a889, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxMana: 50
+  currMana: 0
+  chargeMana: 2
 --- !u!1 &5179892668800440455
 GameObject:
   m_ObjectHideFlags: 0

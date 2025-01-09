@@ -7,6 +7,8 @@ using UnityEngine.EventSystems; // 추가: UI 클릭 감지를 위해 필요
 
 public class EntityController : MonoBehaviour
 {
+    public static EntityController Instance;
+
     private Camera mainCamera;
 
     // 선택 관리
@@ -34,6 +36,10 @@ public class EntityController : MonoBehaviour
     public Transform unitGridParent; // 유닛 아이콘의 부모 Transform
 
 
+    void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
@@ -255,7 +261,7 @@ public class EntityController : MonoBehaviour
     }
 
     // UI 업데이트 메서드
-   private void UpdateSelectionUI()
+    public void UpdateSelectionUI()
     {
         // 단일 선택
         if (selectedUnits.Count == 1)
@@ -275,11 +281,11 @@ public class EntityController : MonoBehaviour
 
             if (upgradeData != null)
             {
-                unitAd.text = $"공격력: {selectedUnit.attackPower + upgradeData.adUpgradeValue}";
+                unitAd.text = $"공격력: {selectedUnit.CurrentAttackPower}";
                 adUpgradeCount.text = $"{upgradeData.adUpgradeCount}"; // 공격력 업그레이드 횟수
-                unitAs.text = $"공격속도: {selectedUnit.attackCooldown * upgradeData.asUpgradeValue:F2}";
+                unitAs.text = $"공격속도: {selectedUnit.CurrentAttackCooldown:F2}";
                 asUpgradeCount.text = $"{upgradeData.asUpgradeCount}"; // 공격 속도 업그레이드 횟수
-                unitCp.text = $"치명타확룔: {(selectedUnit.criticalProb + upgradeData.cpUpgradeValue) * 100:F0} %";
+                unitCp.text = $"치명타확룔: {(selectedUnit.CurrentCriticalProp):F0} %";
             }
         }
         // 다중 선택
