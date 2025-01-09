@@ -190,7 +190,7 @@ public class Unit : Move
    // 애니메이션 이벤트로 호출될 메서드
     public void ApplyDamage() // 근접직업 일반공격
     {
-        manaSystem.currMana += manaSystem.chargeMana;
+        manaSystem.AddMana(manaSystem.chargeMana);
         if (currentTarget == null)
         {
             return; // 공격 대상이 null이면 데미지 적용하지 않음
@@ -207,7 +207,7 @@ public class Unit : Move
     public float criticalValue = 2f;
     public void ApplyCriticalDamage() // 근접직업 크리티컬 공격
     {
-        manaSystem.currMana += manaSystem.chargeMana;
+        manaSystem.AddMana(manaSystem.chargeMana);
         if (currentTarget == null)
         {
             return; // 공격 대상이 null이면 데미지 적용하지 않음
@@ -222,7 +222,7 @@ public class Unit : Move
 
     public void ShootArrow(GameObject enemyObj)
     {
-        manaSystem.currMana += manaSystem.chargeMana;
+        manaSystem.AddMana(manaSystem.chargeMana);
         if (ranger.arrowPrefab != null)
         {
             // 화살 생성

@@ -36,6 +36,13 @@ public class SkillManager : MonoBehaviour
         Instance = this;
     }
 
+    public void OnPassiveSkill(int SkillNumber)
+    {
+        if(SkillNumber == 1) skill_01 = true;
+        if(SkillNumber == 2) skill_02 = true;
+        if(SkillNumber == 3) skill_03 = true;
+    }
+
     public void P_Skill_UI()
     {
         if(skill_01) p_skill_01.sprite = p_skill_01_icon;
@@ -75,7 +82,7 @@ public class SkillManager : MonoBehaviour
     
 
     // 액티브 스킬(마나가 풀 차징이 됐을때 나가는 스킬)
-    public void A_Skill_01(Unit unit)
+    public void A_Skill_01(Unit unit) // 전사 스킬
     {
 
     }
@@ -98,4 +105,9 @@ public class SkillManager : MonoBehaviour
         }
     }
     
+    // 디버프 스킬(마나가 풀 차징이 됐을때 나가는 스킬)
+    public void D_Skill_04(Unit unit)
+    {
+        
+    }
 }

@@ -76,18 +76,24 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        currentHealth -= damage/armor;
-        Debug.Log($"적이 {damage/armor}만큼 데미지를 받았다");
+        currentHealth -= damage / armor;
+        Debug.Log($"적이 {damage / armor}만큼 데미지를 받았다");
 
         if (currentHealth < 0) currentHealth = 0; // 체력이 0보다 내려가지 않도록 보정
 
         UpdateHealthBar(); // 체력바 갱신
+
+        // 적 머리 위에 데미지 텍스트 표시
+        // 적 머리 위에 데미지 텍스트 표시
+        Vector3 uiPosition = transform.position + Vector3.up * 0.5f; // 적 머리 위 위치
+        DamageUI.Instance.ShowDamage(uiPosition, (int)(damage / armor));
 
         if (currentHealth <= 0)
         {
             Die();
         }
     }
+
 
     protected void UpdateHealthBar()
     {
