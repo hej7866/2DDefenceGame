@@ -18,18 +18,19 @@ public class ManaSystem : MonoBehaviour
 
     void Update()
     {
-        if(skillCharged)
-        {
-            UseActiveSkill();
-        }
+        
     }
 
-    void UseActiveSkill()
+    public void UseActiveSkill(bool SkillCharged)
     {
-        if(unit.isRanger) SkillManager.Instance.A_Skill_02(unit);
-        if(unit.isShielder) SkillManager.Instance.D_Skill_04(unit);
-        currMana = 0;
-        skillCharged = false;
+        if(skillCharged)
+        {
+            if(unit.isRanger) SkillManager.Instance.A_Skill_02(unit);
+            if(unit.isMagician) SkillManager.Instance.A_Skill_03(unit);
+            if(unit.isShielder) SkillManager.Instance.D_Skill_04(unit);
+            currMana = 0;
+            skillCharged = false;
+        }        
     }
 
     public void AddMana(int amount)

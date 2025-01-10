@@ -8012,8 +8012,10 @@ MonoBehaviour:
   isRanger: 0
   isMagician: 1
   isShielder: 0
-  skillAttackMultiplier: 1
+  AttackPowerMultiplier: 1
+  AttackCooldownMultiplier: 1
   currentTarget: {fileID: 0}
+  criticalValue: 2
 --- !u!114 &-7751767021749198902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8026,6 +8028,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a05c7bae1d99d42429a9e1138a9ddde0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fireFoolingPrefab: {fileID: 8373238645736452524, guid: b9a6409f5f64fff49b6012422eb92a0f, type: 3}
 --- !u!114 &5705360130544972355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8054,9 +8057,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a82ae9c35a19d04498df799b6110a889, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxMana: 10
+  maxMana: 100
   currMana: 0
   chargeMana: 5
+  skillCharged: 0
 --- !u!1 &9073974344956233362
 GameObject:
   m_ObjectHideFlags: 0

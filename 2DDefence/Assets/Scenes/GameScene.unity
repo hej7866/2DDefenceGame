@@ -23490,7 +23490,21 @@ MonoBehaviour:
     skillIcon: {fileID: 21300000, guid: 6d81d4b9e399b4f428c7d0198533d54d, type: 3}
     skillType: 2
     SkillNumber: 2
-  debuffSkills: []
+  - skillName: "\uBD88\uD0C0\uB294 \uC7A5\uD310"
+    skillDescription: "\uC801\uC758 \uC704\uCE58\uC5D0 \uACF5\uACA9\uB825\uC758 50%\uC5D0
+      \uD574\uB2F9\uD558\uB294 \uD53C\uD574\uB97C 0.3\uCD08\uB9C8\uB2E4 \uC8FC\uB294
+      \uBD88\uC7A5\uD310\uC744 \uC0DD\uC131\uD55C\uB2E4"
+    skillIcon: {fileID: -2037835936, guid: 67d6344c1f64ce74bb6e9a3333d7a915, type: 3}
+    skillType: 2
+    SkillNumber: 3
+  debuffSkills:
+  - skillName: "\uC9C4\uACA9\uC744 \uB9C9\uC544\uC11C\uB294 \uBC29\uD328"
+    skillDescription: "\uBC29\uD328\uB85C \uC801\uC758 \uC9C4\uACA9\uC744 \uB9C9\uC544\uB0B4\uB294
+      \uACF5\uACA9\uC744 \uC2DC\uC804\uD558\uBA70 \uC801\uC758 \uC774\uB3D9\uC18D\uB3C4\uB97C
+      \uAC10\uC18C\uC2DC\uD0A8\uB2E4."
+    skillIcon: {fileID: 21300000, guid: 2fe8d8b16255ee949b84d5be909a4dd6, type: 3}
+    skillType: 1
+    SkillNumber: 4
 --- !u!1 &1974161486
 GameObject:
   m_ObjectHideFlags: 0

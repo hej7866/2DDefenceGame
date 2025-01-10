@@ -186,8 +186,16 @@ public class Unit : Move
     }
 
 
+    /*
+    * 공격은 일반상태일때는 기본공격이 실행되나 스킬차징상태일때는 기본공격 + 액티브 스킬이 묻어서 나가는 방식이다
+    * 예를 들면 궁수는 강화된 화살을 쏜다던지, 스킬이 차징된 방패병의 평타를 맞으면 슬로우에 걸린다던지 하는 방식이다.
+    * 스킬의 차징상태는 ManaSystem 스크립트에서 관리하며 bool 변수인 skillCharged의 상태에 따라 결정된다. 
+    */
 
-   // 애니메이션 이벤트로 호출될 메서드
+
+    /// <summary>
+    /// 근접 공격 유닛들 공격로직 
+    /// </summary>
     public void ApplyDamage() // 근접직업 일반공격
     {
         manaSystem.AddMana(manaSystem.chargeMana);
@@ -197,9 +205,14 @@ public class Unit : Move
         }
 
         Enemy enemy = currentTarget.GetComponent<Enemy>();
-        if (enemy != null)
+        if (enemy != null && !manaSystem.skillCharged) // 스킬 차징 상태가 아니라면 일반공격
         {
             enemy.TakeDamage(CurrentAttackPower);
+        }
+        else if(enemy != null && manaSystem.skillCharged) // 스킬 차징 상태라면 액티브 스킬 발동
+        {
+            enemy.TakeDamage(CurrentAttackPower);
+            manaSystem.UseActiveSkill(manaSystem.skillCharged);
         }
     }
 
@@ -214,15 +227,29 @@ public class Unit : Move
         }
 
         Enemy enemy = currentTarget.GetComponent<Enemy>();
-        if (enemy != null)
+        if (enemy != null && !manaSystem.skillCharged) // 스킬 차징 상태가 아니라면 일반공격
         {
             enemy.TakeDamage(CurrentAttackPower * criticalValue);
         }
+        else if(enemy != null && manaSystem.skillCharged) // 스킬 차징 상태라면 액티브 스킬 발동
+        {
+            enemy.TakeDamage(CurrentAttackPower * criticalValue);
+            manaSystem.UseActiveSkill(manaSystem.skillCharged);
+        }
     }
 
-    public void ShootArrow(GameObject enemyObj)
+    /// <summary>
+    ///  궁수 공격로직
+    /// </summary>
+    public void ShootArrow(GameObject enemyObj) // 궁수의 공격로직을 담당
     {
         manaSystem.AddMana(manaSystem.chargeMana);
+        if(!manaSystem.skillCharged) BasicRangerAttack(enemyObj); // 평소엔 기본 궁수 공격
+        else if(manaSystem.skillCharged) manaSystem.UseActiveSkill(manaSystem.skillCharged); // 스킬이 차징되었을땐 엑티브 스킬 발동
+    }
+
+    private void BasicRangerAttack(GameObject enemyObj) // 기본 궁수 공격
+    {
         if (ranger.arrowPrefab != null)
         {
             // 화살 생성

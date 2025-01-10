@@ -21,7 +21,10 @@ public class SkillSlot : MonoBehaviour
         skillIcon.sprite = skill.skillIcon;
 
         // 버튼 클릭 이벤트에 스킬 활성화 로직 연결
-        activateButton.onClick.AddListener(() => OnPassive());
+        if(skill.skillType == SkillType.Passive)
+        {
+            activateButton.onClick.AddListener(() => OnPassive());
+        }
     }
 
     // 버튼이 눌렸을 때 실행되는 스킬 활성화 로직

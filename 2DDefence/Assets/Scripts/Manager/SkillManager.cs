@@ -104,10 +104,30 @@ public class SkillManager : MonoBehaviour
             }
         }
     }
+
+    public void A_Skill_03(Unit unit) // 마법사 스킬
+    {
+        Magician magician = unit.GetComponent<Magician>();
+        if (magician.fireFoolingPrefab != null)
+        {
+            
+            // 불 장판 생성 (월드 좌표)
+            Vector3 fireFlooringPosition = unit.currentTarget.transform.position; // 적의 현재 위치
+            GameObject fireFlooring = Instantiate(magician.fireFoolingPrefab, fireFlooringPosition, Quaternion.identity); // 월드 좌표에 생성
+            // 불 장판 초기화
+            FireFlooring fireFlooringScript = fireFlooring.GetComponent<FireFlooring>();
+            if (fireFlooringScript != null)
+            {
+                fireFlooringScript.fireFlooringDamage = unit.CurrentAttackPower * 0.5f; // 데미지 설정
+            }
+
+        }
+    }
+
     
     // 디버프 스킬(마나가 풀 차징이 됐을때 나가는 스킬)
     public void D_Skill_04(Unit unit)
     {
-        
+        Enemy.Instance.ApplySlow(2f, 5f);
     }
 }

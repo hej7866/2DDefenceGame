@@ -293,9 +293,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b61d1b5cd14956f4e9949abac14e6636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillIcon: {fileID: 810518891302347740}
   skillName: {fileID: 810518891567259339}
   skillDescription: {fileID: 810518891388852089}
+  skillIcon: {fileID: 810518891302347740}
+  activateButton: {fileID: 0}
 --- !u!1 &810518891302347742
 GameObject:
   m_ObjectHideFlags: 0
@@ -488,7 +489,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 5, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 240, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &810518891567259338
 CanvasRenderer:

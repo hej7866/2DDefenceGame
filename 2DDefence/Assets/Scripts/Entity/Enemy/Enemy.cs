@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UI; // Slider 사용을 위해 필요
+using System.Collections;
 
 public class Enemy : MonoBehaviour
 {
@@ -17,11 +18,16 @@ public class Enemy : MonoBehaviour
     public float currentHealth = 100f; // 현재 체력
     public float armor = 1.0f;
 
+    private float originalSpeed = 2f;  // 원래 속도
+    private Coroutine slowCoroutine; // 슬로우 효과 관리 코루틴
+
     public Slider healthBar; // 체력바 슬라이더 참조 (인스펙터에서 할당)
 
     // 웨이포인트 시스템
     protected Transform target; // 현재 목표 웨이포인트
     private int waypointIndex = 0; // 웨이포인트 인덱스
+
+    public bool isDead = false;
 
     void Awake()
     {
@@ -94,6 +100,35 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void ApplySlow(float slowFactor, float duration)
+    {
+        // 이미 슬로우 효과가 적용 중이라면, 기존 코루틴을 중지
+        if (slowCoroutine != null)
+        {
+            StopCoroutine(slowCoroutine);
+        }
+
+        // 새로운 슬로우 효과 코루틴 시작
+        slowCoroutine = StartCoroutine(SlowEffect(slowFactor, duration));
+    }
+
+    public IEnumerator SlowEffect(float slowFactor, float duration)
+    {
+        // 속도를 감소
+        speed = originalSpeed / slowFactor;
+        Debug.Log($"슬로우 효과 적용됨: 현재 속도 {speed}");
+
+        // 지정된 시간만큼 대기
+        yield return new WaitForSeconds(duration);
+
+        // 속도를 원래 값으로 복원
+        speed = originalSpeed;
+        Debug.Log($"슬로우 효과 종료: 속도 복원 {speed}");
+
+        // 슬로우 효과 종료 시 코루틴 참조 해제
+        slowCoroutine = null;
+    }
+
 
     protected void UpdateHealthBar()
     {
@@ -106,6 +141,7 @@ public class Enemy : MonoBehaviour
 
     protected void Die()
     {
+        isDead = true;
         Debug.Log($"{gameObject.name}이(가) 파괴되었습니다.");
         GameManager.Instance.AddGold(3 * waveNumber); // 디테일한 값 할당 필요 (임시로 기능확인용)
         Destroy(gameObject);
