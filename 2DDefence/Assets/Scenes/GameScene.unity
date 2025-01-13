@@ -3598,7 +3598,7 @@ MonoBehaviour:
   spiritPrefab: {fileID: 2269006391076914790, guid: 186f507a4c6df944e8664035559c936e, type: 3}
   spiritSpawnPoint: {fileID: 1898278603}
   initialWaitTime: 5
-  waveDuration: 20
+  waveDuration: 5
   waveBreakDuration: 5
   currentWave: 0
   waveText: {fileID: 287375553}
@@ -3650,7 +3650,7 @@ MonoBehaviour:
   - {fileID: 3813952981564701131, guid: a0f5e0b795788214cb524507d434947b, type: 3}
   spawnPoint: {fileID: 1239164846}
   initialDelay: 5
-  waveDuration: 20
+  waveDuration: 5
   breakDuration: 5
   spawnInterval: 1
   waveNumber: 1

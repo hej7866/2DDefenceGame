@@ -103,6 +103,14 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    protected void Die()
+    {
+        isDead = true;
+        Debug.Log($"{gameObject.name}이(가) 파괴되었습니다.");
+        GameManager.Instance.AddGold(3 * waveNumber); // 디테일한 값 할당 필요 (임시로 기능확인용)
+        Destroy(gameObject);
+    }
+
     // 디버프 효과 담당 로직
 
     // 궁수 디버프 : 방깎 (디버프 2번 스킬)
@@ -207,11 +215,4 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    protected void Die()
-    {
-        isDead = true;
-        Debug.Log($"{gameObject.name}이(가) 파괴되었습니다.");
-        GameManager.Instance.AddGold(3 * waveNumber); // 디테일한 값 할당 필요 (임시로 기능확인용)
-        Destroy(gameObject);
-    }
 }

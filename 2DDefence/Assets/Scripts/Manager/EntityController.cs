@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -10,6 +11,9 @@ public class EntityController : MonoBehaviour
     public static EntityController Instance;
 
     private Camera mainCamera;
+
+    // ▣ 이벤트: 선택 상태 변경 시 알림
+    public event Action OnSelectionChanged;
 
     // 선택 관리
     public List<Unit> selectedUnits = new List<Unit>();
@@ -32,9 +36,8 @@ public class EntityController : MonoBehaviour
     public Text asUpgradeCount;
 
     public GameObject multiUnitPanel; // 여러 유닛 선택 시 표시할 패널
-    public GameObject unitGridPrefab; // 개별 유닛 아이콘 프리팹    
-    public Transform unitGridParent; // 유닛 아이콘의 부모 Transform
-
+    public GameObject unitGridPrefab; // 개별 유닛 아이콘 프리팹
+    public Transform unitGridParent;  // 유닛 아이콘의 부모 Transform
 
     void Awake()
     {
@@ -44,15 +47,18 @@ public class EntityController : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
+        
+        // 선택 변경 이벤트에 UI 갱신을 구독
+        // => 이렇게 하면 Selection 변경 시 OnSelectionChanged?.Invoke()가 불릴 때마다 UpdateSelectionUI()가 자동 호출됨
+        OnSelectionChanged += UpdateSelectionUI;
     }
 
     void Update()
     {
         HandleMouseInput();
-        if (HasSelectionChanged())
-        {
-            UpdateSelectionUI();
-        }
+        // ▣ 더 이상 HasSelectionChanged()로 매 프레임 검사하지 않음.
+        //   선택이 변할 때마다 OnSelectionChanged 이벤트를 Invoke하여,
+        //   그때만 UpdateSelectionUI()가 동작하도록 함.
     }
 
     private void HandleMouseInput()
@@ -70,14 +76,11 @@ public class EntityController : MonoBehaviour
         {
             isDragging = false;
 
-            // 추가 부분 시작:
             // UI 클릭인지 확인, 만약 UI 위에서 마우스를 뗐다면 월드 선택 로직 실행 안 함
             if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
             {
-                // UI 위를 클릭한 경우이므로 월드 선택 로직을 패스하고 return
                 return;
             }
-            // 추가 부분 끝
 
             // 드래그 박스가 작을 경우 단일 선택 처리
             if (Vector3.Distance(dragStartPos, mainCamera.ScreenToWorldPoint(Input.mousePosition)) < 0.1f)
@@ -117,6 +120,8 @@ public class EntityController : MonoBehaviour
             if (unit != null)
             {
                 AddUnitToSelection(unit);
+                // 단일 선택 완료 → 선택 변경 이벤트
+                OnSelectionChanged?.Invoke();
                 return;
             }
 
@@ -125,9 +130,14 @@ public class EntityController : MonoBehaviour
             if (spirit != null)
             {
                 AddSpiritToSelection(spirit);
+                // 단일 선택 완료 → 선택 변경 이벤트
+                OnSelectionChanged?.Invoke();
                 return;
             }
         }
+
+        // 아무것도 선택되지 않음 → 선택 변경 이벤트 (선택 해제 상태)
+        OnSelectionChanged?.Invoke();
     }
 
     private void SelectEntitiesInDragBox()
@@ -160,48 +170,48 @@ public class EntityController : MonoBehaviour
                 AddSpiritToSelection(spirit);
             }
         }
+
+        // 드래그 선택 완료 → 선택 변경 이벤트
+        OnSelectionChanged?.Invoke();
     }
 
     private void MoveSelectedEntities(Vector3 targetPosition)
     {
         if (selectedUnits.Count + selectedSpirits.Count == 0) return;
 
-        // 유닛 간의 최소 간격 설정 (필요에 따라 조정)
         float unitSpacing = 0.1f; // 유닛들이 겹치지 않도록 최소한의 간격
+
         // 유닛 이동
         foreach (var unit in selectedUnits)
         {
             // 무작위 오프셋 생성
             Vector3 randomOffset = new Vector3(
-                Random.Range(-unitSpacing, unitSpacing),
-                Random.Range(-unitSpacing, unitSpacing),
+                UnityEngine.Random.Range(-unitSpacing, unitSpacing),
+                UnityEngine.Random.Range(-unitSpacing, unitSpacing),
                 0);
 
             Vector3 newTargetPosition = targetPosition + randomOffset;
-            /// 마우스 클릭 위치에 따라 유닛의 방향 변경
-        if (unit != null)
-        {
-            Vector3 scale = unit.transform.localScale;
+            if (unit != null)
+            {
+                // 방향 전환
+                Vector3 scale = unit.transform.localScale;
+                scale.x = (newTargetPosition.x < unit.transform.position.x)
+                          ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);
+                unit.transform.localScale = scale;
 
-            scale.x = newTargetPosition.x < unit.transform.position.x ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);
-            unit.transform.localScale = scale; // 스케일 적용
-        }
-
-            unit.SetTargetPosition(newTargetPosition);
+                unit.SetTargetPosition(newTargetPosition);
+            }
         }
 
         // 스피릿 이동
         foreach (var spirit in selectedSpirits)
         {
-            // 무작위 오프셋 생성
-            Vector3 randomOffset = new Vector3
-                (
-                Random.Range(-unitSpacing, unitSpacing),
-                Random.Range(-unitSpacing, unitSpacing),
+            Vector3 randomOffset = new Vector3(
+                UnityEngine.Random.Range(-unitSpacing, unitSpacing),
+                UnityEngine.Random.Range(-unitSpacing, unitSpacing),
                 0);
 
             Vector3 newTargetPosition = targetPosition + randomOffset;
-
             spirit.SetTargetPosition(newTargetPosition);
         }
     }
@@ -209,7 +219,6 @@ public class EntityController : MonoBehaviour
     private void AddUnitToSelection(Unit unit)
     {
         if (selectedUnits.Contains(unit)) return;
-
         selectedUnits.Add(unit);
         unit.Select();
     }
@@ -217,7 +226,6 @@ public class EntityController : MonoBehaviour
     private void AddSpiritToSelection(Spirit spirit)
     {
         if (selectedSpirits.Contains(spirit)) return;
-
         selectedSpirits.Add(spirit);
         spirit.Select();
     }
@@ -227,16 +235,14 @@ public class EntityController : MonoBehaviour
         // 선택된 유닛 해제
         foreach (var unit in selectedUnits)
         {
-            if (unit != null)
-                unit.Deselect();
+            if (unit != null) unit.Deselect();
         }
         selectedUnits.Clear();
 
         // 선택된 스피릿 해제
         foreach (var spirit in selectedSpirits)
         {
-            if (spirit != null)
-                spirit.Deselect();
+            if (spirit != null) spirit.Deselect();
         }
         selectedSpirits.Clear();
     }
@@ -246,6 +252,7 @@ public class EntityController : MonoBehaviour
         if (selectedSpirits.Contains(spirit))
         {
             selectedSpirits.Remove(spirit);
+            OnSelectionChanged?.Invoke(); // 선택 해제 시 이벤트
         }
     }
 
@@ -254,10 +261,14 @@ public class EntityController : MonoBehaviour
         if (selectedUnits.Contains(unit))
         {
             selectedUnits.Remove(unit);
+            OnSelectionChanged?.Invoke(); // 선택 해제 시 이벤트
         }
     }
 
-    // UI 업데이트 메서드
+    // ▣ 기존 HasSelectionChanged 로직 제거
+    //   -> 대신 OnSelectionChanged 이벤트로 대체
+
+    // ▣ UI 업데이트 메서드: 이벤트로 구독
     public void UpdateSelectionUI()
     {
         // 단일 선택
@@ -279,10 +290,10 @@ public class EntityController : MonoBehaviour
             if (upgradeData != null)
             {
                 unitAd.text = $"공격력: {selectedUnit.CurrentAttackPower}";
-                adUpgradeCount.text = $"{upgradeData.adUpgradeCount}"; // 공격력 업그레이드 횟수
+                adUpgradeCount.text = $"{upgradeData.adUpgradeCount}";
                 unitAs.text = $"공격속도: {selectedUnit.CurrentAttackCooldown:F2}";
-                asUpgradeCount.text = $"{upgradeData.asUpgradeCount}"; // 공격 속도 업그레이드 횟수
-                unitCp.text = $"치명타확룔: {(selectedUnit.CurrentCriticalProp):F0} %";
+                asUpgradeCount.text = $"{upgradeData.asUpgradeCount}";
+                unitCp.text = $"치명타확률: {selectedUnit.CurrentCriticalProp:F0} %";
             }
         }
         // 다중 선택
@@ -312,98 +323,22 @@ public class EntityController : MonoBehaviour
                 Button unitButton = unitGridSlot.GetComponent<Button>();
                 if (unitButton != null)
                 {
-                    Unit selectedUnit = unit; // 로컬 캡처
+                    Unit capturedUnit = unit;
                     unitButton.onClick.AddListener(() =>
                     {
                         DeselectAllEntities();
-                        AddUnitToSelection(selectedUnit);
-                        UpdateSelectionUI();
+                        AddUnitToSelection(capturedUnit);
+                        // 선택 바뀜 → 이벤트
+                        OnSelectionChanged?.Invoke();
                     });
                 }
             }
         }
+        // 선택 없음
         else
         {
             unitInfoPanel.SetActive(false);
             multiUnitPanel.SetActive(false);
         }
     }
-
-
-    
-
-
-    // 선택 상태 변경 확인 메서드
-    private List<Unit> previousSelectedUnits = new List<Unit>();    
-    private bool HasSelectionChanged()
-    {
-        // 선택된 유닛의 수가 변경되었을 경우
-        if (previousSelectedUnits.Count != selectedUnits.Count)
-        {
-            UpdatePreviousSelection(); // 이전 선택 목록 갱신
-            return true;
-        }
-
-        // 선택된 유닛 리스트 내용이 변경되었을 경우
-        for (int i = 0; i < selectedUnits.Count; i++)
-        {
-            if (!selectedUnits[i].Equals(previousSelectedUnits[i])) // Equals로 정확히 비교
-            {
-                UpdatePreviousSelection(); // 이전 선택 목록 갱신
-                return true;
-            }
-        }
-
-        return false; // 변경되지 않음
-    }
-
-    private void UpdatePreviousSelection()
-    {
-        previousSelectedUnits.Clear(); // 기존 데이터를 지우고
-        previousSelectedUnits.AddRange(selectedUnits); // 새로운 데이터를 추가
-    }
-
-
-    // 기즈모 모드에서 드래그박스 구현 (GUI로 게임화면으로 구현완료 => 주석처리)
-    // void OnDrawGizmos() 
-    // {
-    //     // 드래그 박스 시각화
-    //     if (isDragging)
-    //     {
-    //         Gizmos.color = Color.green;
-
-    //         // 현재 마우스 위치 가져오기
-    //         Vector3 currentMousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-    //         currentMousePos.z = 0;
-
-    //         // 드래그 시작 위치와 현재 마우스 위치를 사용해 사각형의 네 모서리 계산
-    //         Vector3 topLeft = new Vector3(Mathf.Min(dragStartPos.x, currentMousePos.x), Mathf.Max(dragStartPos.y, currentMousePos.y), 0);
-    //         Vector3 topRight = new Vector3(Mathf.Max(dragStartPos.x, currentMousePos.x), Mathf.Max(dragStartPos.y, currentMousePos.y), 0);
-    //         Vector3 bottomLeft = new Vector3(Mathf.Min(dragStartPos.x, currentMousePos.x), Mathf.Min(dragStartPos.y, currentMousePos.y), 0);
-    //         Vector3 bottomRight = new Vector3(Mathf.Max(dragStartPos.x, currentMousePos.x), Mathf.Min(dragStartPos.y, currentMousePos.y), 0);
-
-    //         // 선 두께 설정
-    //         float lineThickness = 0.05f; // 선의 두께
-
-    //         // 상단
-    //         Vector3 topLineCenter = (topLeft + topRight) / 2;
-    //         Vector3 topLineSize = new Vector3(Vector3.Distance(topLeft, topRight), lineThickness, 0);
-    //         Gizmos.DrawCube(topLineCenter, topLineSize);
-
-    //         // 하단
-    //         Vector3 bottomLineCenter = (bottomLeft + bottomRight) / 2;
-    //         Vector3 bottomLineSize = new Vector3(Vector3.Distance(bottomLeft, bottomRight), lineThickness, 0);
-    //         Gizmos.DrawCube(bottomLineCenter, bottomLineSize);
-
-    //         // 왼쪽
-    //         Vector3 leftLineCenter = (topLeft + bottomLeft) / 2;
-    //         Vector3 leftLineSize = new Vector3(lineThickness, Vector3.Distance(topLeft, bottomLeft), 0);
-    //         Gizmos.DrawCube(leftLineCenter, leftLineSize);
-
-    //         // 오른쪽
-    //         Vector3 rightLineCenter = (topRight + bottomRight) / 2;
-    //         Vector3 rightLineSize = new Vector3(lineThickness, Vector3.Distance(topRight, bottomRight), 0);
-    //         Gizmos.DrawCube(rightLineCenter, rightLineSize);
-    //     }
-    // }
 }
