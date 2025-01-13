@@ -12,44 +12,41 @@ public class ManaSystem : MonoBehaviour
 
     public bool skillCharged = false; // 스킬 충전 여부
 
-
+    private ActiveSkillData[] activeSkills;
+    private DebuffSkillData[] debuffSkills;
     void Start()
     {
         unit = GetComponent<Unit>();
+        activeSkills = SkillDatabase.Instance.activeSkills;
+        debuffSkills = SkillDatabase.Instance.debuffSkills;
     } 
 
-    void Update()
+    public void UseSkill(int unitId)
     {
-        
-    }
-
-    public void UseActiveSkill(bool SkillCharged)
-    {
-        if(skillCharged)
+        switch(unitId)
         {
-            if(unit.isWarrior) SkillManager.Instance.A_Skill_01(unit);
-            if(unit.isRanger) SkillManager.Instance.A_Skill_02(unit);
-            if(unit.isMagician) SkillManager.Instance.A_Skill_03(unit);
-            if(unit.isShielder) SkillManager.Instance.A_Skill_04(unit);
-
+            case 1:
+                if(activeSkills[0].skillSelected) SkillManager.Instance.A_Skill_01(unit);
+                else if(debuffSkills[0].skillSelected) SkillManager.Instance.D_Skill_01(unit);
+                break;
+                case 2:
+                if(activeSkills[1].skillSelected) SkillManager.Instance.A_Skill_02(unit);
+                else if(debuffSkills[1].skillSelected) SkillManager.Instance.D_Skill_02(unit);
+                break;
+                case 3:
+                if(activeSkills[2].skillSelected) SkillManager.Instance.A_Skill_03(unit);
+                else if(debuffSkills[2].skillSelected) SkillManager.Instance.D_Skill_03(unit);
+                break;
+                case 4:
+                if(activeSkills[3].skillSelected) SkillManager.Instance.A_Skill_04(unit);
+                else if(debuffSkills[3].skillSelected) SkillManager.Instance.D_Skill_04(unit);
+                break;
+        }
             currMana = 0;
             skillCharged = false;
-        }        
-    }
+    }  
+    
 
-    public void UseDebuffSkill(bool SkillCharged)
-    {
-        if(skillCharged)
-        {
-            //if(unit.isWarrior) SkillManager.Instance.D_Skill_01(unit);
-            if(unit.isRanger) SkillManager.Instance.D_Skill_02(unit);
-            //if(unit.isMagician) SkillManager.Instance.A_Skill_03(unit);
-            if(unit.isShielder) SkillManager.Instance.D_Skill_04(unit);
-
-            currMana = 0;
-            skillCharged = false;
-        }        
-    }
 
     public void AddMana(int amount)
     {

@@ -4,5 +4,7 @@ using UnityEngine;
 
 public class Magician : UnitClass
 {
-    public GameObject fireFoolingPrefab;   
+    public GameObject fireFoolingPrefab; 
+
+    public GameObject energyBallPrefab;  
 }

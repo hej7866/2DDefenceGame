@@ -19,6 +19,9 @@ public class Enemy : MonoBehaviour
     public float armor = 1.0f;
 
     private float originalSpeed = 2f;  // 원래 속도
+
+    private Coroutine lowerArmorCoroutine; // 방깎 효과 관리 코루틴
+    private Coroutine stunCoroutine; // 스턴 효과 관리 코루틴
     private Coroutine slowCoroutine; // 슬로우 효과 관리 코루틴
 
     public Slider healthBar; // 체력바 슬라이더 참조 (인스펙터에서 할당)
@@ -106,13 +109,13 @@ public class Enemy : MonoBehaviour
     public void ApplyLowerArmor(float duration)
     {
         // 이미 방깎 효과가 적용 중이라면, 기존 코루틴을 중지
-        if (slowCoroutine != null)
+        if (lowerArmorCoroutine != null)
         {
-            StopCoroutine(slowCoroutine);
+            StopCoroutine(lowerArmorCoroutine);
         }
 
         // 새로운 방깎 효과 코루틴 시작
-        slowCoroutine = StartCoroutine(LowerArmorCoroutine(duration));
+        lowerArmorCoroutine = StartCoroutine(LowerArmorCoroutine(duration));
     }
 
     public IEnumerator LowerArmorCoroutine(float duration)
@@ -129,7 +132,38 @@ public class Enemy : MonoBehaviour
         Debug.Log($"방깎 효과 종료: 아머 복원 {armor}");
 
         // 슬로우 효과 종료 시 코루틴 참조 해제
-        slowCoroutine = null;
+        lowerArmorCoroutine = null;
+    }
+
+
+    // 마법사 디버프 : 스턴 (디버프 3번 스킬)
+    public void ApplyStun(float duration)
+    {
+        // 이미 스턴 효과가 적용 중이라면, 기존 코루틴을 중지
+        if (slowCoroutine != null)
+        {
+            StopCoroutine(stunCoroutine);
+        }
+
+        // 새로운 슬로우 효과 코루틴 시작
+        stunCoroutine = StartCoroutine(StunCoroutine(duration));
+    }
+
+    public IEnumerator StunCoroutine(float duration)
+    {
+        // 속도를 감소
+        speed = 0f;
+        Debug.Log($"스턴 효과 적용됨: 현재 속도 {speed}");
+
+        // 지정된 시간만큼 대기
+        yield return new WaitForSeconds(duration);
+
+        // 속도를 원래 값으로 복원
+        speed = originalSpeed;
+        Debug.Log($"스턴 효과 종료: 속도 복원 {speed}");
+
+        // 슬로우 효과 종료 시 코루틴 참조 해제
+        stunCoroutine = null;
     }
 
 

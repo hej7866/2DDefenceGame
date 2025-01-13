@@ -157,6 +157,29 @@ public class SkillManager : MonoBehaviour
     
     // 디버프 스킬(마나가 풀 차징이 됐을때 나가는 스킬)
 
+    /// 디버프 스킬 1 : 전사의 평타가 적의 체력의 일정비율에 해당하는 도트데미지를 지속적으로 줌
+    public void D_Skill_01(Unit unit)
+    {
+        StartCoroutine(DoTickBloodDamage(unit));
+    }
+
+    private IEnumerator DoTickBloodDamage(Unit unit)
+    {
+        float tickInterval = 1f;
+        float duration = 5f;
+        float elapsed = 0f;
+
+        Enemy enemy = unit.currentTarget.GetComponent<Enemy>();
+
+        while (elapsed < duration)
+        {
+            enemy.TakeDamage(enemy.maxHealth * 0.03f);
+
+            yield return new WaitForSeconds(tickInterval);
+            elapsed += tickInterval;
+        }
+    }
+
 
     /// 디버프 스킬 2 : 궁수의 화살이 적의 방어력을 일정시간 감소시킴
     public void D_Skill_02(Unit unit)
@@ -177,6 +200,26 @@ public class SkillManager : MonoBehaviour
             }
         }
     }
+
+    /// 디버프 스킬 3 : 마법사의 에너지볼이 적을 일정시간 스턴시킴
+    public void D_Skill_03(Unit unit)
+    {
+        Magician magician = unit.GetComponent<Magician>();
+        if (magician.energyBallPrefab != null)
+        {
+            // 화살 생성
+            GameObject energyBall = Instantiate(magician.energyBallPrefab, unit.transform.position, Quaternion.identity);
+
+            // 화살 초기화
+            EnergyBall energyBallScript = energyBall.GetComponent<EnergyBall>();
+            if (energyBallScript != null)
+            {
+                float damage = unit.CurrentAttackPower;
+                energyBallScript.Initialize(unit.currentTarget.transform, damage);
+            }
+        }
+    }
+    
 
 
     /// 디버프 스킬 4 : 방패병이 적을 일정시간 느리게 만듦

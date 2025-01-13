@@ -6563,6 +6563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d537be9870129f49ac8f2926a682295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMoving: 0
   speed: 5
   unitId: 3
   unitName: "\uB9C8\uBC95\uC0AC"
@@ -6579,7 +6580,9 @@ MonoBehaviour:
   isMagician: 1
   isShielder: 0
   AttackPowerMultiplier: 1
+  UnitClassMultiplier: 1
   AttackCooldownMultiplier: 1
+  CriticalProbMultiplier: 1
   currentTarget: {fileID: 0}
   criticalValue: 2
 --- !u!114 &4725213198826828089
@@ -6594,7 +6597,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a05c7bae1d99d42429a9e1138a9ddde0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  A_Skill: 0
+  D_Skill: 0
   fireFoolingPrefab: {fileID: 8373238645736452524, guid: b9a6409f5f64fff49b6012422eb92a0f, type: 3}
+  energyBallPrefab: {fileID: 8751931479301655222, guid: d2cc941ba7533db4ab1511fa79efaee7, type: 3}
 --- !u!114 &-1053445680022165589
 MonoBehaviour:
   m_ObjectHideFlags: 0

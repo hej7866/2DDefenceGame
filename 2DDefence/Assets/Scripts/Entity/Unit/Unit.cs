@@ -219,7 +219,7 @@ public class Unit : Move
         else if(enemy != null && manaSystem.skillCharged) // 스킬 차징 상태라면 액티브 스킬 발동
         {
             //enemy.TakeDamage(CurrentAttackPower);
-            manaSystem.UseActiveSkill(manaSystem.skillCharged);
+            manaSystem.UseSkill(unitId);
         }
     }
 
@@ -241,7 +241,7 @@ public class Unit : Move
         else if(enemy != null && manaSystem.skillCharged) // 스킬 차징 상태라면 액티브 스킬 발동
         {
             //enemy.TakeDamage(CurrentAttackPower * criticalValue);
-            manaSystem.UseActiveSkill(manaSystem.skillCharged);
+            manaSystem.UseSkill(unitId);
         }
     }
 
@@ -252,7 +252,7 @@ public class Unit : Move
     {
         manaSystem.AddMana(manaSystem.chargeMana);
         if(!manaSystem.skillCharged) BasicRangerAttack(enemyObj); // 평소엔 기본 궁수 공격
-        else if(manaSystem.skillCharged) manaSystem.UseActiveSkill(manaSystem.skillCharged); // 스킬이 차징되었을땐 엑티브 스킬 발동
+        else if(manaSystem.skillCharged) manaSystem.UseSkill(unitId); // 스킬이 차징되었을땐 엑티브 스킬 발동
     }
 
     private void BasicRangerAttack(GameObject enemyObj) // 기본 궁수 공격

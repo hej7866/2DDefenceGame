@@ -16,6 +16,11 @@ public class UnitClass : MonoBehaviour
         unit = GetComponent<Unit>();
     }
 
+    void Start()
+    {
+        SkillSeting(unit.unitId);
+    }
+
     private void OnEnable()
     {
         // SkillDatabase 이벤트 구독
@@ -30,11 +35,7 @@ public class UnitClass : MonoBehaviour
 
     private void OnSkillChanged(int unitId)
     {
-        // 현재 유닛 ID와 변경된 ID가 일치할 때만 업데이트
-        if (unit.unitId == unitId)
-        {
-            SkillSeting(unitId);
-        }
+        SkillSeting(unitId);
     }
 
     public void SkillSeting(int unitId)
