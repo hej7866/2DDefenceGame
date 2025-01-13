@@ -37,12 +37,12 @@ public class Unit : Move
     private Magician magician;
     private Shielder shielder;
 
-    private float targetSearchInterval = 0.1f; // 적 탐색 주기
-    private float lastTargetSearchTime = 0f; // 마지막 탐색 시간
-
 
     // 액티브
     private ManaSystem manaSystem;
+
+    float normalAttackLength;
+    float criticalAttackLength;
 
 
     void Awake()
@@ -56,25 +56,33 @@ public class Unit : Move
         lineRenderer = GetComponentInChildren<LineRenderer>();
         manaSystem = GetComponent<ManaSystem>();
 
+        Debug.Log(CurrentAttackCooldown);
+
+        normalAttackLength = AnimationLengthFetcher.Instance.normalAttackLength;
+        criticalAttackLength = AnimationLengthFetcher.Instance.criticalAttackLength;
+
         if(isWarrior) warrior = GetComponent<Warrior>();
         else if(isRanger) ranger = GetComponent<Ranger>();
         else if(isMagician) magician = GetComponent<Magician>();
         else if(isShielder) shielder = GetComponent<Shielder>();
+
+        if(isShielder) UnitClassMultiplier = 0;
     }
 
-    // **현재 공격력**: (기본 공격력 + 업그레이드 공격력)
+    // **현재 공격력**: (기본 공격력 + 업그레이드 공격력) * 직업보정 스킬 계수
     // **현재 공격력(패시브 활성화시)**: (기본 공격력 + 업그레이드 공격력) * 패시브 스킬 배수
     public int AttackPowerMultiplier = 1;
+    public int UnitClassMultiplier = 1;
     public int CurrentAttackPower
     {
         get
         {
-            return (attackPower + UnitUpgrade.Instance.GetUpgradeData(unitValue).adUpgradeValue) * AttackPowerMultiplier;
+            return (attackPower + UnitUpgrade.Instance.GetUpgradeData(unitValue).adUpgradeValue) * UnitClassMultiplier * AttackPowerMultiplier;
         }
     }
 
     // **현재 공격 속도**: 기본 공격 속도 * 업그레이드 공속 계수
-    // **현재 공격 속도(패시브 활성화시)**: (기본 공격속도 * 업그레이드 공격계수) * 스킬배수
+    // **현재 공격 속도(패시브 활성화시)**: (기본 공격속도 * 업그레이드 공격계수) * 패시브 스킬배수
     public float AttackCooldownMultiplier = 1f;
     public float CurrentAttackCooldown
     {
@@ -85,11 +93,13 @@ public class Unit : Move
     }
 
     // **현재 치명타 확률**: 기본 치명타 확률 + 업그레이드 치명타 확률
+    // **현재 치명타 확률(전사 액티브 스킬 시전 시)**: (기본 치명타 확률 + 업그레이드 치명타 확률) * 스킬배수
+    public float CriticalProbMultiplier = 1f;
     public float CurrentCriticalProp
     {
         get
         {
-            return (criticalProb + UnitUpgrade.Instance.GetUpgradeData(unitValue).cpUpgradeValue) * 100;
+            return ((criticalProb + UnitUpgrade.Instance.GetUpgradeData(unitValue).cpUpgradeValue) * 100) * CriticalProbMultiplier;
         }
     }
 
@@ -101,19 +111,14 @@ public class Unit : Move
         animator.SetBool("1_Move", isMoving); // 이동 애니메이션 구현
 
         OnPassiveSkill();
-
-        // 일정 간격으로 적 탐색
-        if (Time.time >= lastTargetSearchTime + targetSearchInterval) // 0.1 초마다 탐색
+       
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, attackRange, enemyLayer);
+        GameObject target = GetClosestTarget(hits);
+        if (target != null)
         {
-            lastTargetSearchTime = Time.time;
-
-            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, attackRange, enemyLayer);
-            GameObject target = GetClosestTarget(hits);
-            if (target != null)
-            {
-                currentTarget = target;
-            }
+            currentTarget = target;
         }
+        
 
         // 공격 로직
         if (!isMoving && currentTarget != null && Time.time >= lastAttackTime + CurrentAttackCooldown)
@@ -128,16 +133,11 @@ public class Unit : Move
     {
         if (enemyObj != null && !isMoving)
         {
-            // 현재 공격 대상을 저장
-            currentTarget = enemyObj;
-
             // 적 위치에 따라 방향 전환
             FaceTarget(enemyObj.transform.position);
 
             // 공격 애니메이션 실행
             PlayAttackAnimation();
-
-            Debug.Log($"CurrentCriticalProp: {CurrentCriticalProp}");
         }
     }
 
@@ -162,15 +162,8 @@ public class Unit : Move
     private void PlayAttackAnimation()
     {
         float randomValue = Random.Range(0f, 100f);
-        // 공격 속도 설정
-        if (randomValue < CurrentCriticalProp)
-        {
-            animator.SetFloat("AttackSpeedMultiplier", AnimationLengthFetcher.Instance.criticalAttackLength / CurrentAttackCooldown);
-        }
-        else
-        {
-            animator.SetFloat("AttackSpeedMultiplier", AnimationLengthFetcher.Instance.normalAttackLength / CurrentAttackCooldown);
-        }
+    
+        AttackSpeedSetting(randomValue);
 
         // 크리티컬 여부에 따라 애니메이션 트리거 설정
         if (randomValue < CurrentCriticalProp)
@@ -192,6 +185,20 @@ public class Unit : Move
     * 스킬의 차징상태는 ManaSystem 스크립트에서 관리하며 bool 변수인 skillCharged의 상태에 따라 결정된다. 
     */
 
+    // 공격속도 세팅
+    void AttackSpeedSetting(float randomValue)
+    {
+        Debug.Log($"{CurrentAttackCooldown}");
+        // 공격 속도 설정
+        if (randomValue < CurrentCriticalProp)
+        {
+            animator.SetFloat("AttackSpeedMultiplier",  criticalAttackLength / CurrentAttackCooldown);
+        }
+        else
+        {
+            animator.SetFloat("AttackSpeedMultiplier",  normalAttackLength / CurrentAttackCooldown);
+        }
+    }
 
     /// <summary>
     /// 근접 공격 유닛들 공격로직 
@@ -211,7 +218,7 @@ public class Unit : Move
         }
         else if(enemy != null && manaSystem.skillCharged) // 스킬 차징 상태라면 액티브 스킬 발동
         {
-            enemy.TakeDamage(CurrentAttackPower);
+            //enemy.TakeDamage(CurrentAttackPower);
             manaSystem.UseActiveSkill(manaSystem.skillCharged);
         }
     }
@@ -233,7 +240,7 @@ public class Unit : Move
         }
         else if(enemy != null && manaSystem.skillCharged) // 스킬 차징 상태라면 액티브 스킬 발동
         {
-            enemy.TakeDamage(CurrentAttackPower * criticalValue);
+            //enemy.TakeDamage(CurrentAttackPower * criticalValue);
             manaSystem.UseActiveSkill(manaSystem.skillCharged);
         }
     }
@@ -294,24 +301,27 @@ public class Unit : Move
     }
 
     // 패시브 스킬 활성화
-    private void OnPassiveSkill()
+    public void OnPassiveSkill()
     {
-        if(SkillManager.Instance.skill_01) 
+        if(SkillManager.Instance.p_skill_01) 
         {
             SkillManager.Instance.P_Skill_01(this);
             SkillManager.Instance.P_Skill_UI();
         }
-        if(SkillManager.Instance.skill_02)
+        if(SkillManager.Instance.p_skill_02)
         {
             SkillManager.Instance.P_Skill_02(this);
             SkillManager.Instance.P_Skill_UI();
         }
-        if(SkillManager.Instance.skill_03)
+        if(SkillManager.Instance.p_skill_03)
         {
             SkillManager.Instance.P_Skill_03(this);
             SkillManager.Instance.P_Skill_UI();
         } 
     }
+
+
+    // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
     public void Select()
     {

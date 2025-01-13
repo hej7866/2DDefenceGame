@@ -8,7 +8,7 @@ public class Ranger : UnitClass
     public GameObject arrowPrefab;
 
     [Header("스킬 화살")]
-    public GameObject skillArrowPrefab;
+    public GameObject A_SkillArrowPrefab;
+    public GameObject D_SkillArrowPrefab; 
 
-    
 }

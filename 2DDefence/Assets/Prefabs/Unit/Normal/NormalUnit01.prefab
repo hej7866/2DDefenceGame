@@ -4701,6 +4701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d537be9870129f49ac8f2926a682295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMoving: 0
   speed: 5
   unitId: 1
   unitName: "\uC804\uC0AC"
@@ -4716,8 +4717,11 @@ MonoBehaviour:
   isRanger: 0
   isMagician: 0
   isShielder: 0
-  skillAttackMultiplier: 1
+  AttackPowerMultiplier: 1
+  AttackCooldownMultiplier: 1
+  CriticalProbMultiplier: 1
   currentTarget: {fileID: 0}
+  criticalValue: 2
 --- !u!114 &3980892230610238162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4761,6 +4765,7 @@ MonoBehaviour:
   maxMana: 30
   currMana: 0
   chargeMana: 3
+  skillCharged: 0
 --- !u!1 &2013773059107689656
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,12 +9,14 @@ public class ManaSystem : MonoBehaviour
     public int chargeMana = 5;
     Unit unit;
 
+
     public bool skillCharged = false; // 스킬 충전 여부
+
 
     void Start()
     {
         unit = GetComponent<Unit>();
-    }
+    } 
 
     void Update()
     {
@@ -25,9 +27,25 @@ public class ManaSystem : MonoBehaviour
     {
         if(skillCharged)
         {
+            if(unit.isWarrior) SkillManager.Instance.A_Skill_01(unit);
             if(unit.isRanger) SkillManager.Instance.A_Skill_02(unit);
             if(unit.isMagician) SkillManager.Instance.A_Skill_03(unit);
+            if(unit.isShielder) SkillManager.Instance.A_Skill_04(unit);
+
+            currMana = 0;
+            skillCharged = false;
+        }        
+    }
+
+    public void UseDebuffSkill(bool SkillCharged)
+    {
+        if(skillCharged)
+        {
+            //if(unit.isWarrior) SkillManager.Instance.D_Skill_01(unit);
+            if(unit.isRanger) SkillManager.Instance.D_Skill_02(unit);
+            //if(unit.isMagician) SkillManager.Instance.A_Skill_03(unit);
             if(unit.isShielder) SkillManager.Instance.D_Skill_04(unit);
+
             currMana = 0;
             skillCharged = false;
         }        
@@ -40,6 +58,6 @@ public class ManaSystem : MonoBehaviour
         {
             currMana += amount;
         }
-        if(currMana == maxMana) skillCharged = true;    
+        if(currMana >= maxMana) skillCharged = true;    
     }
 }

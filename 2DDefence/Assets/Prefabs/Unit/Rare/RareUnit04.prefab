@@ -7096,6 +7096,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d537be9870129f49ac8f2926a682295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMoving: 0
   speed: 5
   unitId: 4
   unitName: "\uBC29\uD328\uBCD1"
@@ -7113,6 +7114,7 @@ MonoBehaviour:
   isShielder: 1
   AttackPowerMultiplier: 1
   AttackCooldownMultiplier: 1
+  CriticalProbMultiplier: 1
   currentTarget: {fileID: 0}
   criticalValue: 2
 --- !u!114 &7395149181798957295
@@ -7127,6 +7129,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbcb331ee39d24941a75c7bfd9892917, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  A_Skill: 0
+  B_Skill: 0
 --- !u!114 &8734375756560195710
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,14 +18,14 @@ public class SkillManager : MonoBehaviour
 
     // 스킬 시스템
     [Header("패시브 스킬 ON / OFF 여부")]
-    public bool skill_01 = false;
-    public bool skill_02 = false;
-    public bool skill_03 = false;
+    public bool p_skill_01 = false;
+    public bool p_skill_02 = false;
+    public bool p_skill_03 = false;
 
     [Header("패시브 아이콘")]
-    [SerializeField] Image p_skill_01;
-    [SerializeField] Image p_skill_02;
-    [SerializeField] Image p_skill_03;
+    [SerializeField] Image p_skill_01_Img;
+    [SerializeField] Image p_skill_02_Img;
+    [SerializeField] Image p_skill_03_Img;
 
     [Header("패시브 아이콘 이미지")]
     [SerializeField] Sprite p_skill_01_icon;
@@ -36,18 +37,19 @@ public class SkillManager : MonoBehaviour
         Instance = this;
     }
 
-    public void OnPassiveSkill(int SkillNumber)
+    public void OnPassive(int SkillNumber)
     {
-        if(SkillNumber == 1) skill_01 = true;
-        if(SkillNumber == 2) skill_02 = true;
-        if(SkillNumber == 3) skill_03 = true;
+        if(SkillNumber == 1) p_skill_01 = true;
+        if(SkillNumber == 2) p_skill_02 = true;
+        if(SkillNumber == 3) p_skill_03 = true;
     }
+
 
     public void P_Skill_UI()
     {
-        if(skill_01) p_skill_01.sprite = p_skill_01_icon;
-        if(skill_02) p_skill_02.sprite = p_skill_02_icon;
-        if(skill_03) p_skill_03.sprite = p_skill_03_icon;
+        if(p_skill_01) p_skill_01_Img.sprite = p_skill_01_icon;
+        if(p_skill_02) p_skill_02_Img.sprite = p_skill_02_icon;
+        if(p_skill_03) p_skill_03_Img.sprite = p_skill_03_icon;
     }
 
     // 패시브 스킬
@@ -66,10 +68,10 @@ public class SkillManager : MonoBehaviour
 
     public void P_Skill_02(Unit unit)
     {
-        // 3배로 세팅
+        // 2배로 세팅
         unit.AttackCooldownMultiplier = 0.5f;
 
-        EntityController.Instance.UpdateSelectionUI(); // 공격력이 증가했으므로 UI 업데이트 해줘야함
+        EntityController.Instance.UpdateSelectionUI(); // 공격속도가 증가했으므로 UI 업데이트 해줘야함
  
     }
 
@@ -82,18 +84,35 @@ public class SkillManager : MonoBehaviour
     
 
     // 액티브 스킬(마나가 풀 차징이 됐을때 나가는 스킬)
+
+    /// 액티브 스킬 1 : 전사의 치명타 확률이 일시적으로 2배가 됨
     public void A_Skill_01(Unit unit) // 전사 스킬
     {
-
+        StartCoroutine(A_Skill_01_Coroutine(unit));
     }
 
+    private IEnumerator A_Skill_01_Coroutine(Unit unit)
+    {
+        float duration = 5f;
+
+        unit.CriticalProbMultiplier = 2f;
+        EntityController.Instance.UpdateSelectionUI(); // 치확이 증가했으므로 UI 업데이트 해줘야함
+
+        yield return new WaitForSeconds(duration);
+
+        unit.CriticalProbMultiplier = 1f;
+        EntityController.Instance.UpdateSelectionUI(); // 치확이 돌아왔으므로 UI 업데이트 해줘야함         
+    }
+
+
+    /// 액티브 스킬 2 : 궁수가 강화된 화살을 발사함
     public void A_Skill_02(Unit unit) // 궁수 스킬
     {
         Ranger ranger = unit.GetComponent<Ranger>();
-        if (ranger.skillArrowPrefab != null)
+        if (ranger.A_SkillArrowPrefab != null)
         {
             // 화살 생성
-            GameObject skillArrow = Instantiate(ranger.skillArrowPrefab, unit.transform.position, Quaternion.identity);
+            GameObject skillArrow = Instantiate(ranger.A_SkillArrowPrefab, unit.transform.position, Quaternion.identity);
 
             // 화살 초기화
             Arrow arrowScript = skillArrow.GetComponent<Arrow>();
@@ -105,6 +124,8 @@ public class SkillManager : MonoBehaviour
         }
     }
 
+
+    /// 액티브 스킬 3 : 마법사가 도트데미지를 주는 불장판을 생성함
     public void A_Skill_03(Unit unit) // 마법사 스킬
     {
         Magician magician = unit.GetComponent<Magician>();
@@ -124,10 +145,44 @@ public class SkillManager : MonoBehaviour
         }
     }
 
+
+    /// 액티브 스킬 4 : 방패병이 적에게 100의 고정피해를 주는 공격을 함
+    public void A_Skill_04(Unit unit) // 방패병 스킬
+    {
+        Enemy target = unit.currentTarget.GetComponent<Enemy>();
+        target.TakeDamage(100 * target.armor);
+    }
+
+
     
     // 디버프 스킬(마나가 풀 차징이 됐을때 나가는 스킬)
+
+
+    /// 디버프 스킬 2 : 궁수의 화살이 적의 방어력을 일정시간 감소시킴
+    public void D_Skill_02(Unit unit)
+    {
+        Ranger ranger = unit.GetComponent<Ranger>();
+        if (ranger.D_SkillArrowPrefab != null)
+        {
+            // 화살 생성
+            GameObject skillArrow = Instantiate(ranger.D_SkillArrowPrefab, unit.transform.position, Quaternion.identity);
+
+            // 화살 초기화
+            Arrow arrowScript = skillArrow.GetComponent<Arrow>();
+            arrowScript.D_Arrow = true; // 디버프 화살을 쐈으므로 true로 만들어준다.
+            if (arrowScript != null)
+            {
+                float damage = unit.CurrentAttackPower;
+                arrowScript.Initialize(unit.currentTarget.transform, damage);
+            }
+        }
+    }
+
+
+    /// 디버프 스킬 4 : 방패병이 적을 일정시간 느리게 만듦
     public void D_Skill_04(Unit unit)
     {
-        Enemy.Instance.ApplySlow(2f, 5f);
+        Enemy target = unit.currentTarget.GetComponent<Enemy>();
+        target.ApplySlow(2f, 5f);
     }
 }

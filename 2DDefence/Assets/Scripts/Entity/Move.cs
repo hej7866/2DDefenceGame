@@ -3,7 +3,7 @@ using UnityEngine;
 public class Move : MonoBehaviour
 {
     protected Vector3 targetPosition;
-    protected bool isMoving;
+    public bool isMoving;
 
     [SerializeField] protected float speed = 5f;
 

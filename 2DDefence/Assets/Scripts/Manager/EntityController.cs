@@ -95,7 +95,6 @@ public class EntityController : MonoBehaviour
         {
             Vector3 targetPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             targetPosition.z = 0;
-
             MoveSelectedEntities(targetPosition);
         }
     }
@@ -169,7 +168,6 @@ public class EntityController : MonoBehaviour
 
         // 유닛 간의 최소 간격 설정 (필요에 따라 조정)
         float unitSpacing = 0.1f; // 유닛들이 겹치지 않도록 최소한의 간격
-
         // 유닛 이동
         foreach (var unit in selectedUnits)
         {
@@ -180,7 +178,6 @@ public class EntityController : MonoBehaviour
                 0);
 
             Vector3 newTargetPosition = targetPosition + randomOffset;
-
             /// 마우스 클릭 위치에 따라 유닛의 방향 변경
         if (unit != null)
         {

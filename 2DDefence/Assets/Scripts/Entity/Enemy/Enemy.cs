@@ -100,6 +100,40 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    // 디버프 효과 담당 로직
+
+    // 궁수 디버프 : 방깎 (디버프 2번 스킬)
+    public void ApplyLowerArmor(float duration)
+    {
+        // 이미 방깎 효과가 적용 중이라면, 기존 코루틴을 중지
+        if (slowCoroutine != null)
+        {
+            StopCoroutine(slowCoroutine);
+        }
+
+        // 새로운 방깎 효과 코루틴 시작
+        slowCoroutine = StartCoroutine(LowerArmorCoroutine(duration));
+    }
+
+    public IEnumerator LowerArmorCoroutine(float duration)
+    {
+        float originalArmor = armor;
+        armor = armor * 0.7f;
+        Debug.Log($"방깎 효과 적용됨: 현재 아머 {armor}");
+
+        // 지정된 시간만큼 대기
+        yield return new WaitForSeconds(duration);
+
+        // 속도를 원래 값으로 복원
+        armor = originalArmor;
+        Debug.Log($"방깎 효과 종료: 아머 복원 {armor}");
+
+        // 슬로우 효과 종료 시 코루틴 참조 해제
+        slowCoroutine = null;
+    }
+
+
+    // 방패병 디버프 : 슬로우 (디버프 4번 스킬)
     public void ApplySlow(float slowFactor, float duration)
     {
         // 이미 슬로우 효과가 적용 중이라면, 기존 코루틴을 중지
@@ -109,10 +143,10 @@ public class Enemy : MonoBehaviour
         }
 
         // 새로운 슬로우 효과 코루틴 시작
-        slowCoroutine = StartCoroutine(SlowEffect(slowFactor, duration));
+        slowCoroutine = StartCoroutine(SlowCoroutine(slowFactor, duration));
     }
 
-    public IEnumerator SlowEffect(float slowFactor, float duration)
+    public IEnumerator SlowCoroutine(float slowFactor, float duration)
     {
         // 속도를 감소
         speed = originalSpeed / slowFactor;

@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -7,6 +10,10 @@ public class Arrow : MonoBehaviour
     private Transform target; // 목표 대상
     private float damage; // 화살 데미지
 
+    public bool D_Arrow = false; // 궁수가 디버프 화살을 쐈는지에 대한 여부 평소엔 false
+
+    private bool hasHit = false; // 이미 명중 처리를 했는지 여부 중복데미지가 들어가는것을 막음
+
     // 화살 초기화
     public void Initialize(Transform target, float damage)
     {
@@ -14,11 +21,13 @@ public class Arrow : MonoBehaviour
         this.damage = damage;
     }
 
+
     void Update()
     {
-        if (target == null)
+        if (target == null || hasHit)
         {
-            Destroy(gameObject); // 목표가 없으면 화살 삭제
+            // 목표가 없거나 이미 명중처리를 했으면
+            Destroy(gameObject);
             return;
         }
 
@@ -46,12 +55,14 @@ public class Arrow : MonoBehaviour
     // 목표에 도달했을 때 처리
     private void OnHitTarget()
     {
+        hasHit = true; // 명중 처리 했다고 표시
+
         Enemy enemy = target.GetComponent<Enemy>();
         if (enemy != null)
         {
             enemy.TakeDamage(damage); // 적에게 데미지 적용
+            if(D_Arrow) enemy.ApplyLowerArmor(5f);
         }
-
         Destroy(gameObject); // 화살 삭제
     }
 }

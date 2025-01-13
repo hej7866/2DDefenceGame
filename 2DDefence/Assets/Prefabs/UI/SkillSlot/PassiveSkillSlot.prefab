@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 810518890706418866}
   - component: {fileID: 810518890706418864}
   - component: {fileID: 810518890706418865}
-  - component: {fileID: 4670777634529593589}
+  - component: {fileID: 7453829434741454767}
   m_Layer: 5
   m_Name: PassiveSkillSlot
   m_TagString: Untagged
@@ -281,7 +281,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4670777634529593589
+--- !u!114 &7453829434741454767
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -290,7 +290,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 810518890706418867}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b61d1b5cd14956f4e9949abac14e6636, type: 3}
+  m_Script: {fileID: 11500000, guid: 215fc071bdf5e2c43b84292fcb8f310c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skillName: {fileID: 810518891567259339}
@@ -488,7 +488,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 5, y: 0}
+  m_AnchoredPosition: {x: 10, y: 0}
   m_SizeDelta: {x: 240, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &810518891567259338

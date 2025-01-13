@@ -6,21 +6,23 @@ using UnityEngine.UI;
 
 public class Skill_Panel_UI : MonoBehaviour
 {
+    public static Skill_Panel_UI Instance;
+
     [Header("UI 관련")]
     public GameObject PassiveSlotPrefab; // 패시브스킬 슬롯 프리팹
     public GameObject ActiveSlotPrefab; // 액티브스킬 슬롯 프리팹
     public GameObject DebuffSlotPrefab; // 디버프스킬 슬롯 프리팹
     public Text skillType_txt;
 
-    [Header("패시브 스킬 온오프 버튼")]
-    public Button onoff_btn;
-
     // SkillType 별로 분리된 리스트
-    private SkillData[] passiveSkills; 
-    private SkillData[] activeSkills;
-    private SkillData[] debuffSkills;
+    private PassiveSkillData[] passiveSkills; 
+    private ActiveSkillData[] activeSkills;
+    private DebuffSkillData[] debuffSkills;
 
-
+    void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
@@ -43,14 +45,14 @@ public class Skill_Panel_UI : MonoBehaviour
 
 
         // 스킬 데이터에 따라 슬롯 생성
-        foreach (SkillData skill in passiveSkills)
+        foreach (PassiveSkillData skill in passiveSkills)
         {
             GameObject slot = Instantiate(PassiveSlotPrefab, transform); // 부모 오브젝트를 transform으로 설정
-            SkillSlot skillSlot = slot.GetComponent<SkillSlot>();
+            P_SkillSlot P_skillSlot = slot.GetComponent<P_SkillSlot>();
 
-            if (skillSlot != null)
+            if (P_skillSlot != null)
             {
-                skillSlot.SetSkillData(skill); // 슬롯에 스킬 데이터 설정
+                P_skillSlot.SetSkillData(skill); // 슬롯에 스킬 데이터 설정
             }
         }
         skillType_txt.text = "Passive Skill";
@@ -66,14 +68,14 @@ public class Skill_Panel_UI : MonoBehaviour
 
 
         // 스킬 데이터에 따라 슬롯 생성
-        foreach (SkillData skill in activeSkills)
+        foreach (ActiveSkillData skill in activeSkills)
         {
             GameObject slot = Instantiate(ActiveSlotPrefab, transform); // 부모 오브젝트를 transform으로 설정
-            SkillSlot skillSlot = slot.GetComponent<SkillSlot>();
+            A_SkillSlot A_skillSlot = slot.GetComponent<A_SkillSlot>();
 
-            if (skillSlot != null)
+            if (A_skillSlot != null)
             {
-                skillSlot.SetSkillData(skill); // 슬롯에 스킬 데이터 설정
+                A_skillSlot.SetSkillData(skill); // 슬롯에 스킬 데이터 설정
             }
         }
         skillType_txt.text = "Active Skill";
@@ -90,14 +92,14 @@ public class Skill_Panel_UI : MonoBehaviour
 
 
         // 스킬 데이터에 따라 슬롯 생성
-        foreach (SkillData skill in debuffSkills)
+        foreach (DebuffSkillData skill in debuffSkills)
         {
             GameObject slot = Instantiate(DebuffSlotPrefab, transform); // 부모 오브젝트를 transform으로 설정
-            SkillSlot skillSlot = slot.GetComponent<SkillSlot>();
+            D_SkillSlot D_skillSlot = slot.GetComponent<D_SkillSlot>();
 
-            if (skillSlot != null)
+            if (D_skillSlot != null)
             {
-                skillSlot.SetSkillData(skill); // 슬롯에 스킬 데이터 설정
+                D_skillSlot.SetSkillData(skill); // 슬롯에 스킬 데이터 설정
             }
         }
         skillType_txt.text = "Debuff Skill";

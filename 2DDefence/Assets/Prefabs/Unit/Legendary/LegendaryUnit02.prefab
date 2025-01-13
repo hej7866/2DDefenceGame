@@ -7993,6 +7993,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d537be9870129f49ac8f2926a682295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMoving: 0
   speed: 5
   unitId: 2
   unitName: "\uAD81\uC218"
@@ -8009,7 +8010,9 @@ MonoBehaviour:
   isMagician: 0
   isShielder: 0
   AttackPowerMultiplier: 1
+  UnitClassMultiplier: 1
   AttackCooldownMultiplier: 1
+  CriticalProbMultiplier: 1
   currentTarget: {fileID: 0}
   criticalValue: 2
 --- !u!114 &308159158910753796
@@ -8024,8 +8027,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f89810cab69ffdb4cbf6e0538b4c6432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  A_Skill: 0
+  B_Skill: 0
   arrowPrefab: {fileID: 7051063880171958710, guid: 3abb28f61be7ac14e887baefda23f5b9, type: 3}
-  skillArrowPrefab: {fileID: 4118627563225771851, guid: 19f2adfef8d45154694f001bf348e04f, type: 3}
+  A_SkillArrowPrefab: {fileID: 4118627563225771851, guid: 19f2adfef8d45154694f001bf348e04f, type: 3}
+  D_SkillArrowPrefab: {fileID: 4118627563225771851, guid: c31f333ec4d941545b0501d2601bccae, type: 3}
 --- !u!114 &1312617898572541395
 MonoBehaviour:
   m_ObjectHideFlags: 0

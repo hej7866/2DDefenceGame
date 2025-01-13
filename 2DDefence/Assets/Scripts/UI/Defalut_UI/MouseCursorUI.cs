@@ -40,6 +40,8 @@ public class MouseCursorUI : MonoBehaviour
         {
             ShowMarkerAtMousePosition();
         }
+
+        OnCursor();
     }
 
     void ShowMarkerAtMousePosition()
@@ -66,5 +68,13 @@ public class MouseCursorUI : MonoBehaviour
         // Unity 커서를 다시 표시
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+    }
+
+    void OnCursor()
+    {
+        if(Input.GetMouseButton(0))
+        {
+            Cursor.visible = false;
+        }
     }
 }

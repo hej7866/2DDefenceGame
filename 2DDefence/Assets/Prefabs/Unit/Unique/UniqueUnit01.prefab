@@ -3433,6 +3433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d537be9870129f49ac8f2926a682295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMoving: 0
   speed: 5
   unitId: 1
   unitName: "\uC804\uC0AC"
@@ -3448,8 +3449,10 @@ MonoBehaviour:
   isRanger: 0
   isMagician: 0
   isShielder: 0
-  skillAttackMultiplier: 1
+  AttackPowerMultiplier: 1
+  AttackCooldownMultiplier: 1
   currentTarget: {fileID: 0}
+  criticalValue: 2
 --- !u!114 &2190453387299524641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3462,6 +3465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab607511bf9638e44becdace88528de6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swordSlashPrefab: {fileID: 9014296314056452153, guid: 999d5486f51b8924bbf6ddf3b02a4e6b, type: 3}
 --- !u!114 &-8112225864862602091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3493,6 +3497,7 @@ MonoBehaviour:
   maxMana: 10
   currMana: 0
   chargeMana: 5
+  skillCharged: 0
 --- !u!1 &866242504790932392
 GameObject:
   m_ObjectHideFlags: 0
