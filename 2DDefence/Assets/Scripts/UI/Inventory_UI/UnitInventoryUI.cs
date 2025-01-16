@@ -13,7 +13,7 @@ public class UnitInventoryUI : MonoBehaviour
 {
     public static UnitInventoryUI Instance; 
 
-    public UnitInventoryManager unitInventoryManager; // 유닛 인벤토리 매니저 참조
+    public UnitManager unitManager; // 유닛 인벤토리 매니저 참조
     public Transform unitListParent; // 유닛 리스트 버튼이 생성될 부모 오브젝트
     public GameObject unitButtonPrefab; // 유닛 버튼 프리팹
     private List<GameObject> currentButtons = new List<GameObject>(); // 생성된 버튼 리스트
@@ -45,7 +45,7 @@ public class UnitInventoryUI : MonoBehaviour
         InitializePrefabDictionary();
 
         // UnitInventoryManager의 이벤트를 구독
-        unitInventoryManager.OnInventoryUpdated += RefreshCurrentInventory;
+        unitManager.OnInventoryUpdated += RefreshCurrentInventory;
 
         nextButton.onClick.AddListener(NextPage);
         prevButton.onClick.AddListener(PreviousPage);
@@ -77,27 +77,27 @@ public class UnitInventoryUI : MonoBehaviour
     // 노말 버튼 클릭 시 호출될 함수
     public void ShowNormalUnits()
     {
-        UpdateUnitListUI(unitInventoryManager.normalUnits);
+        UpdateUnitListUI(unitManager.normalUnits);
     }
 
     public void ShowRareUnits()
     {
-        UpdateUnitListUI(unitInventoryManager.rareUnits);
+        UpdateUnitListUI(unitManager.rareUnits);
     }
 
     public void ShowUniqueUnits()
     {
-        UpdateUnitListUI(unitInventoryManager.uniqueUnits);
+        UpdateUnitListUI(unitManager.uniqueUnits);
     }
 
     public void ShowLegendaryUnits()
     {
-        UpdateUnitListUI(unitInventoryManager.legendaryUnits);
+        UpdateUnitListUI(unitManager.legendaryUnits);
     }
 
     public void ShowGodUnits()
     {
-        UpdateUnitListUI(unitInventoryManager.godUnits);
+        UpdateUnitListUI(unitManager.godUnits);
     }
 
     private void UpdateUnitListUI(List<GameObject> unitList)
@@ -253,7 +253,7 @@ public class UnitInventoryUI : MonoBehaviour
             foreach (GameObject unit in combineList)
             {
                 string unitValue = unit.GetComponent<Unit>().unitValue;
-                unitInventoryManager.RemoveUnit(unit, unitValue); // 인벤토리에서 제거
+                unitManager.RemoveUnit(unit, unitValue); // 인벤토리에서 제거
                 Destroy(unit);
             }
 

@@ -7,10 +7,16 @@ public class Move : MonoBehaviour
 
     [SerializeField] protected float speed = 5f;
 
+    // protected virtual void FixedUpdate()
+    // {
+    //     HandleMovement();
+    // }
+    
     protected virtual void Update()
     {
         HandleMovement();
     }
+
 
  
 

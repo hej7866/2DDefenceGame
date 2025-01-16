@@ -13,11 +13,13 @@
             Instance = this;
         }
 
-        public void ShowDamage(Vector3 position, int damage)
+        public void ShowDamage(Vector3 position, int damage, bool isCritical)
         {
             // 데미지 텍스트 생성
             GameObject damageText = Instantiate(damageTextPrefab, worldCanvas);
             damageText.GetComponent<Text>().text = damage.ToString();
+
+            if(isCritical) damageText.GetComponent<Text>().color = Color.red;
 
             // 텍스트 위치를 월드 좌표로 설정
             damageText.transform.position = position;

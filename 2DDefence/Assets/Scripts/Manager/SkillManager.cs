@@ -54,12 +54,12 @@ public class SkillManager : MonoBehaviour
 
     // 패시브 스킬
 
-    /// 패시브 스킬 1: 현재 공격력이 2배가 됨.
+    /// 패시브 스킬 1: 현재 공격력이 50% 증가함.
 
     public void P_Skill_01(Unit unit)
     {
         // 3배로 세팅
-        unit.AttackPowerMultiplier = 2;
+        unit.AttackPowerMultiplier = 1.5f;
 
         EntityController.Instance.UpdateSelectionUI(); // 공격력이 증가했으므로 UI 업데이트 해줘야함
     }
@@ -69,13 +69,13 @@ public class SkillManager : MonoBehaviour
     public void P_Skill_02(Unit unit)
     {
         // 2배로 세팅
-        unit.AttackCooldownMultiplier = 0.5f;
+        unit.AttackCooldownMultiplier = 1.3f;
 
         EntityController.Instance.UpdateSelectionUI(); // 공격속도가 증가했으므로 UI 업데이트 해줘야함
  
     }
 
-    /// 패시브 스킬 3: 초간 치명타 데미지가 2.5배가 됨.
+    /// 패시브 스킬 3: 현재 치명타 데미지가 2.5배가 됨.
 
     public void P_Skill_03(Unit unit)
     {
@@ -119,7 +119,7 @@ public class SkillManager : MonoBehaviour
             if (arrowScript != null)
             {
                 float damage = unit.CurrentAttackPower * 3;
-                arrowScript.Initialize(unit.currentTarget.transform, damage);
+                arrowScript.Initialize(unit.currentTarget.transform, damage, false);
             }
         }
     }
@@ -150,7 +150,7 @@ public class SkillManager : MonoBehaviour
     public void A_Skill_04(Unit unit) // 방패병 스킬
     {
         Enemy target = unit.currentTarget.GetComponent<Enemy>();
-        target.TakeDamage(100 * target.armor);
+        target.TakeDamage(100 * target.armor, false);
     }
 
 
@@ -173,7 +173,7 @@ public class SkillManager : MonoBehaviour
 
         while (elapsed < duration)
         {
-            enemy.TakeDamage(enemy.maxHealth * 0.03f);
+            enemy.TakeDamage(enemy.maxHealth * 0.03f, false);
 
             yield return new WaitForSeconds(tickInterval);
             elapsed += tickInterval;
@@ -196,7 +196,7 @@ public class SkillManager : MonoBehaviour
             if (arrowScript != null)
             {
                 float damage = unit.CurrentAttackPower;
-                arrowScript.Initialize(unit.currentTarget.transform, damage);
+                arrowScript.Initialize(unit.currentTarget.transform, damage, false);
             }
         }
     }

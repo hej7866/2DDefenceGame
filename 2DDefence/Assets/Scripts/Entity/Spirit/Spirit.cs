@@ -6,6 +6,7 @@ public class Spirit : Move
     private Vector2 moveDirection;
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
+    private Animator animator;
 
     private LineRenderer lineRenderer; 
 
@@ -15,6 +16,14 @@ public class Spirit : Move
         spriteRenderer = GetComponent<SpriteRenderer>();
         lineRenderer = GetComponentInChildren<LineRenderer>();
         originalColor = spriteRenderer.color;
+        animator = GetComponentInChildren<Animator>();
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        animator.SetBool("1_Move", isMoving); // 이동 애니메이션 구현
     }
 
     private void OnDestroy()
@@ -32,7 +41,7 @@ public class Spirit : Move
     {
         if (collision.CompareTag("MoneyPortal"))
         {
-            GameManager.Instance.AddGold(10000); // 돈 추가
+            GameManager.Instance.AddGold(100); // 돈 추가
             Destroy(gameObject);
         }
         else if (collision.CompareTag("UnitPortal"))

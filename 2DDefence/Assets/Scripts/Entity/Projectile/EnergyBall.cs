@@ -58,7 +58,7 @@ public class EnergyBall : MonoBehaviour
         Enemy enemy = target.GetComponent<Enemy>();
         if (enemy != null)
         {
-            enemy.TakeDamage(damage); // 적에게 데미지 적용
+            enemy.TakeDamage(damage, false); // 적에게 데미지 적용
             enemy.ApplyStun(2f);
         }
         Destroy(gameObject); // 화살 삭제

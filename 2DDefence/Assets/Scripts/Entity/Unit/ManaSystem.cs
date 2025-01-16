@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
+
 
 public class ManaSystem : MonoBehaviour
 {
@@ -9,17 +12,59 @@ public class ManaSystem : MonoBehaviour
     public int chargeMana = 5;
     Unit unit;
 
-
-    public bool skillCharged = false; // 스킬 충전 여부
+    public bool skillCharged = false;
 
     private ActiveSkillData[] activeSkills;
     private DebuffSkillData[] debuffSkills;
+
+    Canvas unitCanvas;
+
+    public GameObject manaBar;
+    private GameObject manaBarInstance;
+    private Slider instantiatedManaBar;
+
+    private float previousScaleX; // 이전 스케일 X 값을 저장
+
     void Start()
     {
         unit = GetComponent<Unit>();
         activeSkills = SkillDatabase.Instance.activeSkills;
         debuffSkills = SkillDatabase.Instance.debuffSkills;
-    } 
+
+        // 유닛 프리팹 내부의 Canvas 찾기
+        unitCanvas = GetComponentInChildren<Canvas>();
+        if (unitCanvas == null)
+        {
+            Debug.LogError("Canvas를 찾을 수 없습니다. 유닛 프리팹 내부에 Canvas가 있어야 합니다.");
+            return;
+        }
+
+        // 마나바 생성 (Canvas를 부모로 설정)
+        manaBarInstance = Instantiate(manaBar, unitCanvas.transform);
+
+        // 마나바의 위치를 유닛 위에 배치
+        RectTransform manaBarRect = manaBarInstance.GetComponent<RectTransform>();
+        manaBarRect.localPosition = new Vector3(0, -45f, 0);
+
+        instantiatedManaBar = manaBarInstance.GetComponent<Slider>();
+        UpdateManaBar();
+
+        // 초기 스케일 X 값 설정
+        previousScaleX = unit.transform.localScale.x;
+
+        unitCanvas.enabled = false;
+    }
+
+    void Update()
+    {
+        // 유닛의 스케일 X 값이 변경되었을 때만 연산 수행
+        if (Mathf.Abs(unit.transform.localScale.x - previousScaleX) > Mathf.Epsilon)
+        {
+            ManaBarScaleChangeFunc();
+            previousScaleX = unit.transform.localScale.x; // 이전 값을 업데이트
+        }
+    }
+
 
     public void UseSkill(int unitId)
     {
@@ -44,9 +89,9 @@ public class ManaSystem : MonoBehaviour
         }
             currMana = 0;
             skillCharged = false;
+            UpdateManaBar();
     }  
     
-
 
     public void AddMana(int amount)
     {
@@ -55,6 +100,21 @@ public class ManaSystem : MonoBehaviour
         {
             currMana += amount;
         }
-        if(currMana >= maxMana) skillCharged = true;    
+        if(currMana >= maxMana) skillCharged = true;
+        UpdateManaBar();
+    }
+
+    protected void UpdateManaBar()
+    {
+        if (manaBar != null)
+        {
+            instantiatedManaBar.maxValue = maxMana;
+            instantiatedManaBar.value = currMana;
+        }
+    }
+
+    public void ManaBarScaleChangeFunc()
+    {
+        unitCanvas.transform.localScale = unit.transform.localScale * 0.01f;
     }
 }

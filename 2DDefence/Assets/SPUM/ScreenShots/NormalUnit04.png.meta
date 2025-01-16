@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7a2d7b68805b80b4aad93fbcdc1b5372
+guid: e38c48d69519b74418fddd60da927f22
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,7 +117,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: NormalHuman01_0
+      name: NormalUnit04_0
       rect:
         serializedVersion: 2
         x: 30
@@ -125,161 +125,161 @@ TextureImporter:
         width: 200
         height: 200
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ab4e74a3e5a58574fb4423ccf6e8941b
-      internalID: 1590091592
+      spriteID: 9e1c8dc334511834ebb74c9b087cf92f
+      internalID: 993502624
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NormalHuman01_1
+      name: NormalUnit04_1
       rect:
         serializedVersion: 2
-        x: 336
+        x: 316
         y: 1815
-        width: 96
+        width: 116
         height: 131
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3b706adf5e1d17e4e969e1937b3c342f
-      internalID: -1846144269
+      spriteID: 5d261c9adc15a1f4e89441158d6ed027
+      internalID: 1231912994
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NormalHuman01_2
+      name: NormalUnit04_2
       rect:
         serializedVersion: 2
-        x: 591
+        x: 570
         y: 1815
-        width: 98
+        width: 119
         height: 132
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 18a04c2404a84b14294479871e2951c5
-      internalID: 2085179102
+      spriteID: 33f701f78d70cc7478f1b15dad50c611
+      internalID: 1369374830
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NormalHuman01_3
+      name: NormalUnit04_3
       rect:
         serializedVersion: 2
-        x: 845
+        x: 824
         y: 1814
-        width: 102
+        width: 123
         height: 133
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 125b3777a0524894f9c866891f024e18
-      internalID: -416218523
+      spriteID: 586e9c5e0423bda4da15a60418ad9535
+      internalID: 1547519265
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NormalHuman01_4
+      name: NormalUnit04_4
       rect:
         serializedVersion: 2
-        x: 1100
+        x: 1079
         y: 1814
-        width: 104
+        width: 125
         height: 134
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bcda0ad633a13e1419539a8ffd8d6cba
-      internalID: -1179275546
+      spriteID: e48ded5154f15314e89017030390160c
+      internalID: 247016181
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NormalHuman01_5
+      name: NormalUnit04_5
       rect:
         serializedVersion: 2
-        x: 1357
+        x: 1336
         y: 1814
-        width: 102
+        width: 123
         height: 134
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ecf6d1f70c4e10e49b16d9f816b1b3f3
-      internalID: -1693950662
+      spriteID: 0858fef42b7c60842b9c836b4dbcc510
+      internalID: -592281332
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NormalHuman01_6
+      name: NormalUnit04_6
       rect:
         serializedVersion: 2
-        x: 1614
+        x: 1593
         y: 1815
-        width: 100
+        width: 121
         height: 132
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4c9dd140b791a0341875e19a2228bd34
-      internalID: 448602488
+      spriteID: 4bb9082231f0f414ab41a73b3ca78f48
+      internalID: 1814688126
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NormalHuman01_7
+      name: NormalUnit04_7
       rect:
         serializedVersion: 2
-        x: 1871
+        x: 1851
         y: 1815
-        width: 98
+        width: 118
         height: 131
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dc6b5b556d1e5c9409674de0dc2a1d94
-      internalID: -1609919094
+      spriteID: fd353a6288819df4c9fc569b003b0b55
+      internalID: 252644903
       vertices: []
       indices: 
       edges: []
@@ -295,14 +295,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      NormalHuman01_0: 1590091592
-      NormalHuman01_1: -1846144269
-      NormalHuman01_2: 2085179102
-      NormalHuman01_3: -416218523
-      NormalHuman01_4: -1179275546
-      NormalHuman01_5: -1693950662
-      NormalHuman01_6: 448602488
-      NormalHuman01_7: -1609919094
+      NormalUnit04_0: 993502624
+      NormalUnit04_1: 1231912994
+      NormalUnit04_2: 1369374830
+      NormalUnit04_3: 1547519265
+      NormalUnit04_4: 247016181
+      NormalUnit04_5: -592281332
+      NormalUnit04_6: 1814688126
+      NormalUnit04_7: 252644903
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

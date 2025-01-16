@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f90bc3b34778914688f264bf9eb29be, type: 3}
+  m_Name: Card01
+  m_EditorClassIdentifier: 
+  augmentId: 1
+  augmentName: "\uC778\uD574\uC804\uC220"
+  augmentDesc: "\uC801\uC774 \uD544\uB4DC\uC5D0 \uC788\uB294 \uC720\uB2DB \uD55C\uB9C8\uB9AC
+    \uB2F9 2%\uC758 \uCD94\uAC00 \uB370\uBBF8\uC9C0\uB97C \uC785\uC2B5\uB2C8\uB2E4. "
+  augmentIcon: {fileID: 21300000, guid: c0e1e714dbe9f84448cc0cdb7ee868f4, type: 3}
+  augmentType: 0

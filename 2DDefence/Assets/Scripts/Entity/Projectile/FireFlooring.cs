@@ -58,7 +58,7 @@ public class FireFlooring : MonoBehaviour
                     continue;
                 }
 
-                enemy.TakeDamage(fireFlooringDamage);
+                enemy.TakeDamage(fireFlooringDamage, false);
             }
 
             yield return new WaitForSeconds(tickInterval);

@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UI; // Slider 사용을 위해 필요
 using System.Collections;
+using System.Runtime.CompilerServices;
 
 public class Enemy : MonoBehaviour
 {
@@ -83,10 +84,44 @@ public class Enemy : MonoBehaviour
         EnemyArmor(currentWave);
     }
 
-    public void TakeDamage(float damage)
+    /// <summary>
+    /// 적이 데미지를 받는 로직
+    /// 
+    /// 일반 상황
+    /// - 유닛이 주는 데미지에 적의 아머를 연산한 값에 해당하는 데미지를 받는다.
+    /// 특수 상황
+    /// - 증강체 활성화 : 증강체가 활성화 된 경우 활성화 된 증강체의 능력에 따라 추가 데미지를 받는다.
+    /// </summary>
+    public void TakeDamage(float damage, bool isCritical)
     {
-        currentHealth -= damage / armor;
-        Debug.Log($"적이 {damage / armor}만큼 데미지를 받았다");
+        float realDamage = damage / armor;
+        bool[] augmentSecletedList = AugmentManager.Instance.augmentSecletedList;
+        if(augmentSecletedList[0]) // 1번 증강체 적용 (0번 인덱스 true => 1번 증강체 활성화 상태)
+        {
+            realDamage *= AugmentUtility.Instance.Augment_01(); // 유닛이 준 데미지에 아머를 적용하고 1번 증강체 계수까지 적용하여 진짜 데미지 연산을 함.
+        }
+
+        if(augmentSecletedList[1]) // 2번 증강체 적용 (1번 인덱스 true => 2번 증강체 활성화 상태)
+        {
+            if(currentHealth / maxHealth <= 0.2f)
+            {
+                realDamage *= AugmentUtility.Instance.Augment_02(this); 
+            }
+        }
+
+        if(augmentSecletedList[2]) // 3번 증강체 적용 (2번 인덱스 true => 3번 증강체 활성화 상태)
+        {
+            // 0부터 100 사이의 랜덤 값을 생성
+            int randomValue = UnityEngine.Random.Range(0, 1000);
+
+            // 랜덤 값이 3이하일 경우, 0.3% 확률로 실행
+            if (randomValue < 3)
+            {
+                realDamage = AugmentUtility.Instance.Augment_03(); 
+            }
+        }
+
+        currentHealth -= realDamage;
 
         if (currentHealth < 0) currentHealth = 0; // 체력이 0보다 내려가지 않도록 보정
 
@@ -95,7 +130,7 @@ public class Enemy : MonoBehaviour
         // 적 머리 위에 데미지 텍스트 표시
         // 적 머리 위에 데미지 텍스트 표시
         Vector3 uiPosition = transform.position + Vector3.up * 0.5f; // 적 머리 위 위치
-        DamageUI.Instance.ShowDamage(uiPosition, (int)(damage / armor));
+        DamageUI.Instance.ShowDamage(uiPosition, (int)(realDamage), isCritical);
 
         if (currentHealth <= 0)
         {

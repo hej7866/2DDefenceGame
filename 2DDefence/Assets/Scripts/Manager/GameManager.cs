@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public int gold = 0;
+    //public int unitPopulation = 0;
 
     // 게임 종료 관련
     [SerializeField] private int enemyCountLimit;
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
     // 재화 UI 관련
     [Header("재화 UI 세팅")]
     [SerializeField] Text goldText;
+    public Text unitPopulationText;
 
 
     // 일반 웨이브 보스 웨이브 구분용
@@ -57,7 +59,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        UpdateUnitCount();
+        UpdateEnemyCount();
         if(enemyCount >= enemyCountLimit) OnGameOverPanel(); // 게임 종료조건 (유카사)
     }
 
@@ -67,7 +69,7 @@ public class GameManager : MonoBehaviour
         Debug.Log($"[게임 시작 대기] {initialWaitTime}초 동안 대기합니다.");
 
         // 정령 소환
-        SpawnInitialSpirits(5);
+        SpawnInitialSpirits(3);
 
         // UI 업데이트
         if (waveText != null)
@@ -208,7 +210,7 @@ public class GameManager : MonoBehaviour
         {
             waveText.text = $"웨이브 대기";
         }
-        SpawnInitialSpirits(5);
+        SpawnInitialSpirits(3);
         float elapsedTime = 0f;
 
         while (elapsedTime < waveBreakDuration)
@@ -247,7 +249,7 @@ public class GameManager : MonoBehaviour
         return $"{minutes:00}:{seconds:00}";
     }
 
-    public void UpdateUnitCount()
+    public void UpdateEnemyCount()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy"); // "Enemy" 태그로 오브젝트 검색
         enemyCount = enemies.Length; // Enemy 수 계산
@@ -262,6 +264,7 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("UnitCountText가 설정되지 않았습니다.");
         }
     }
+
 
     // 게임 종료 관련 로직
     private void OnGameOverPanel() // 게임 종료시 패널 띄우기

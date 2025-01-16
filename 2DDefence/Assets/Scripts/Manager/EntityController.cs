@@ -212,6 +212,16 @@ public class EntityController : MonoBehaviour
                 0);
 
             Vector3 newTargetPosition = targetPosition + randomOffset;
+            if (spirit != null)
+            {
+                // 방향 전환
+                Vector3 scale = spirit.transform.localScale;
+                scale.x = (newTargetPosition.x < spirit.transform.position.x)
+                          ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);
+                spirit.transform.localScale = scale;
+
+                spirit.SetTargetPosition(newTargetPosition);
+            }
             spirit.SetTargetPosition(newTargetPosition);
         }
     }
@@ -279,6 +289,7 @@ public class EntityController : MonoBehaviour
 
             Unit selectedUnit = selectedUnits[0];
             SpriteRenderer unitSprite = selectedUnit.GetComponent<SpriteRenderer>();
+            Canvas unitCanvas = selectedUnit.GetComponentInChildren<Canvas>();
 
             unitImage.sprite = unitSprite.sprite; // 이미지
             unitName.text = selectedUnit.unitName; // 유닛 이름
@@ -315,6 +326,9 @@ public class EntityController : MonoBehaviour
                 Image unitImage = unitGridSlot.GetComponent<Image>();
 
                 SpriteRenderer unitSprite = unit.GetComponent<SpriteRenderer>();
+
+                Canvas unitCanvas = unit.GetComponentInChildren<Canvas>();
+
                 if (unitSprite != null)
                 {
                     unitImage.sprite = unitSprite.sprite;
