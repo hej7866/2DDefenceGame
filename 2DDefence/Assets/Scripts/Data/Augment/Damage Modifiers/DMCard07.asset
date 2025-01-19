@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f90bc3b34778914688f264bf9eb29be, type: 3}
+  m_Name: DMCard07
+  m_EditorClassIdentifier: 
+  augmentId: 7
+  augmentName: "\uC57D\uC810\uBC1C\uACAC"
+  augmentDesc: "\uC720\uB2DB\uC774 \uAE30\uBCF8\uACF5\uACA9 \uC2DC 20%\uD655\uB960\uB85C
+    \uC801\uC758 \uBC29\uC5B4\uB825\uC744 \uBB34\uC2DC\uD558\uB294 \uACF5\uACA9\uC744\uD569\uB2C8\uB2E4."
+  augmentIcon: {fileID: 21300000, guid: a84d85d98dca59c419eb8dc9a2d72ae4, type: 3}
+  augmentType: 0

@@ -14,7 +14,8 @@ public class AugmentData : ScriptableObject
 
 
     public enum AugmentType
-    {  
-        SpecialAbility,    
+    {
+        DamageModifiers, // 데미지 관련 증강
+        SpecialAbility,  // 특수 능력 (스킬포인트 증가 유닛 도박 등..)
     }
 }

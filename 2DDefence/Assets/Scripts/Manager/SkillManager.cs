@@ -119,7 +119,7 @@ public class SkillManager : MonoBehaviour
             if (arrowScript != null)
             {
                 float damage = unit.CurrentAttackPower * 3;
-                arrowScript.Initialize(unit.currentTarget.transform, damage, false);
+                arrowScript.Initialize(unit.currentTarget.transform, damage, false, unit);
             }
         }
     }
@@ -150,7 +150,7 @@ public class SkillManager : MonoBehaviour
     public void A_Skill_04(Unit unit) // 방패병 스킬
     {
         Enemy target = unit.currentTarget.GetComponent<Enemy>();
-        target.TakeDamage(100 * target.armor, false);
+        target.TakeSkillDamage(100 * target.armor);
     }
 
 
@@ -173,7 +173,7 @@ public class SkillManager : MonoBehaviour
 
         while (elapsed < duration)
         {
-            enemy.TakeDamage(enemy.maxHealth * 0.03f, false);
+            enemy.TakeSkillDamage(enemy.maxHealth * 0.03f);
 
             yield return new WaitForSeconds(tickInterval);
             elapsed += tickInterval;
@@ -196,7 +196,7 @@ public class SkillManager : MonoBehaviour
             if (arrowScript != null)
             {
                 float damage = unit.CurrentAttackPower;
-                arrowScript.Initialize(unit.currentTarget.transform, damage, false);
+                arrowScript.Initialize(unit.currentTarget.transform, damage, false, unit);
             }
         }
     }

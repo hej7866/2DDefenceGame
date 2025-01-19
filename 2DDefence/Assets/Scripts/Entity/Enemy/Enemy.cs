@@ -92,34 +92,12 @@ public class Enemy : MonoBehaviour
     /// 특수 상황
     /// - 증강체 활성화 : 증강체가 활성화 된 경우 활성화 된 증강체의 능력에 따라 추가 데미지를 받는다.
     /// </summary>
-    public void TakeDamage(float damage, bool isCritical)
+    public void TakeAttackDamage(float damage, bool isCritical, Unit unit)
     {
         float realDamage = damage / armor;
         bool[] augmentSecletedList = AugmentManager.Instance.augmentSecletedList;
-        if(augmentSecletedList[0]) // 1번 증강체 적용 (0번 인덱스 true => 1번 증강체 활성화 상태)
-        {
-            realDamage *= AugmentUtility.Instance.Augment_01(); // 유닛이 준 데미지에 아머를 적용하고 1번 증강체 계수까지 적용하여 진짜 데미지 연산을 함.
-        }
 
-        if(augmentSecletedList[1]) // 2번 증강체 적용 (1번 인덱스 true => 2번 증강체 활성화 상태)
-        {
-            if(currentHealth / maxHealth <= 0.2f)
-            {
-                realDamage *= AugmentUtility.Instance.Augment_02(this); 
-            }
-        }
-
-        if(augmentSecletedList[2]) // 3번 증강체 적용 (2번 인덱스 true => 3번 증강체 활성화 상태)
-        {
-            // 0부터 100 사이의 랜덤 값을 생성
-            int randomValue = UnityEngine.Random.Range(0, 1000);
-
-            // 랜덤 값이 3이하일 경우, 0.3% 확률로 실행
-            if (randomValue < 3)
-            {
-                realDamage = AugmentUtility.Instance.Augment_03(); 
-            }
-        }
+        realDamage = AugmentDamageSetting(realDamage, augmentSecletedList, unit); // 증강 보정값 추가
 
         currentHealth -= realDamage;
 
@@ -138,6 +116,95 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    // 증강 보정 로직
+    private float AugmentDamageSetting(float realDamage, bool[] augmentSecletedList, Unit unit)
+    {
+        if(augmentSecletedList[0]) // 1번 증강체 적용 (0번 인덱스 true => 1번 증강체 활성화 상태)
+        {
+            realDamage *= AugmentUtility.Instance.DMCard01(); // 유닛이 준 데미지에 아머를 적용하고 1번 증강체 계수까지 적용하여 진짜 데미지 연산을 함.
+        }
+
+        if(augmentSecletedList[1]) // 2번 증강체 적용 (1번 인덱스 true => 2번 증강체 활성화 상태)
+        {
+            if(currentHealth / maxHealth <= 0.2f)
+            {
+                realDamage *= AugmentUtility.Instance.DMCard02(this); 
+            }
+        }
+
+        if(augmentSecletedList[2]) // 3번 증강체 적용 (2번 인덱스 true => 3번 증강체 활성화 상태)
+        {
+            // 0부터 100 사이의 랜덤 값을 생성
+            int randomValue = UnityEngine.Random.Range(0, 1000);
+
+            // 랜덤 값이 3이하일 경우, 0.3% 확률로 실행
+            if (randomValue < 3)
+            {
+                realDamage = AugmentUtility.Instance.DMCard03(); 
+            }
+        }
+
+        if(augmentSecletedList[3]) // 4번 증강체 적용 (3번 인덱스 true => 4번 증강체 활성화 상태)
+        {
+            realDamage += AugmentUtility.Instance.DMCard04(unit); 
+        }
+
+        if(augmentSecletedList[4]) // 5번 증강체 적용 (4번 인덱스 true => 5번 증강체 활성화 상태)
+        {
+            realDamage *= AugmentUtility.Instance.DMCard05(); 
+        }
+
+        if(augmentSecletedList[5]) // 6번 증강체 적용 (5번 인덱스 true => 6번 증강체 활성화 상태)
+        {
+            realDamage *= AugmentUtility.Instance.DMCard06(); 
+        }
+
+        if(augmentSecletedList[6]) // 7번 증강체 적용 (6번 인덱스 true => 7번 증강체 활성화 상태)
+        {
+            // 0부터 100 사이의 랜덤 값을 생성
+            int randomValue = UnityEngine.Random.Range(0, 100);
+
+            // 랜덤 값이 20이하일 경우, 20% 확률로 실행
+            if (randomValue < 20)
+            {
+                realDamage *= AugmentUtility.Instance.DMCard07(this); 
+            }
+        }
+
+        if(augmentSecletedList[7]) // 8번 증강체 적용 (7번 인덱스 true => 8번 증강체 활성화 상태)
+        {
+            realDamage *= AugmentUtility.Instance.DMCard08(this); 
+        }
+
+        if(augmentSecletedList[8]) // 9번 증강체 적용 (8번 인덱스 true => 9번 증강체 활성화 상태)
+        {
+            realDamage += AugmentUtility.Instance.DMCard09(this, unit); 
+        }
+
+        return realDamage;
+    }
+
+    public void TakeSkillDamage(float damage)
+    {
+        float realDamage = damage / armor;
+
+        currentHealth -= realDamage;
+
+        if (currentHealth < 0) currentHealth = 0; // 체력이 0보다 내려가지 않도록 보정
+
+        UpdateHealthBar(); // 체력바 갱신
+
+        // 적 머리 위에 데미지 텍스트 표시
+        // 적 머리 위에 데미지 텍스트 표시
+        Vector3 uiPosition = transform.position + Vector3.up * 0.5f; // 적 머리 위 위치
+        DamageUI.Instance.ShowSkillDamage(uiPosition, (int)(realDamage));
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
     protected void Die()
     {
         isDead = true;
@@ -146,7 +213,11 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // 디버프 효과 담당 로직
+    //  디버프 효과 담당 로직
+    /// <summary>
+    /// [디버프를 스크립트를 따로 분리하지않고 여기서 처리하는 이유] 
+    /// 공격을 당하는 객체가 유닛의 정보에 담기게 되고 그 객체를 통해 바로 여기있는 함수를 불러올 수 있기 때문에 디버프를 걸기 용이하다.
+    /// </summary>
 
     // 궁수 디버프 : 방깎 (디버프 2번 스킬)
     public void ApplyLowerArmor(float duration)

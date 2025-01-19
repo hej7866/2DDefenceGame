@@ -7,6 +7,7 @@ using UnityEngine;
 public class Arrow : MonoBehaviour
 {
     public float speed = 10f; // 화살의 이동 속도
+    private Unit unit;
     private Transform target; // 목표 대상
     private float damage; // 화살 데미지
     private bool isCritical;
@@ -16,8 +17,9 @@ public class Arrow : MonoBehaviour
     private bool hasHit = false; // 이미 명중 처리를 했는지 여부 중복데미지가 들어가는것을 막음
 
     // 화살 초기화
-    public void Initialize(Transform target, float damage, bool isCritical)
+    public void Initialize(Transform target, float damage, bool isCritical, Unit unit) // 현제 타겟, 화살의 데미지, 화살이 크리티컬공격인지 아닌지, 화살을 쏜 유닛의 정보
     {
+        this.unit = unit;
         this.target = target;
         this.damage = damage;
         this.isCritical = isCritical;
@@ -62,8 +64,15 @@ public class Arrow : MonoBehaviour
         Enemy enemy = target.GetComponent<Enemy>();
         if (enemy != null)
         {
-            enemy.TakeDamage(damage, isCritical); // 적에게 데미지 적용
-            if(D_Arrow) enemy.ApplyLowerArmor(5f);
+            if(!D_Arrow)
+            {
+                enemy.TakeAttackDamage(damage, isCritical, unit); // 적에게 데미지 적용
+            }
+            else if(D_Arrow)
+            {
+                enemy.TakeSkillDamage(damage); // 적에게 데미지 적용
+                enemy.ApplyLowerArmor(5f);
+            } 
         }
         Destroy(gameObject); // 화살 삭제
     }

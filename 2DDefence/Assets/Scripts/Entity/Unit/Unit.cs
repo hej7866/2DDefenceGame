@@ -16,6 +16,8 @@ public class Unit : Move
     public float attackCooldown = 1f; // 공격속도
     public float criticalProb = 0f; // 치명타 확률
 
+    public int AttackCount = 0;
+
     public LayerMask enemyLayer;
 
     private Animator animator;
@@ -154,6 +156,8 @@ public class Unit : Move
     {
         if (enemyObj != null && !isMoving)
         {
+            AttackCount++;
+
             // 적 위치에 따라 방향 전환
             FaceTarget(enemyObj.transform.position);
 
@@ -243,7 +247,7 @@ public class Unit : Move
         Enemy enemy = currentTarget.GetComponent<Enemy>();
         if (enemy != null && !manaSystem.skillCharged) // 스킬 차징 상태가 아니라면 일반공격
         {
-            enemy.TakeDamage(CurrentAttackPower, isCritical);
+            enemy.TakeAttackDamage(CurrentAttackPower, isCritical, this);
         }
         else if(enemy != null && manaSystem.skillCharged) // 스킬 차징 상태라면 액티브 스킬 발동
         {
@@ -267,7 +271,7 @@ public class Unit : Move
         Enemy enemy = currentTarget.GetComponent<Enemy>();
         if (enemy != null && !manaSystem.skillCharged) // 스킬 차징 상태가 아니라면 일반공격
         {
-            enemy.TakeDamage(CurrentAttackPower * criticalValue, isCritical);
+            enemy.TakeAttackDamage(CurrentAttackPower * criticalValue, isCritical, this);
         }
         else if(enemy != null && manaSystem.skillCharged) // 스킬 차징 상태라면 액티브 스킬 발동
         {
@@ -306,7 +310,7 @@ public class Unit : Move
                     ? true      // 크리티컬
                     : false;    // 일반
                 Debug.Log(damage);
-                arrowScript.Initialize(enemyObj.transform, damage, isCritical);
+                arrowScript.Initialize(enemyObj.transform, damage, isCritical, this);
             }
         }
         else

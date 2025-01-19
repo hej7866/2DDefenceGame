@@ -3601,8 +3601,8 @@ MonoBehaviour:
   spiritPrefab: {fileID: 2661833736949709387, guid: 0356ffabdfc805c4cab5f8df97e0aeb9, type: 3}
   spiritSpawnPoint: {fileID: 1898278603}
   initialWaitTime: 5
-  waveDuration: 20
-  waveBreakDuration: 10
+  waveDuration: 5
+  waveBreakDuration: 5
   currentWave: 0
   waveText: {fileID: 287375553}
   wavePanelText: {fileID: 1360799641}
@@ -3654,8 +3654,8 @@ MonoBehaviour:
   - {fileID: 3813952981564701131, guid: a0f5e0b795788214cb524507d434947b, type: 3}
   spawnPoint: {fileID: 1239164846}
   initialDelay: 5
-  waveDuration: 20
-  breakDuration: 10
+  waveDuration: 5
+  breakDuration: 5
   spawnInterval: 1
   waveNumber: 1
 --- !u!114 &371259731
@@ -7720,7 +7720,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 832730409}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &814792668
 MonoBehaviour:
@@ -7734,10 +7734,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebe85e4ec3b6e6246b6fcaddb0ced75d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  augmentDatas:
-  - {fileID: 11400000, guid: 85c5ace544033dd44bfbffee55e76737, type: 2}
-  - {fileID: 11400000, guid: f457447a5c069b34da60dcd6b20f4eb2, type: 2}
-  - {fileID: 11400000, guid: ecafe94212e756a458775d42c9ecbe2c, type: 2}
   augmentPanel: {fileID: 1723973460}
   augmentCard: {fileID: 1646459836125749744, guid: d587aa944a5ebce4985194d58f6eca52, type: 3}
   parentPanel: {fileID: 1723973460}
@@ -7832,37 +7828,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 820988829}
   m_CullTransparentMesh: 1
---- !u!1 &821743432
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 821743433}
-  m_Layer: 0
-  m_Name: ManaBarController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &821743433
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 821743432}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 832730409}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &824494172
 GameObject:
   m_ObjectHideFlags: 0
@@ -8046,7 +8011,6 @@ Transform:
   - {fileID: 273685120}
   - {fileID: 444513329}
   - {fileID: 1184184027}
-  - {fileID: 821743433}
   - {fileID: 814792667}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -16204,6 +16168,60 @@ Transform:
   m_Father: {fileID: 953720073}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1324474986
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1324474987}
+  - component: {fileID: 1324474988}
+  m_Layer: 0
+  m_Name: AugmentDatabase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1324474987
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1324474986}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1529719397}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1324474988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1324474986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d37e897fa59947942acccd4c4a063949, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  augmentDatas:
+  - {fileID: 11400000, guid: 85c5ace544033dd44bfbffee55e76737, type: 2}
+  - {fileID: 11400000, guid: f457447a5c069b34da60dcd6b20f4eb2, type: 2}
+  - {fileID: 11400000, guid: ecafe94212e756a458775d42c9ecbe2c, type: 2}
+  - {fileID: 11400000, guid: 53012abe2c356d64893d9cf202bc1180, type: 2}
+  - {fileID: 11400000, guid: bce6151b6bc16554cb4053006ac0b8dc, type: 2}
+  - {fileID: 11400000, guid: e4e6e32a36873e64ab515f445e4cf705, type: 2}
+  - {fileID: 11400000, guid: 91e7e69bd11bba74fb836174da11080c, type: 2}
+  - {fileID: 11400000, guid: e3e9fc09a6579ee4d8c2cf939aa1495d, type: 2}
+  - {fileID: 11400000, guid: 30ed565067aff894aafc25cb2996fbe6, type: 2}
 --- !u!1 &1326644374
 GameObject:
   m_ObjectHideFlags: 0
@@ -17941,6 +17959,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1964088748}
+  - {fileID: 1324474987}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
