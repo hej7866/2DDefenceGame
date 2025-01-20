@@ -7700,6 +7700,7 @@ GameObject:
   - component: {fileID: 814792667}
   - component: {fileID: 814792668}
   - component: {fileID: 814792669}
+  - component: {fileID: 814792670}
   m_Layer: 0
   m_Name: AugmentManager
   m_TagString: Untagged
@@ -7735,9 +7736,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   augmentPanel: {fileID: 1723973460}
-  augmentCard: {fileID: 1646459836125749744, guid: d587aa944a5ebce4985194d58f6eca52, type: 3}
   parentPanel: {fileID: 1723973460}
-  augmentSecletedList: 
+  dmAugmentCard: {fileID: 1646459836125749744, guid: d587aa944a5ebce4985194d58f6eca52, type: 3}
+  saAugmentCard: {fileID: 1646459836125749744, guid: c7dbcd9479e74134395963fde13a886d, type: 3}
+  dmAugmentSecletedList: 
+  saAugmentSecletedList: 
 --- !u!114 &814792669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7750,7 +7753,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bbe759f0cf0cfa4c8c521c527d43e60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  augmentSecletedList: 
+--- !u!114 &814792670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 814792666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d67cbb2f4658fcd4ab7e3664e73150e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &820988829
 GameObject:
   m_ObjectHideFlags: 0
@@ -16212,7 +16226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d37e897fa59947942acccd4c4a063949, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  augmentDatas:
+  dmAugmentDatas:
   - {fileID: 11400000, guid: 85c5ace544033dd44bfbffee55e76737, type: 2}
   - {fileID: 11400000, guid: f457447a5c069b34da60dcd6b20f4eb2, type: 2}
   - {fileID: 11400000, guid: ecafe94212e756a458775d42c9ecbe2c, type: 2}
@@ -16222,6 +16236,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 91e7e69bd11bba74fb836174da11080c, type: 2}
   - {fileID: 11400000, guid: e3e9fc09a6579ee4d8c2cf939aa1495d, type: 2}
   - {fileID: 11400000, guid: 30ed565067aff894aafc25cb2996fbe6, type: 2}
+  saAugmentDatas:
+  - {fileID: 11400000, guid: ba07b509109e4ae4cae5fd674f836cd5, type: 2}
 --- !u!1 &1326644374
 GameObject:
   m_ObjectHideFlags: 0
@@ -25020,6 +25036,7 @@ MonoBehaviour:
   legendaryUnits: []
   godUnits: []
   unitPopulation: 0
+  populationLimit: 30
 --- !u!1 &2078467593
 GameObject:
   m_ObjectHideFlags: 0

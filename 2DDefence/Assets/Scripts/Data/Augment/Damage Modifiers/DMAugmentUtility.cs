@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class AugmentUtility : MonoBehaviour
+public class DMAugmentUtility : MonoBehaviour
 {
-    public static AugmentUtility Instance;
+    public static DMAugmentUtility Instance;
 
-    public bool[] augmentSecletedList; // 증강이 선택됐는지 체크하는 배열
+    // public bool[] augmentSecletedList; // 증강이 선택됐는지 체크하는 배열
 
     void Awake()
     {
@@ -138,7 +138,7 @@ public class AugmentUtility : MonoBehaviour
         else
         {
             return 0f;
-        }
+        }   
     }
 }
 

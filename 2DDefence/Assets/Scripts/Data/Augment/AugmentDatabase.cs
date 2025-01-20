@@ -6,7 +6,8 @@ public class AugmentDatabase : MonoBehaviour
 {
     public static AugmentDatabase Instance;
 
-    public AugmentData[] augmentDatas; // 전체 증강 데이터
+    public AugmentData[] dmAugmentDatas; 
+    public AugmentData[] saAugmentDatas;
 
     void Awake()
     {

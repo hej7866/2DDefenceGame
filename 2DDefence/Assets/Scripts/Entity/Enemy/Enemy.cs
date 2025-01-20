@@ -95,9 +95,9 @@ public class Enemy : MonoBehaviour
     public void TakeAttackDamage(float damage, bool isCritical, Unit unit)
     {
         float realDamage = damage / armor;
-        bool[] augmentSecletedList = AugmentManager.Instance.augmentSecletedList;
+        bool[] dmAugmentSecletedList = AugmentManager.Instance.dmAugmentSecletedList;
 
-        realDamage = AugmentDamageSetting(realDamage, augmentSecletedList, unit); // 증강 보정값 추가
+        realDamage = AugmentDamageSetting(realDamage, dmAugmentSecletedList, unit); // 증강 보정값 추가
 
         currentHealth -= realDamage;
 
@@ -117,22 +117,22 @@ public class Enemy : MonoBehaviour
     }
 
     // 증강 보정 로직
-    private float AugmentDamageSetting(float realDamage, bool[] augmentSecletedList, Unit unit)
+    private float AugmentDamageSetting(float realDamage, bool[] dmAugmentSecletedList, Unit unit)
     {
-        if(augmentSecletedList[0]) // 1번 증강체 적용 (0번 인덱스 true => 1번 증강체 활성화 상태)
+        if(dmAugmentSecletedList[0]) // 1번 증강체 적용 (0번 인덱스 true => 1번 증강체 활성화 상태)
         {
-            realDamage *= AugmentUtility.Instance.DMCard01(); // 유닛이 준 데미지에 아머를 적용하고 1번 증강체 계수까지 적용하여 진짜 데미지 연산을 함.
+            realDamage *= DMAugmentUtility.Instance.DMCard01(); // 유닛이 준 데미지에 아머를 적용하고 1번 증강체 계수까지 적용하여 진짜 데미지 연산을 함.
         }
 
-        if(augmentSecletedList[1]) // 2번 증강체 적용 (1번 인덱스 true => 2번 증강체 활성화 상태)
+        if(dmAugmentSecletedList[1]) // 2번 증강체 적용 (1번 인덱스 true => 2번 증강체 활성화 상태)
         {
             if(currentHealth / maxHealth <= 0.2f)
             {
-                realDamage *= AugmentUtility.Instance.DMCard02(this); 
+                realDamage *= DMAugmentUtility.Instance.DMCard02(this); 
             }
         }
 
-        if(augmentSecletedList[2]) // 3번 증강체 적용 (2번 인덱스 true => 3번 증강체 활성화 상태)
+        if(dmAugmentSecletedList[2]) // 3번 증강체 적용 (2번 인덱스 true => 3번 증강체 활성화 상태)
         {
             // 0부터 100 사이의 랜덤 값을 생성
             int randomValue = UnityEngine.Random.Range(0, 1000);
@@ -140,26 +140,26 @@ public class Enemy : MonoBehaviour
             // 랜덤 값이 3이하일 경우, 0.3% 확률로 실행
             if (randomValue < 3)
             {
-                realDamage = AugmentUtility.Instance.DMCard03(); 
+                realDamage = DMAugmentUtility.Instance.DMCard03(); 
             }
         }
 
-        if(augmentSecletedList[3]) // 4번 증강체 적용 (3번 인덱스 true => 4번 증강체 활성화 상태)
+        if(dmAugmentSecletedList[3]) // 4번 증강체 적용 (3번 인덱스 true => 4번 증강체 활성화 상태)
         {
-            realDamage += AugmentUtility.Instance.DMCard04(unit); 
+            realDamage += DMAugmentUtility.Instance.DMCard04(unit); 
         }
 
-        if(augmentSecletedList[4]) // 5번 증강체 적용 (4번 인덱스 true => 5번 증강체 활성화 상태)
+        if(dmAugmentSecletedList[4]) // 5번 증강체 적용 (4번 인덱스 true => 5번 증강체 활성화 상태)
         {
-            realDamage *= AugmentUtility.Instance.DMCard05(); 
+            realDamage *= DMAugmentUtility.Instance.DMCard05(); 
         }
 
-        if(augmentSecletedList[5]) // 6번 증강체 적용 (5번 인덱스 true => 6번 증강체 활성화 상태)
+        if(dmAugmentSecletedList[5]) // 6번 증강체 적용 (5번 인덱스 true => 6번 증강체 활성화 상태)
         {
-            realDamage *= AugmentUtility.Instance.DMCard06(); 
+            realDamage *= DMAugmentUtility.Instance.DMCard06(); 
         }
 
-        if(augmentSecletedList[6]) // 7번 증강체 적용 (6번 인덱스 true => 7번 증강체 활성화 상태)
+        if(dmAugmentSecletedList[6]) // 7번 증강체 적용 (6번 인덱스 true => 7번 증강체 활성화 상태)
         {
             // 0부터 100 사이의 랜덤 값을 생성
             int randomValue = UnityEngine.Random.Range(0, 100);
@@ -167,18 +167,18 @@ public class Enemy : MonoBehaviour
             // 랜덤 값이 20이하일 경우, 20% 확률로 실행
             if (randomValue < 20)
             {
-                realDamage *= AugmentUtility.Instance.DMCard07(this); 
+                realDamage *= DMAugmentUtility.Instance.DMCard07(this); 
             }
         }
 
-        if(augmentSecletedList[7]) // 8번 증강체 적용 (7번 인덱스 true => 8번 증강체 활성화 상태)
+        if(dmAugmentSecletedList[7]) // 8번 증강체 적용 (7번 인덱스 true => 8번 증강체 활성화 상태)
         {
-            realDamage *= AugmentUtility.Instance.DMCard08(this); 
+            realDamage *= DMAugmentUtility.Instance.DMCard08(this); 
         }
 
-        if(augmentSecletedList[8]) // 9번 증강체 적용 (8번 인덱스 true => 9번 증강체 활성화 상태)
+        if(dmAugmentSecletedList[8]) // 9번 증강체 적용 (8번 인덱스 true => 9번 증강체 활성화 상태)
         {
-            realDamage += AugmentUtility.Instance.DMCard09(this, unit); 
+            realDamage += DMAugmentUtility.Instance.DMCard09(this, unit); 
         }
 
         return realDamage;

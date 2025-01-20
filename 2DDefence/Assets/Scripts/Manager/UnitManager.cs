@@ -17,6 +17,7 @@ public class UnitManager : MonoBehaviour
     private int previousUnitCount = 0; // 이전 유닛 수 감지용
 
     public int unitPopulation = 0;
+    public int populationLimit = 30;
 
     void Awake()
     {
