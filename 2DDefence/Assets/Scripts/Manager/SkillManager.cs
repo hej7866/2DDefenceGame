@@ -16,6 +16,7 @@ public class SkillManager : MonoBehaviour
 {
     public static SkillManager Instance;
 
+
     // 스킬 시스템
     [Header("패시브 스킬 ON / OFF 여부")]
     public bool p_skill_01 = false;
@@ -31,6 +32,7 @@ public class SkillManager : MonoBehaviour
     [SerializeField] Sprite p_skill_01_icon;
     [SerializeField] Sprite p_skill_02_icon;
     [SerializeField] Sprite p_skill_03_icon;
+
 
     void Awake()
     {
@@ -64,7 +66,7 @@ public class SkillManager : MonoBehaviour
         EntityController.Instance.UpdateSelectionUI(); // 공격력이 증가했으므로 UI 업데이트 해줘야함
     }
 
-    /// 패시브 스킬 2: 현재 공격속도가 2배가 됨.
+    /// 패시브 스킬 2: 현재 공격속도가 30% 증가됨.
 
     public void P_Skill_02(Unit unit)
     {

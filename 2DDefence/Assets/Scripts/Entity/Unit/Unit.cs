@@ -127,7 +127,7 @@ public class Unit : Move
         
 
         // 공격 로직
-        if (!isMoving && currentTarget != null && Time.time >= lastAttackTime + CurrentAttackCooldown)
+        if (Time.time >= lastAttackTime + CurrentAttackCooldown && currentTarget != null && !isMoving)
         {
             lastAttackTime = Time.time;
             AttackTarget(currentTarget);

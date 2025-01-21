@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.EventSystems; // 추가: UI 클릭 감지를 위해 필요
 public class DragBoxUI : MonoBehaviour
 {
     private Vector3 dragStartPos;
@@ -12,6 +12,11 @@ public class DragBoxUI : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            // UI 클릭인지 확인, 만약 UI 위에서 마우스를 뗐다면 월드 선택 로직 실행 안 함
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
             isDragging = true;
             dragStartPos = Input.mousePosition; // 마우스 시작 위치
         }

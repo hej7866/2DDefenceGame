@@ -134,6 +134,7 @@ public class AugmentManager : MonoBehaviour
             cardButton.onClick.AddListener(() =>
             {
                 saAugmentSecletedList[augmentData.augmentId - 1] = true;
+                SAAugmentUtility.Instance.SAAugmentExecuteFunc(augmentData);
                 OffAugmentPanel(); // 패널 닫기
             });
         }

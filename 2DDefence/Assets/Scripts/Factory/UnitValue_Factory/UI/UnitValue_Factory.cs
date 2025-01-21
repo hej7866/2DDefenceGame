@@ -44,7 +44,8 @@ public class UnitValue_Factory : MonoBehaviour
         }
     }
 
-    void ToggleUnitValuePanel()
+    public 
+void ToggleUnitValuePanel()
     {
         if (unitvalue_panel != null)
         {

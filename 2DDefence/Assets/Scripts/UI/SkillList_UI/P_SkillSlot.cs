@@ -25,11 +25,26 @@ public class P_SkillSlot : SkillSlot
 
     private void OnPassive()
     {
-        passiveSkillData.skillOn = true;
-        Debug.Log($"스킬 활성화: {passiveSkillData.skillName}");
-        // SkillManager를 통해 스킬 활성화 처리
-        SkillManager.Instance.OnPassive(passiveSkillData.skillNumber);
-        OnUI();
+        int skillPoint = GameManager.Instance.skillPoint;
+
+        if(skillPoint < 1) 
+        {
+            LogManager.Instance.Log($"<color=#FF0000>스킬 포인트가 부족합니다.</color>");
+            return;
+        }
+        else if(skillPoint >= 1)
+        {
+            GameManager.Instance.EarnSkillPoint(-1);
+            
+            passiveSkillData.skillOn = true;
+            Debug.Log($"스킬 활성화: {passiveSkillData.skillName}");
+            // SkillManager를 통해 스킬 활성화 처리
+            SkillManager.Instance.OnPassive(passiveSkillData.skillNumber);
+            LogManager.Instance.Log($"패시브 스킬 <color=#FF0000>{passiveSkillData.skillName}</color>이 활성화 되었습니다.");
+            OnUI();
+        }
+
+
     }
 
     private void OnUI()

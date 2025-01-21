@@ -3443,6 +3443,7 @@ MonoBehaviour:
   attackRange: 2
   attackCooldown: 0.75
   criticalProb: 0
+  AttackCount: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -3450,8 +3451,8 @@ MonoBehaviour:
   isRanger: 0
   isMagician: 0
   isShielder: 0
-  AttackPowerMultiplier: 1
   UnitClassMultiplier: 1
+  AttackPowerMultiplier: 1
   AttackCooldownMultiplier: 1
   CriticalProbMultiplier: 1
   currentTarget: {fileID: 0}
@@ -3500,7 +3501,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxMana: 30
   currMana: 0
-  chargeMana: 6
+  chargeMana: 5
   skillCharged: 0
   manaBar: {fileID: 5256260524777795665, guid: 977df034237948748a5aafa7cc424f02, type: 3}
 --- !u!1 &866242504790932392

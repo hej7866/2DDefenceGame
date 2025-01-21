@@ -17,7 +17,7 @@ public class UnitManager : MonoBehaviour
     private int previousUnitCount = 0; // 이전 유닛 수 감지용
 
     public int unitPopulation = 0;
-    public int populationLimit = 30;
+    public int populationLimit = 20;
 
     void Awake()
     {
@@ -43,7 +43,7 @@ public class UnitManager : MonoBehaviour
         if (currentUnitCount != previousUnitCount)
         {
             UpdateUnitLists();
-            GameManager.Instance.unitPopulationText.text = CountAllUnits().ToString();
+            UnitPopulationUIUpdate();
             unitPopulation = CountAllUnits();
             previousUnitCount = currentUnitCount; // 이전 유닛 수 업데이트
         }
@@ -57,6 +57,11 @@ public class UnitManager : MonoBehaviour
                GameObject.FindGameObjectsWithTag("Unique").Length +
                GameObject.FindGameObjectsWithTag("Legendary").Length +
                GameObject.FindGameObjectsWithTag("God").Length;
+    }
+
+    public void UnitPopulationUIUpdate()
+    {
+        GameManager.Instance.unitPopulationText.text = $"{CountAllUnits()} / {populationLimit}";
     }
 
     // 유닛 리스트 업데이트

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Spirit : Move
 {
@@ -50,6 +51,12 @@ public class Spirit : Move
             if(unitManager.unitPopulation < unitManager.populationLimit)
             {    
                 UnitSpawnManager.Instance.ExecuteRandomFunction();
+            }
+            else if(unitManager.unitPopulation >= unitManager.populationLimit)
+            {
+                string log = "최대 인구수에 도달하여 유닛을 생산할 수 없습니다.";
+                LogManager.Instance.Log(log);
+                return;
             }
             Destroy(gameObject);
         }

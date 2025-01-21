@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public int gold = 0;
+    public int jewel = 0;
+    public int skillPoint = 0;
     //public int unitPopulation = 0;
 
     // 게임 종료 관련
@@ -38,6 +40,8 @@ public class GameManager : MonoBehaviour
     // 재화 UI 관련
     [Header("재화 UI 세팅")]
     [SerializeField] Text goldText;
+    [SerializeField] Text jewelText;
+    [SerializeField] Text SPText;
     public Text unitPopulationText;
 
 
@@ -117,7 +121,6 @@ public class GameManager : MonoBehaviour
                 goldText.text = gold.ToString();
             }
         }
-        Debug.Log($"골드: {gold}g");
     }
 
     public void UseGold(int amount) // 돈 소모
@@ -130,7 +133,27 @@ public class GameManager : MonoBehaviour
                 goldText.text = gold.ToString();
             }
         }
-        Debug.Log($"골드: {gold}g");
+    }
+
+    public void AddJewel(int amount) // 정령으로 돈 흭득
+    {
+        jewel += amount;
+        // UI 업데이트
+        {
+            if(jewelText != null)
+            {
+                jewelText.text = jewel.ToString();
+            }
+        }
+    }
+
+    public void EarnSkillPoint(int earnPoint)
+    {
+        skillPoint += earnPoint;
+        if(SPText != null)
+        {
+            SPText.text = $"SP : {skillPoint}";
+        }
     }
 
     // Wave System
@@ -257,7 +280,7 @@ public class GameManager : MonoBehaviour
         // UI 업데이트
         if (unitCount != null)
         {
-            unitCount.text = $"유닛 카운트: {enemyCount}";
+            unitCount.text = $"유닛 카운트 : {enemyCount}";
         }
         else
         {

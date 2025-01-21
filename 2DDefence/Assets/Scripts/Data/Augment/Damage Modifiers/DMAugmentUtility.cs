@@ -7,12 +7,14 @@ public class DMAugmentUtility : MonoBehaviour
 {
     public static DMAugmentUtility Instance;
 
+
     // public bool[] augmentSecletedList; // 증강이 선택됐는지 체크하는 배열
 
     void Awake()
     {
         Instance = this;
     }
+
 
     // 첫번째 증강 카드
     /*

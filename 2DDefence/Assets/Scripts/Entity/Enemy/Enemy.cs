@@ -208,8 +208,11 @@ public class Enemy : MonoBehaviour
     protected void Die()
     {
         isDead = true;
-        Debug.Log($"{gameObject.name}이(가) 파괴되었습니다.");
         GameManager.Instance.AddGold(3 * waveNumber); // 디테일한 값 할당 필요 (임시로 기능확인용)
+        if (this.CompareTag("Boss"))
+        {
+            GameManager.Instance.EarnSkillPoint(1);
+        }
         Destroy(gameObject);
     }
 
