@@ -186,7 +186,7 @@ public class Enemy : MonoBehaviour
 
     public void TakeSkillDamage(float damage)
     {
-        float realDamage = damage / armor;
+        float realDamage = (damage / armor) * PotentialUtility.Instance.PotentialMultiplier_03;
 
         currentHealth -= realDamage;
 

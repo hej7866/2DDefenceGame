@@ -69,25 +69,30 @@ public class Unit : Move
     }
 
     // **현재 공격력**: (기본 공격력 + 업그레이드 공격력) * 직업보정 스킬 계수
-    // **현재 공격력(패시브 활성화시)**: (기본 공격력 + 업그레이드 공격력) * 패시브 스킬 배수
+    // **현재 공격력(패시브 활성화시)**: (기본 공격력 + 업그레이드 공격력) * 패시브 스킬 배수 * 잠재능력
     public int UnitClassMultiplier = 1;
-    public float AttackPowerMultiplier = 1;
+    public float AttackPowerMultiplier = 1f;
     public float CurrentAttackPower
     {
         get
         {
-            return (attackPower + UnitUpgrade.Instance.GetUpgradeData(unitValue).adUpgradeValue) * UnitClassMultiplier * AttackPowerMultiplier;
+            return (attackPower + UnitUpgrade.Instance.GetUpgradeData(unitValue).adUpgradeValue) 
+            * UnitClassMultiplier 
+            * AttackPowerMultiplier 
+            * PotentialUtility.Instance.PotentialMultiplier_01;
         }
     }
 
     // **현재 공격 속도**: 기본 공격 속도 * 업그레이드 공속 계수
-    // **현재 공격 속도(패시브 활성화시)**: (기본 공격속도 * 업그레이드 공격계수) * 패시브 스킬배수
+    // **현재 공격 속도(패시브 활성화시)**: (기본 공격속도 * 업그레이드 공격계수) / (패시브 스킬배수 * 잠재능력)
     public float AttackCooldownMultiplier = 1f;
+    public float AS_PotentialMultiplier = 1f;
     public float CurrentAttackCooldown
     {
         get
         {
-            return (attackCooldown * UnitUpgrade.Instance.GetUpgradeData(unitValue).asUpgradeValue) / AttackCooldownMultiplier;
+            return (attackCooldown * UnitUpgrade.Instance.GetUpgradeData(unitValue).asUpgradeValue)  
+            / (AttackCooldownMultiplier * PotentialUtility.Instance.PotentialMultiplier_02);
         }
     }
 
@@ -98,7 +103,8 @@ public class Unit : Move
     {
         get
         {
-            return ((criticalProb + UnitUpgrade.Instance.GetUpgradeData(unitValue).cpUpgradeValue) * 100) * CriticalProbMultiplier;
+            return ((criticalProb + UnitUpgrade.Instance.GetUpgradeData(unitValue).cpUpgradeValue) * 100) 
+            * CriticalProbMultiplier;
         }
     }
 

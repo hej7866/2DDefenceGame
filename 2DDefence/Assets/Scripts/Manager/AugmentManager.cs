@@ -98,6 +98,7 @@ public class AugmentManager : MonoBehaviour
             cardButton.onClick.AddListener(() =>
             {
                 dmAugmentSecletedList[augmentData.augmentId - 1] = true;
+                LogManager.Instance.Log($"증강체 <color=#00FF00>{augmentData.augmentName}</color>을 선택하셨습니다.");
                 OffAugmentPanel(); // 패널 닫기
             });
         }
@@ -134,6 +135,7 @@ public class AugmentManager : MonoBehaviour
             cardButton.onClick.AddListener(() =>
             {
                 saAugmentSecletedList[augmentData.augmentId - 1] = true;
+                LogManager.Instance.Log($"증강체 <color=#0000FF>{augmentData.augmentName}</color>을 선택하셨습니다.");
                 SAAugmentUtility.Instance.SAAugmentExecuteFunc(augmentData);
                 OffAugmentPanel(); // 패널 닫기
             });

@@ -30,13 +30,17 @@ public class SAAugmentUtility : MonoBehaviour
 
     public void SAAugmentExecuteFunc(AugmentData saAugmentData)
     {
-        if(saAugmentData.augmentId == 1) SACard01();
-        if(saAugmentData.augmentId == 2) SACard02(); 
-        if(saAugmentData.augmentId == 3) SACard03(); 
-        if(saAugmentData.augmentId == 4) SACard04();
-        if(saAugmentData.augmentId == 5) SACard05();
-        if(saAugmentData.augmentId == 6) SACard06(); 
-        if(saAugmentData.augmentId == 7) SACard07();
+        switch(saAugmentData.augmentId)
+        {
+            case 1: SACard01(); break;
+            case 2: SACard02(); break;
+            case 3: SACard03(); break;
+            case 4: SACard04(); break;
+            case 5: SACard05(); break;
+            case 6: SACard06(); break;
+            case 7: SACard07(); break;
+            case 8: SACard08(); break;
+        }
     }
 
     // 첫번째 증강 카드
@@ -227,22 +231,33 @@ public class SAAugmentUtility : MonoBehaviour
     // 일곱번째 증강 카드
     /*
     * 증강 이름 : 금은보화
-    * 증강 능력 : 골드 2000원과 보석 5개를 얻습니다.
+    * 증강 능력 : 골드 2000원과 보석 10개를 얻습니다.
     */
     public void SACard07() 
     {
         GameManager.Instance.AddGold(2000);
-        GameManager.Instance.AddJewel(5);
+        GameManager.Instance.AddJewel(10);
     }
 
     // 여덟번째 증강 카드
     /*
-    * 증강 이름 : 
-    * 증강 능력 : 
+    * 증강 이름 : 정령의 기운
+    * 증강 능력 : 정령 5마리가 추가 지급됩니다.
     */
     public void SACard08() 
     {
-        
+        GameManager.Instance.SpawnInitialSpirits(5);
+    }
+
+    // 아홉번째 증강 카드
+    /*
+    * 증강 이름 : 독서의 힘
+    * 증강 능력 : 마도서 20개를 얻습니다.
+    */
+    public void SACard09() 
+    {
+        PotentialManager.Instance.book += 20;
+        PotentialGacha_UI.Instance.UpdeteResourceUI();
     }
 }
     

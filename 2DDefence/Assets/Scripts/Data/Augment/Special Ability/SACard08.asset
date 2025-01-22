@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SACard08
   m_EditorClassIdentifier: 
   augmentId: 8
-  augmentName: 
-  augmentDesc: 
-  augmentIcon: {fileID: 21300000, guid: afd2ecff1f782de46b562029d30a529c, type: 3}
+  augmentName: "\uC815\uB839\uC758 \uAE30\uC6B4"
+  augmentDesc: "\uC815\uB839 5\uAC1C\uB97C \uD68D\uB4DD\uD569\uB2C8\uB2E4."
+  augmentIcon: {fileID: 21300000, guid: 6397b6e1627035d4a9fed5357f2fd398, type: 3}
   augmentType: 1

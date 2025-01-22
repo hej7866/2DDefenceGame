@@ -135,9 +135,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void AddJewel(int amount) // 정령으로 돈 흭득
+    public void AddJewel(int amount) 
     {
         jewel += amount;
+        // UI 업데이트
+        {
+            if(jewelText != null)
+            {
+                jewelText.text = jewel.ToString();
+            }
+        }
+    }
+
+    public void UseJewel(int amount) 
+    {
+        jewel -= amount;
         // UI 업데이트
         {
             if(jewelText != null)

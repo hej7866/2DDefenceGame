@@ -31,8 +31,19 @@ public class A_SkillSlot : SkillSlot
 
     private void ActiveSkill_LvUp()
     {
-        activeSkillData.skillLevel++;
-        Skill_Panel_UI.Instance.A_Btn();
+        int skillPoint = GameManager.Instance.skillPoint;
+
+        if(skillPoint < 1) 
+        {
+            LogManager.Instance.Log($"<color=#FF0000>스킬 포인트가 부족합니다.</color>");
+            return;
+        }
+        else if(skillPoint >= 1)
+        {
+            activeSkillData.skillLevel++;
+            GameManager.Instance.EarnSkillPoint(-1);
+            Skill_Panel_UI.Instance.A_Btn();
+        }
     }
 
     private void ActiveSkill_Selected()

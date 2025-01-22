@@ -28,8 +28,19 @@ public class D_SkillSlot : SkillSlot
 
     private void DebuffSkill_LvUp()
     {
-        debuffSkillData.skillLevel++;
-        Skill_Panel_UI.Instance.D_Btn();
+        int skillPoint = GameManager.Instance.skillPoint;
+
+        if(skillPoint < 1) 
+        {
+            LogManager.Instance.Log($"<color=#FF0000>스킬 포인트가 부족합니다.</color>");
+            return;
+        }
+        else if(skillPoint >= 1)
+        {
+            debuffSkillData.skillLevel++;
+            GameManager.Instance.EarnSkillPoint(-1);
+            Skill_Panel_UI.Instance.D_Btn();
+        }
     }
 
     private void DebuffSkill_Selected()
