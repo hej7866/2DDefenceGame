@@ -67,7 +67,16 @@ public class Enemy : MonoBehaviour
     // 에너미 스텟 설정
     private float EnemyHealth(int currentWave)
     {
-        maxHealth += currentWave * 10;
+        int correction = currentWave / 10; // currentWave가 21이면 2... 이런식
+        
+        if(currentWave < 10)
+        {
+            maxHealth += currentWave * 10;
+        }
+        else
+        {
+            maxHealth += currentWave * correction * 10 ;
+        }
         return maxHealth;
     }
     
@@ -208,7 +217,7 @@ public class Enemy : MonoBehaviour
     protected void Die()
     {
         isDead = true;
-        GameManager.Instance.AddGold(3 * waveNumber); // 디테일한 값 할당 필요 (임시로 기능확인용)
+        GameManager.Instance.AddGold(2 * waveNumber); // 디테일한 값 할당 필요 (임시로 기능확인용)
         if (this.CompareTag("Boss"))
         {
             GameManager.Instance.EarnSkillPoint(1);

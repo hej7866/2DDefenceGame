@@ -40,6 +40,7 @@ public class SAAugmentUtility : MonoBehaviour
             case 6: SACard06(); break;
             case 7: SACard07(); break;
             case 8: SACard08(); break;
+            case 9: SACard09(); break;
         }
     }
 

@@ -325,6 +325,15 @@ public class Unit : Move
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("DeletePortal") && DeletePortal.Instance.onPortal)
+        {
+            // int randomValue = Random.Range(0, 100);
+            Destroy(gameObject);
+        }
+    }
+
 
     // 패시브 스킬 활성화
     private bool p_skill_01 = false;

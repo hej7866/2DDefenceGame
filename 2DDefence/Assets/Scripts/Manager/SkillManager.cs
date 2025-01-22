@@ -152,7 +152,18 @@ public class SkillManager : MonoBehaviour
     public void A_Skill_04(Unit unit) // 방패병 스킬
     {
         Enemy target = unit.currentTarget.GetComponent<Enemy>();
-        target.TakeSkillDamage(100 * target.armor);
+
+        int skillDamage = 0;
+
+        switch(unit.unitValue)
+        {
+            case "Normal": skillDamage = 20; break;
+            case "Rare": skillDamage = 50; break;
+            case "Unique": skillDamage = 100; break;
+            case "Regendary": skillDamage = 300; break;
+            case "God": skillDamage = 500; break;
+        }
+        target.TakeSkillDamage(skillDamage * target.armor);
     }
 
 

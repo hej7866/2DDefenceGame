@@ -29,7 +29,7 @@ public class AugmentManager : MonoBehaviour
     
     private List<GameObject> createdCards = new List<GameObject>(); // 생성된 카드 리스트
     
-    private int[] augmentWave = { 1, 3, 5 }; // 증강이 열릴 웨이브
+    private int[] augmentWave = {11, 21}; // 증강이 열릴 웨이브
     private int curr = 0; // 현재 증강 웨이브 인덱스
 
     [Header("증강 체크 리스트")]
@@ -62,8 +62,8 @@ public class AugmentManager : MonoBehaviour
     {
         if (GameManager.Instance.currentWave == augmentWave[curr])
         {
-            if(curr == 0) OnDMAugmentPanel();
-            else if(curr == 1) OnSAAugmentPanel();
+            if(curr == 0) OnSAAugmentPanel();
+            else if(curr == 1) OnDMAugmentPanel();
         }
     }
 

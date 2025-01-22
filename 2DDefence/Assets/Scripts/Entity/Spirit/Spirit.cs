@@ -60,6 +60,11 @@ public class Spirit : Move
             }
             Destroy(gameObject);
         }
+        else if (collision.CompareTag("JewelPortal"))
+        {
+            GameManager.Instance.AddJewel(1); // 보석 추가
+            Destroy(gameObject);
+        }
     }
 
     public void Select()
