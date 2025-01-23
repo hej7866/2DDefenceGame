@@ -12,7 +12,7 @@ public class EnergyBall : MonoBehaviour
 
     private bool hasHit = false; // 이미 명중 처리를 했는지 여부 중복데미지가 들어가는것을 막음
 
-    // 화살 초기화
+    // 에너지볼 초기화
     public void Initialize(Transform target, float damage)
     {
         this.target = target;

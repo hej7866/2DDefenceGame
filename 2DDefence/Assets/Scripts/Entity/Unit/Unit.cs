@@ -15,6 +15,8 @@ public class Unit : Move
     public float attackRange = 1.5f; // 공격 범위 / 사거리
     public float attackCooldown = 1f; // 공격속도
     public float criticalProb = 0f; // 치명타 확률
+    public float armorPenetration = 1f; // 방관
+    
 
     public int AttackCount = 0;
 
@@ -66,6 +68,7 @@ public class Unit : Move
         else if(isShielder) shielder = GetComponent<Shielder>();
 
         if(isShielder) UnitClassMultiplier = 0;
+        ArmorPenetration(); // 유닛 밸류에 따른 방관 세팅
     }
 
     // **현재 공격력**: (기본 공격력 + 업그레이드 공격력) * 직업보정 스킬 계수
@@ -105,6 +108,15 @@ public class Unit : Move
         {
             return ((criticalProb + UnitUpgrade.Instance.GetUpgradeData(unitValue).cpUpgradeValue) * 100) 
             * CriticalProbMultiplier;
+        }
+    }
+
+    //public float UnitValueMultiplier = 0f;
+    public float CurrentArmorPenetration
+    {
+        get
+        {
+            return armorPenetration;
         }
     }
 
@@ -251,6 +263,7 @@ public class Unit : Move
         }
 
         Enemy enemy = currentTarget.GetComponent<Enemy>();
+
         if (enemy != null && !manaSystem.skillCharged) // 스킬 차징 상태가 아니라면 일반공격
         {
             enemy.TakeAttackDamage(CurrentAttackPower, isCritical, this);
@@ -275,6 +288,7 @@ public class Unit : Move
         }
 
         Enemy enemy = currentTarget.GetComponent<Enemy>();
+
         if (enemy != null && !manaSystem.skillCharged) // 스킬 차징 상태가 아니라면 일반공격
         {
             enemy.TakeAttackDamage(CurrentAttackPower * criticalValue, isCritical, this);
@@ -325,12 +339,35 @@ public class Unit : Move
         }
     }
 
+    public void ArmorPenetration()
+    {
+        switch(unitValue)
+        {
+            case "Normal": armorPenetration = 1f; break;
+            case "Rare": armorPenetration = 0.9f; break;
+            case "Unique": armorPenetration = 0.8f; break;
+            case "Legendary": armorPenetration = 0.7f; break;
+            case "God": armorPenetration = 0.5f; break;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        int goldPrice = 0;
+        switch(unitValue)
+        {
+            case "Normal" : goldPrice = 75; break;
+            case "Rare" : goldPrice = 165; break;
+            case "Unique" : goldPrice = 500; break;
+            case "Legendary" : goldPrice = 1125; break;
+            case "God" : goldPrice = 2500; break;
+        }
+
         if (collision.CompareTag("DeletePortal") && DeletePortal.Instance.onPortal)
         {
-            // int randomValue = Random.Range(0, 100);
+            GameManager.Instance.AddGold(goldPrice);
             Destroy(gameObject);
+            LogManager.Instance.Log($"유닛을 팔아 <color=#FF0000>{goldPrice}</color>골드를 얻었습니다.");
         }
     }
 

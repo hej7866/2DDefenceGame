@@ -103,7 +103,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public void TakeAttackDamage(float damage, bool isCritical, Unit unit)
     {
-        float realDamage = damage / armor;
+        float realDamage = damage / (armor * unit.CurrentArmorPenetration);
         bool[] dmAugmentSecletedList = AugmentManager.Instance.dmAugmentSecletedList;
 
         realDamage = AugmentDamageSetting(realDamage, dmAugmentSecletedList, unit); // 증강 보정값 추가
@@ -221,6 +221,7 @@ public class Enemy : MonoBehaviour
         if (this.CompareTag("Boss"))
         {
             GameManager.Instance.EarnSkillPoint(1);
+            GameManager.Instance.AddJewel(5);
         }
         Destroy(gameObject);
     }

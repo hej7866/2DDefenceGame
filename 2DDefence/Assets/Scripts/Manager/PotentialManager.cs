@@ -88,20 +88,20 @@ public class PotentialManager : MonoBehaviour
         int gold = GameManager.Instance.gold;
         int jewel = GameManager.Instance.jewel;
 
-        if(gold < 100)
+        if(gold < 500)
         {
             LogManager.Instance.Log("골드가 부족합니다.");
             return;
         }
 
-        if(jewel < 1)
+        if(jewel < 5)
         {
             LogManager.Instance.Log("보석이 부족합니다.");
             return;
         }
 
-        GameManager.Instance.UseGold(100);
-        GameManager.Instance.UseJewel(1);
+        GameManager.Instance.UseGold(500);
+        GameManager.Instance.UseJewel(5);
 
         book++;
 

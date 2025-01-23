@@ -28,11 +28,14 @@ public class PotentialGacha_UI : MonoBehaviour
     
     void Start()
     {
-        Book.text = $"마도서 : {PotentialManager.Instance.book}";
-
         ability01.text = firstAbility;
         ability02.text = firstAbility;
         ability03.text = firstAbility;
+    }
+
+    void OnEnable()
+    {
+        Book.text = $"마도서 : {PotentialManager.Instance.book}";
     }
 
 

@@ -40,11 +40,11 @@ public class UnitUpgrade : MonoBehaviour
     {
         upgradeData = new Dictionary<string, UpgradeData>
         {
-            { "Normal", new UpgradeData { adCost = 10, asCost = 10, cpCost = 10, adIncrement = 1, asDecrement = 0.02f, cpIncrement = 0.02f } },
-            { "Rare", new UpgradeData { adCost = 30, asCost = 30, cpCost = 30, adIncrement = 3, asDecrement = 0.03f, cpIncrement = 0.03f } },
-            { "Unique", new UpgradeData { adCost = 100, asCost = 100, cpCost = 100, adIncrement = 5, asDecrement = 0.05f, cpIncrement = 0.05f } },
-            { "Legendary", new UpgradeData { adCost = 300, asCost = 300, cpCost = 300, adIncrement = 7, asDecrement = 0.075f, cpIncrement = 0.75f } },
-            { "God", new UpgradeData { adCost = 500, asCost = 500, cpCost = 500, adIncrement = 30, asDecrement = 0.1f, cpIncrement = 0.1f } }
+            { "Normal", new UpgradeData { adCost = 50, asCost = 50, cpCost = 50, adIncrement = 1, asDecrement = 0.02f, cpIncrement = 0.02f } },
+            { "Rare", new UpgradeData { adCost = 100, asCost = 100, cpCost = 100, adIncrement = 3, asDecrement = 0.04f, cpIncrement = 0.03f } },
+            { "Unique", new UpgradeData { adCost = 300, asCost = 300, cpCost = 300, adIncrement = 8, asDecrement = 0.075f, cpIncrement = 0.05f } },
+            { "Legendary", new UpgradeData { adCost = 1000, asCost = 1000, cpCost = 1000, adIncrement = 25, asDecrement = 0.125f, cpIncrement = 0.075f } },
+            { "God", new UpgradeData { adCost = 3000, asCost = 3000, cpCost = 3000, adIncrement = 50, asDecrement = 0.2f, cpIncrement = 0.1f } }
         };
     }
 
@@ -57,14 +57,21 @@ public class UnitUpgrade : MonoBehaviour
         if (GameManager.Instance.gold >= data.adCost)
         {
             GameManager.Instance.UseGold(data.adCost);
-            data.adCost += 10;
+            switch(grade)
+            {
+                case "Normal" : data.adCost += 30; break;
+                case "Rare" : data.adCost += 50; break;
+                case "Unique" : data.adCost += 100; break;
+                case "Legendary" : data.adCost += 300; break;
+                case "God" : data.adCost += 1000; break;
+            }
             data.adUpgradeCount++;
             data.adUpgradeValue += data.adIncrement; // 등급별 공격력 증가량 적용
 
         }
         else
         {
-            Debug.Log("재화가 부족합니다.");
+            LogManager.Instance.Log("<color=#FF0000>골드가 부족합니다.</color>");
         }
     }
 
@@ -77,13 +84,20 @@ public class UnitUpgrade : MonoBehaviour
         if (GameManager.Instance.gold >= data.asCost)
         {
             GameManager.Instance.UseGold(data.asCost);
-            data.asCost += 10;
+            switch(grade)
+            {
+                case "Normal" : data.asCost += 30; break;
+                case "Rare" : data.asCost += 50; break;
+                case "Unique" : data.asCost += 100; break;
+                case "Legendary" : data.asCost += 300; break;
+                case "God" : data.asCost += 1000; break;
+            }
             data.asUpgradeCount++;
             data.asUpgradeValue -= data.asDecrement; // 등급별 공속 감소량 적용
         }
         else
         {
-            Debug.Log("재화가 부족합니다.");
+            LogManager.Instance.Log("<color=#FF0000>골드가 부족합니다.</color>");
         }
     }
 
@@ -96,13 +110,20 @@ public class UnitUpgrade : MonoBehaviour
         if (GameManager.Instance.gold >= data.cpCost)
         {
             GameManager.Instance.UseGold(data.cpCost);
-            data.cpCost += 10;
+            switch(grade)
+            {
+                case "Normal" : data.cpCost += 30; break;
+                case "Rare" : data.cpCost += 50; break;
+                case "Unique" : data.cpCost += 100; break;
+                case "Legendary" : data.cpCost += 300; break;
+                case "God" : data.cpCost += 1000; break;
+            }
             data.cpUpgradeCount++;
             data.cpUpgradeValue += data.cpIncrement; // 등급별 치명타 확률 증가량 적용
         }
         else
         {
-            Debug.Log("재화가 부족합니다.");
+            LogManager.Instance.Log("<color=#FF0000>골드가 부족합니다.</color>");
         }
     }
 

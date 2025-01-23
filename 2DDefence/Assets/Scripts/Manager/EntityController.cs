@@ -32,8 +32,7 @@ public class EntityController : MonoBehaviour
     public Text unitAd;
     public Text unitAs;
     public Text unitCp;
-    public Text adUpgradeCount;
-    public Text asUpgradeCount;
+    public Text unitArmorPenetration;
 
     public GameObject multiUnitPanel; // 여러 유닛 선택 시 표시할 패널
     public GameObject unitGridPrefab; // 개별 유닛 아이콘 프리팹
@@ -301,9 +300,8 @@ public class EntityController : MonoBehaviour
             if (upgradeData != null)
             {
                 unitAd.text = $"공격력: {selectedUnit.CurrentAttackPower}";
-                adUpgradeCount.text = $"{upgradeData.adUpgradeCount}";
                 unitAs.text = $"공격속도: {selectedUnit.CurrentAttackCooldown:F2}";
-                asUpgradeCount.text = $"{upgradeData.asUpgradeCount}";
+                unitArmorPenetration.text = $"{ (1 - selectedUnit.CurrentArmorPenetration) * 100 }%";
                 unitCp.text = $"치명타확률: {selectedUnit.CurrentCriticalProp:F0} %";
             }
         }

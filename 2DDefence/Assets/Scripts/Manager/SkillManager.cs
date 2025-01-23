@@ -54,6 +54,28 @@ public class SkillManager : MonoBehaviour
         if(p_skill_03) p_skill_03_Img.sprite = p_skill_03_icon;
     }
 
+    public void BuySkillPoint() // 스킬포인트 구매
+    {
+        int gold = GameManager.Instance.gold;
+        int jewel = GameManager.Instance.jewel;
+
+        if(gold < 3000)
+        {
+            LogManager.Instance.Log("골드가 부족합니다.");
+            return;
+        }
+
+        if(jewel < 5)
+        {
+            LogManager.Instance.Log("보석이 부족합니다.");
+            return;
+        }
+
+        GameManager.Instance.UseGold(3000);
+        GameManager.Instance.UseJewel(5);
+        GameManager.Instance.EarnSkillPoint(1);
+    }
+
     // 패시브 스킬
 
     /// 패시브 스킬 1: 현재 공격력이 50% 증가함.

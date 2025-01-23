@@ -258,7 +258,6 @@ public class SAAugmentUtility : MonoBehaviour
     public void SACard09() 
     {
         PotentialManager.Instance.book += 20;
-        PotentialGacha_UI.Instance.UpdeteResourceUI();
     }
 }
     
