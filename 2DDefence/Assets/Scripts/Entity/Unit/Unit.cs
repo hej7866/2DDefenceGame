@@ -339,7 +339,7 @@ public class Unit : Move
         }
     }
 
-    public void ArmorPenetration()
+    public void ArmorPenetration() // 방관세팅 
     {
         switch(unitValue)
         {
