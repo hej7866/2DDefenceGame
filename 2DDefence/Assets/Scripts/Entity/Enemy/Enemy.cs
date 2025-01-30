@@ -33,6 +33,8 @@ public class Enemy : MonoBehaviour
 
     public bool isDead = false;
 
+    Animator animator;
+
     void Awake()
     {
         Instance = this;
@@ -40,6 +42,8 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        animator = GetComponentInChildren<Animator>();
+
         waveNumber = EnemySpawnSyetem.Instance.waveNumber;
         target = WayPointManager.Instance.waypoints[0]; // 첫 번째 웨이포인트 설정
         EnemyStatSetting(waveNumber);
@@ -62,6 +66,31 @@ public class Enemy : MonoBehaviour
     {
         waypointIndex = (waypointIndex + 1) % WayPointManager.Instance.waypoints.Length;
         target = WayPointManager.Instance.waypoints[waypointIndex];
+
+        if(waypointIndex == 3)
+        {
+            // 대상의 위치와 자신의 위치를 비교하여 방향 설정
+            Vector3 scale = transform.localScale;
+            Vector3 sliderScale = healthBar.transform.localScale; 
+
+            scale.x = Mathf.Abs(scale.x);
+            sliderScale.x = Mathf.Abs(sliderScale.x);
+
+            transform.localScale = scale;
+            healthBar.transform.localScale = sliderScale; 
+        }
+        else if(waypointIndex == 1)
+        {
+            // 대상의 위치와 자신의 위치를 비교하여 방향 설정
+            Vector3 scale = transform.localScale;
+            Vector3 sliderScale = healthBar.transform.localScale; 
+            
+            scale.x = -Mathf.Abs(scale.x);
+            sliderScale.x = -Mathf.Abs(sliderScale.x);
+
+            transform.localScale = scale;
+            healthBar.transform.localScale = sliderScale; 
+        }
     }
 
     // 에너미 스텟 설정
