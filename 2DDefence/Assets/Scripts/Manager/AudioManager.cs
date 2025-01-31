@@ -29,20 +29,6 @@ public class AudioManager : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            if(!setting) 
-            {   
-                setting_panel.SetActive(true);
-                setting = true;
-            }
-            else if(setting)
-            {
-                setting_panel.SetActive(false);
-                setting = false;
-            }
-        }
-
         audioSource.volume = BGM_slider.value;
     }
 

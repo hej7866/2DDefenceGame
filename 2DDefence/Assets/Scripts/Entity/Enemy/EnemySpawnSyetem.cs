@@ -76,7 +76,7 @@ public class EnemySpawnSyetem : MonoBehaviour
         }
 
         // 웨이브 번호에 따라 프리팹 선택
-        int prefabIndex = (waveNumber - 1) % enemyPrefabs.Length; // 웨이브 번호에 맞는 프리팹 선택
+        int prefabIndex = ((waveNumber) / 10); // 웨이브 번호에 맞는 프리팹 선택
         GameObject selectedPrefab = enemyPrefabs[prefabIndex];
         Instantiate(selectedPrefab, spawnPoint.position, spawnPoint.rotation);
         Debug.Log($"[스폰된 적] {selectedPrefab.name} (웨이브 {waveNumber})");

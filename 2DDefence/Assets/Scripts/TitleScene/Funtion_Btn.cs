@@ -17,7 +17,7 @@ public class Funtion_Btn : MonoBehaviour
     // 게임시작 버튼 (게임씬을 불러온다.)
     public void LoadGameScene()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     // 1. 환경설정 

@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class Boss : Enemy
 {
-    void Start()
+    protected override void Start()
     {
-        target = WayPointManager.Instance.waypoints[0]; // 첫 번째 웨이포인트 설정
-        UpdateHealthBar();
+        base.Start();
     }
 
     protected override void Update()

@@ -301,7 +301,6 @@ public class GameManager : MonoBehaviour
     }
 
 
-    // 게임 종료 관련 로직
     private void OnGameOverPanel() // 게임 종료시 패널 띄우기
     {        
         gameoverPanel.SetActive(true);
@@ -311,12 +310,12 @@ public class GameManager : MonoBehaviour
     // 다시하기 버튼
     public void RetryGame()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     // 돌아가기 버튼
     public void EndGame()
     {
-        SceneManager.LoadScene(1); 
+        SceneManager.LoadScene(0); 
     }
 }

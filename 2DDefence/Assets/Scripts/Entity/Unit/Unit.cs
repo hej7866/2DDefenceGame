@@ -1,8 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor.ShaderGraph.Internal;
-using System.Linq.Expressions;
 
 
 public class Unit : Move
