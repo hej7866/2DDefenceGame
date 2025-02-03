@@ -15,9 +15,14 @@ public class Funtion_Btn : MonoBehaviour
     public Image title_panel;
     public GameObject title_panel_hide;
     // 게임시작 버튼 (게임씬을 불러온다.)
-    public void LoadGameScene()
+    public void LoadBasicScene()
     {
         SceneManager.LoadScene(1);
+    }
+
+    public void LoadChallengeScene()
+    {
+        SceneManager.LoadScene(2);
     }
 
     // 1. 환경설정 

@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,7 +16,10 @@ public class GameManager : MonoBehaviour
 
     // 게임 종료 관련
     [SerializeField] private int enemyCountLimit;
-    [SerializeField] private GameObject gameoverPanel;
+    [SerializeField] private GameObject losePanel;
+    [SerializeField] private GameObject winPanel;
+    private bool isWin = false;
+    private bool isLose = false;
 
 
     // 정령 프리팹 및 스포너 세팅
@@ -49,6 +54,8 @@ public class GameManager : MonoBehaviour
     EnemySpawnSyetem enemySpawnSyetem;
     BossSpawnSystem bossSpawnSystem;
 
+    public bool isChallenge;
+
     void Awake()
     {
         Instance = this;
@@ -64,7 +71,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         UpdateEnemyCount();
-        if(enemyCount >= enemyCountLimit) OnGameOverPanel(); // 게임 종료조건 (유카사)
+        if(enemyCount >= enemyCountLimit) LoseGame(); // 게임 종료조건 (유카사)
     }
 
     // 게임 첫 시작시 실행
@@ -192,9 +199,21 @@ public class GameManager : MonoBehaviour
                 Debug.LogWarning("currentWaveText가 설정되어 있지 않습니다.");
             }
 
-            // 게임 종료 조건 (보스사) 
-            GameObject bossObject = GameObject.FindGameObjectWithTag("Boss"); // "Boss" 태그를 가진 게임 오브젝트를 찾아오기
-            if (bossObject != null) OnGameOverPanel(); // Boss 게임 오브젝트가 일반 웨이브에 존재하면 패배
+            if(currentWave > 2 && currentWave % 10 == 1) // 현재 웨이브가 2보다 크고 10으로나누었을대 나머지가 1이면 즉 11, 21, 31 ... 이런 웨이브일때만 아래 내용을 실행
+            {
+                GameObject bossObject = GameObject.FindGameObjectWithTag("Boss"); // "Boss" 태그를 가진 게임 오브젝트를 찾아오기
+
+                if(!isChallenge) // 베이직 모드 일때 즉, 챌린지 모드가 아닐때 (챌린지 모드는 승리조건이 없다!)
+                {
+                    if(bossObject == null && currentWave >= 61) isWin = true;
+                }
+
+                if(bossObject != null)  isLose = true; // 챌린지 모드와 베이직 모두 패배조건은 존재
+
+                CheckGame(isWin, isLose);
+            }
+
+    
 
             StartCoroutine(WaveTimer());
         }
@@ -301,11 +320,15 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private void OnGameOverPanel() // 게임 종료시 패널 띄우기
+    private void LoseGame() // 게임 종료시 패널 띄우기
     {        
-        gameoverPanel.SetActive(true);
+        losePanel.SetActive(true);
     }
 
+    private void WinGame()
+    {
+        winPanel.SetActive(true);
+    }
 
     // 다시하기 버튼
     public void RetryGame()
@@ -317,5 +340,22 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         SceneManager.LoadScene(0); 
+    }
+
+
+    public void CheckGame(bool isWin, bool isLose)
+    {
+        if (isWin) 
+        {
+            WinGame();
+        }
+        else if(isLose)
+        {
+            LoseGame();
+        }
+        else
+        {
+            Debug.Log("보스 섬멸에 성공하였습니다.");
+        }
     }
 }

@@ -5865,7 +5865,8 @@ MonoBehaviour:
   jewel: 0
   skillPoint: 0
   enemyCountLimit: 60
-  gameoverPanel: {fileID: 820988829}
+  losePanel: {fileID: 0}
+  winPanel: {fileID: 0}
   spiritPrefab: {fileID: 2661833736949709387, guid: 0356ffabdfc805c4cab5f8df97e0aeb9, type: 3}
   spiritSpawnPoint: {fileID: 1898278603}
   initialWaitTime: 5
@@ -5880,6 +5881,7 @@ MonoBehaviour:
   jewelText: {fileID: 750478077}
   SPText: {fileID: 1779711838}
   unitPopulationText: {fileID: 1511962525}
+  isChallenge: 1
 --- !u!114 &371259729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15135,7 +15137,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 261708460}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999805
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -34569,7 +34571,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.0000076293945}
+  m_AnchoredPosition: {x: 0, y: 0.000045776367}
   m_SizeDelta: {x: 0, y: 180}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1905877321
