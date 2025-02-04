@@ -3440,9 +3440,10 @@ MonoBehaviour:
   unitName: "\uC804\uC0AC"
   unitValue: Unique
   attackPower: 80
-  attackRange: 2
+  attackRange: 1.6
   attackCooldown: 0.75
   criticalProb: 0
+  armorPenetration: 1
   AttackCount: 0
   enemyLayer:
     serializedVersion: 2
@@ -3454,6 +3455,7 @@ MonoBehaviour:
   UnitClassMultiplier: 1
   AttackPowerMultiplier: 1
   AttackCooldownMultiplier: 1
+  AS_PotentialMultiplier: 1
   CriticalProbMultiplier: 1
   currentTarget: {fileID: 0}
   criticalValue: 2

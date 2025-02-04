@@ -76,4 +76,9 @@ public class PotentialGacha_UI : MonoBehaviour
         ability03.text = potentialAbility03.potentialText;
     }
 
+    public void CloseUI()
+    {
+        gameObject.SetActive(false);
+    }
+
 }

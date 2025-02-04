@@ -6671,7 +6671,7 @@ MonoBehaviour:
   unitName: "\uB9C8\uBC95\uC0AC"
   unitValue: Legendary
   attackPower: 75
-  attackRange: 3.5
+  attackRange: 2
   attackCooldown: 0.5
   criticalProb: 0
   armorPenetration: 1

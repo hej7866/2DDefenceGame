@@ -131,8 +131,10 @@ public class Unit : Move
         OnPassiveSkill_01();
         OnPassiveSkill_02();
         OnPassiveSkill_03();
+
        
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, attackRange, enemyLayer);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position + new Vector3(0, 0.35f, 0), attackRange, enemyLayer);
+
         GameObject target = GetClosestTarget(hits);
         if (target != null)
         {
@@ -155,7 +157,7 @@ public class Unit : Move
 
         foreach (Collider2D hit in hits)
         {
-            float distance = Vector2.Distance(transform.position, hit.transform.position);
+            float distance = Vector2.Distance(transform.position + new Vector3(0, 0.35f, 0), hit.transform.position);
             if (distance < minDistance)
             {
                 minDistance = distance;
@@ -429,6 +431,6 @@ public class Unit : Move
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.DrawWireSphere(transform.position + new Vector3(0,0.35f,0), attackRange);
     }
 }

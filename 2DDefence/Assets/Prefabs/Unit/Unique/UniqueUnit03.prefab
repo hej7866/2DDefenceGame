@@ -7657,9 +7657,11 @@ MonoBehaviour:
   unitName: "\uB9C8\uBC95\uC0AC"
   unitValue: Unique
   attackPower: 45
-  attackRange: 3.5
+  attackRange: 2
   attackCooldown: 0.6
   criticalProb: 0
+  armorPenetration: 1
+  AttackCount: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -7667,9 +7669,10 @@ MonoBehaviour:
   isRanger: 0
   isMagician: 1
   isShielder: 0
-  AttackPowerMultiplier: 1
   UnitClassMultiplier: 1
+  AttackPowerMultiplier: 1
   AttackCooldownMultiplier: 1
+  AS_PotentialMultiplier: 1
   CriticalProbMultiplier: 1
   currentTarget: {fileID: 0}
   criticalValue: 2

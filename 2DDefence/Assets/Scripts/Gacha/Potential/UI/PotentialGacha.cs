@@ -53,4 +53,9 @@ public class PotentialGacha : MonoBehaviour
             potentialGacha_Panel.gameObject.SetActive(!isActive);
         }
     }
+
+    public void CloseUI()
+    {
+        potentialGacha_Panel.gameObject.SetActive(false);
+    }
 }

@@ -5647,9 +5647,11 @@ MonoBehaviour:
   unitName: "\uBC29\uD328\uBCD1"
   unitValue: God
   attackPower: 0
-  attackRange: 2
+  attackRange: 1.6
   attackCooldown: 1
   criticalProb: 0
+  armorPenetration: 1
+  AttackCount: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -5657,9 +5659,10 @@ MonoBehaviour:
   isRanger: 0
   isMagician: 0
   isShielder: 1
-  AttackPowerMultiplier: 1
   UnitClassMultiplier: 1
+  AttackPowerMultiplier: 1
   AttackCooldownMultiplier: 1
+  AS_PotentialMultiplier: 1
   CriticalProbMultiplier: 1
   currentTarget: {fileID: 0}
   criticalValue: 2
