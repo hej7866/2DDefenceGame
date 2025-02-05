@@ -3451,7 +3451,7 @@ MonoBehaviour:
   unitName: "\uBC29\uD328\uBCD1"
   unitValue: Unique
   attackPower: 0
-  attackRange: 1.6
+  attackRange: 1.8
   attackCooldown: 1
   criticalProb: 0
   armorPenetration: 1

@@ -4708,7 +4708,7 @@ MonoBehaviour:
   unitName: "\uC804\uC0AC"
   unitValue: Normal
   attackPower: 15
-  attackRange: 1.6
+  attackRange: 1.8
   attackCooldown: 1
   criticalProb: 0
   armorPenetration: 1

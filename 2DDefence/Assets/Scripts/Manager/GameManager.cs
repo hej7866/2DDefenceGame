@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,10 +15,12 @@ public class GameManager : MonoBehaviour
     public int skillPoint = 0;
     //public int unitPopulation = 0;
 
-    // 게임 종료 관련
+    // 게임 종료 / 중단
+    [Header("게임 종료 / 중단")]
     [SerializeField] private int enemyCountLimit;
     [SerializeField] private GameObject losePanel;
     [SerializeField] private GameObject winPanel;
+    [SerializeField] private GameObject pausePanel;
     private bool isWin = false;
     private bool isLose = false;
 
@@ -56,9 +59,14 @@ public class GameManager : MonoBehaviour
 
     public bool isChallenge;
 
+    private InputAction escAction;
+
     void Awake()
     {
         Instance = this;
+
+        escAction = new InputAction(binding: "<Keyboard>/escape");
+        escAction.performed += ctx => OnEscapePressed();
     }
 
     void Start()
@@ -66,6 +74,8 @@ public class GameManager : MonoBehaviour
         enemySpawnSyetem = GetComponent<EnemySpawnSyetem>();
         bossSpawnSystem = GetComponent<BossSpawnSystem>(); 
         StartCoroutine(StartGameWithInitialWait());
+
+        escAction.Enable(); // 🔥 이걸 추가해야 ESC 입력을 감지함
     }
 
     void Update()
@@ -356,6 +366,20 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("보스 섬멸에 성공하였습니다.");
+        }
+    }
+
+    private void OnEscapePressed()
+    {
+        if(!pausePanel.activeSelf)
+        {
+            pausePanel.SetActive(true);
+            Time.timeScale = 0f;
+        }
+        else if(pausePanel.activeSelf)
+        {
+            pausePanel.SetActive(false);
+            Time.timeScale = 1f;
         }
     }
 }

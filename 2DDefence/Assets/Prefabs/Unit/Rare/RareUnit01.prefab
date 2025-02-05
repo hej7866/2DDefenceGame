@@ -4949,7 +4949,7 @@ MonoBehaviour:
   unitName: "\uC804\uC0AC"
   unitValue: Rare
   attackPower: 32
-  attackRange: 1.6
+  attackRange: 1.8
   attackCooldown: 0.9
   criticalProb: 0
   armorPenetration: 1

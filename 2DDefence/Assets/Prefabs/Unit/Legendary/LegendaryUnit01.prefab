@@ -3185,7 +3185,7 @@ MonoBehaviour:
   unitName: "\uC804\uC0AC"
   unitValue: Legendary
   attackPower: 150
-  attackRange: 1.6
+  attackRange: 1.8
   attackCooldown: 0.55
   criticalProb: 0
   armorPenetration: 1

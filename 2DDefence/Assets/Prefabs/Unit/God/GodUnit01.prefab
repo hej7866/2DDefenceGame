@@ -8245,7 +8245,7 @@ MonoBehaviour:
   unitName: "\uC804\uC0AC"
   unitValue: God
   attackPower: 600
-  attackRange: 1.6
+  attackRange: 1.8
   attackCooldown: 0.45
   criticalProb: 0
   armorPenetration: 1
