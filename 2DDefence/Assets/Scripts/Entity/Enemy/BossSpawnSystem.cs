@@ -24,7 +24,7 @@ public class BossSpawnSystem : MonoBehaviour
         }
 
         // 웨이브 번호에 따라 프리팹 선택
-        int prefabIndex = (waveNumber / 10) - 1; // 웨이브 번호에 맞는 프리팹 선택
+        int prefabIndex = ((waveNumber / 10) - 1) % 3; // 웨이브 번호에 맞는 프리팹 선택
         Debug.Log($"보스인덱스 : {prefabIndex}");
         GameObject selectedPrefab = bossPrefabs[prefabIndex];
         Instantiate(selectedPrefab, bossSpawnPoint.position, bossSpawnPoint.rotation);

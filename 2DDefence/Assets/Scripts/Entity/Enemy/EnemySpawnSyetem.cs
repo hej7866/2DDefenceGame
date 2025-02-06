@@ -19,6 +19,8 @@ public class EnemySpawnSyetem : MonoBehaviour
     public int waveNumber = 1; // 현재 웨이브 번호
     private bool isSpawning = false; // 스폰 중인지 여부
 
+    private bool isChallenge = false; // 챌린지 모드인지 여부
+
 
     void Awake()
     {
@@ -30,6 +32,8 @@ public class EnemySpawnSyetem : MonoBehaviour
     {
         // 첫 번째 웨이브 시작
         StartCoroutine(WaveRoutine());
+
+        isChallenge = GameManager.Instance.isChallenge;
     }
 
     private IEnumerator WaveRoutine()
@@ -69,6 +73,11 @@ public class EnemySpawnSyetem : MonoBehaviour
 
     private void SpawnEnemy()
     {
+        if(!isChallenge) // 베이직 모드에선 61라운드 이후엔 몹이 생성되면 안되므로 리턴해버림
+        {
+            if(waveNumber >= 61) return;
+        } 
+
         if (enemyPrefabs.Length == 0)
         {
             Debug.LogError("EnemyPrefabs 배열이 비어 있습니다!");

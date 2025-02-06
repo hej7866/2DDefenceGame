@@ -226,7 +226,9 @@ public class Enemy : MonoBehaviour
     protected void Die()
     {
         isDead = true;
-        GameManager.Instance.AddGold(2 * waveNumber); // 디테일한 값 할당 필요 (임시로 기능확인용)
+        int randomValue = UnityEngine.Random.Range(1, 4);
+
+        GameManager.Instance.AddGold(waveNumber * randomValue); // 디테일한 값 할당 필요 (임시로 기능확인용)
         if (this.CompareTag("Boss"))
         {
             GameManager.Instance.EarnSkillPoint(1);

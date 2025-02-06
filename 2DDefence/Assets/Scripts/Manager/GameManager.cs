@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
 
     public bool isChallenge;
 
-    private InputAction escAction;
+    private InputAction escAction; // esc키 인풋액션
 
     void Awake()
     {
@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
         bossSpawnSystem = GetComponent<BossSpawnSystem>(); 
         StartCoroutine(StartGameWithInitialWait());
 
-        escAction.Enable(); // 🔥 이걸 추가해야 ESC 입력을 감지함
+        escAction.Enable();
     }
 
     void Update()
