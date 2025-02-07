@@ -6,7 +6,7 @@ public class AnimationLengthFetcher : MonoBehaviour
 {
     public static AnimationLengthFetcher Instance;
 
-    private Animator animator;
+    private Animator _animator;
     public float normalAttackLength = 1.0f;
     public float criticalAttackLength = 1.0f;
     public string normalClipName;
@@ -19,7 +19,7 @@ public class AnimationLengthFetcher : MonoBehaviour
 
     void Start()
     {
-        animator = GetComponentInChildren<Animator>();
+        _animator = GetComponentInChildren<Animator>();
         // 현재 재생 중인 애니메이션의 길이 가져오기
         normalAttackLength = GetAnimationLength(normalClipName); // 애니메이션 클립 이름 입력
         criticalAttackLength = GetAnimationLength(criticalClipName);
@@ -27,14 +27,14 @@ public class AnimationLengthFetcher : MonoBehaviour
 
     private float GetAnimationLength(string clipName)
     {
-        if (animator == null)
+        if (_animator == null)
         {
             Debug.LogError("Animator가 설정되지 않았습니다.");
             return -1f;
         }
 
         // AnimatorController에서 모든 애니메이션 클립 가져오기
-        RuntimeAnimatorController controller = animator.runtimeAnimatorController;
+        RuntimeAnimatorController controller = _animator.runtimeAnimatorController;
         if (controller != null)
         {
             foreach (AnimationClip clip in controller.animationClips)

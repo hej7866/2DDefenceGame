@@ -25,7 +25,7 @@ public class Unit : Move
     private Color originalColor;
 
 
-    private float lastAttackTime = 0f;
+    private float _lastAttackTime = 0f;
 
     [Header("직업")]
     public bool isWarrior = false;
@@ -41,8 +41,8 @@ public class Unit : Move
     // 액티브
     private ManaSystem manaSystem;
 
-    float normalAttackLength;
-    float criticalAttackLength;
+    private float _normalAttackLength;
+    private float _criticalAttackLength;
 
 
 
@@ -55,8 +55,8 @@ public class Unit : Move
 
         Debug.Log(CurrentAttackCooldown);
 
-        normalAttackLength = AnimationLengthFetcher.Instance.normalAttackLength;
-        criticalAttackLength = AnimationLengthFetcher.Instance.criticalAttackLength;
+        _normalAttackLength = AnimationLengthFetcher.Instance.normalAttackLength;
+        _criticalAttackLength = AnimationLengthFetcher.Instance.criticalAttackLength;
 
         if(isWarrior) warrior = GetComponent<Warrior>();
         else if(isRanger) ranger = GetComponent<Ranger>();
@@ -143,9 +143,9 @@ public class Unit : Move
         
 
         // 공격 로직
-        if (Time.time >= lastAttackTime + CurrentAttackCooldown && currentTarget != null && !isMoving)
+        if (Time.time >= _lastAttackTime + CurrentAttackCooldown && currentTarget != null && !isMoving)
         {
-            lastAttackTime = Time.time;
+            _lastAttackTime = Time.time;
             AttackTarget(currentTarget);
         }
     }
@@ -209,11 +209,11 @@ public class Unit : Move
         // 공격 속도 설정
         if (randomValue < CurrentCriticalProp)
         {
-            animator.SetFloat("AttackSpeedMultiplier",  criticalAttackLength / CurrentAttackCooldown);
+            animator.SetFloat("AttackSpeedMultiplier",  _criticalAttackLength / CurrentAttackCooldown);
         }
         else
         {
-            animator.SetFloat("AttackSpeedMultiplier",  normalAttackLength / CurrentAttackCooldown);
+            animator.SetFloat("AttackSpeedMultiplier",  _normalAttackLength / CurrentAttackCooldown);
         }
     }
 

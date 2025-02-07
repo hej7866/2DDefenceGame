@@ -13,7 +13,7 @@ public class LogManager : MonoBehaviour
     public float textHeight = 30f;  // 텍스트 박스 높이
     private int maxLogs = 20;        // 최대 로그 개수
 
-    private bool userScrolled = false; // 사용자가 스크롤을 올렸는지 여부
+    private bool _userScrolled = false; // 사용자가 스크롤을 올렸는지 여부
 
     void Awake()
     {
@@ -44,7 +44,7 @@ public class LogManager : MonoBehaviour
         }
 
         // 스크롤 유지: 사용자가 스크롤을 올리지 않았다면 아래로 자동 스크롤
-        if (!userScrolled) // 사용자가 스크롤을 올리지 않았다면
+        if (!_userScrolled) // 사용자가 스크롤을 올리지 않았다면
         {
             Canvas.ForceUpdateCanvases();
             scrollRect.verticalNormalizedPosition = 0f; // 맨 아래로 스크롤
@@ -55,7 +55,7 @@ public class LogManager : MonoBehaviour
     private void OnScroll(Vector2 scrollPosition)
     {
         // 스크롤이 맨 아래가 아니면 사용자가 스크롤을 올린 것으로 간주
-        userScrolled = scrollRect.verticalNormalizedPosition > 0.01f;
+        _userScrolled = scrollRect.verticalNormalizedPosition > 0.01f;
     }
 
     void OnDestroy()

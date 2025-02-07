@@ -17,9 +17,9 @@ public class EnemySpawnSyetem : MonoBehaviour
     public float spawnInterval = 0.5f; // 적 스폰 간격
 
     public int waveNumber = 1; // 현재 웨이브 번호
-    private bool isSpawning = false; // 스폰 중인지 여부
+    private bool _isSpawning = false; // 스폰 중인지 여부
 
-    private bool isChallenge = false; // 챌린지 모드인지 여부
+    private bool _isChallenge = false; // 챌린지 모드인지 여부
 
 
     void Awake()
@@ -33,7 +33,7 @@ public class EnemySpawnSyetem : MonoBehaviour
         // 첫 번째 웨이브 시작
         StartCoroutine(WaveRoutine());
 
-        isChallenge = GameManager.Instance.isChallenge;
+        _isChallenge = GameManager.Instance.isChallenge;
     }
 
     private IEnumerator WaveRoutine()
@@ -46,14 +46,14 @@ public class EnemySpawnSyetem : MonoBehaviour
             Debug.Log($"[웨이브 {waveNumber} 시작]");
 
             // 웨이브 진행
-            isSpawning = true;
+            _isSpawning = true;
             StartCoroutine(SpawnEnemies());
 
             // 웨이브 지속 시간 동안 대기
             yield return new WaitForSeconds(waveDuration);
 
             // 웨이브 종료
-            isSpawning = false;
+            _isSpawning = false;
             waveNumber++;
             Debug.Log($"[웨이브 {waveNumber - 1} 종료]");
 
@@ -64,7 +64,7 @@ public class EnemySpawnSyetem : MonoBehaviour
 
     private IEnumerator SpawnEnemies()
     {
-        while (isSpawning && waveNumber % 10 != 0)
+        while (_isSpawning && waveNumber % 10 != 0)
         {
             SpawnEnemy();
             yield return new WaitForSeconds(spawnInterval);
@@ -73,7 +73,7 @@ public class EnemySpawnSyetem : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        if(!isChallenge) // 베이직 모드에선 61라운드 이후엔 몹이 생성되면 안되므로 리턴해버림
+        if(!_isChallenge) // 베이직 모드에선 61라운드 이후엔 몹이 생성되면 안되므로 리턴해버림
         {
             if(waveNumber >= 61) return;
         } 

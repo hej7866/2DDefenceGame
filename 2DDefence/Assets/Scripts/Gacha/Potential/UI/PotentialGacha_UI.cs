@@ -19,7 +19,7 @@ public class PotentialGacha_UI : MonoBehaviour
     PotentialData potentialAbility02;
     PotentialData potentialAbility03;
 
-    private string firstAbility = "설정된 어벌리티 값이 없습니다."; 
+    private string _firstAbility = "설정된 어벌리티 값이 없습니다."; 
 
     void Awake()
     {
@@ -28,9 +28,9 @@ public class PotentialGacha_UI : MonoBehaviour
     
     void Start()
     {
-        ability01.text = firstAbility;
-        ability02.text = firstAbility;
-        ability03.text = firstAbility;
+        ability01.text = _firstAbility;
+        ability02.text = _firstAbility;
+        ability03.text = _firstAbility;
     }
 
     void OnEnable()

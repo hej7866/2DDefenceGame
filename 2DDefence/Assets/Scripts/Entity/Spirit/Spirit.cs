@@ -11,7 +11,7 @@ public class Spirit : Move
 
     private LineRenderer lineRenderer; 
 
-    private int currentWave;
+    private int _currentWave;
 
     void Start()
     {
@@ -21,7 +21,7 @@ public class Spirit : Move
         originalColor = spriteRenderer.color;
         animator = GetComponentInChildren<Animator>();
 
-        currentWave = GameManager.Instance.currentWave;
+        _currentWave = GameManager.Instance.currentWave;
     }
 
     protected override void Update()
@@ -48,7 +48,7 @@ public class Spirit : Move
         {
             int randomValue = Random.Range(5,21); // 5 ~ 20;
 
-            GameManager.Instance.AddGold(50 + currentWave * randomValue); // 돈 추가 (50 + 현재 웨이브 * 랜덤밸류)
+            GameManager.Instance.AddGold(50 + _currentWave * randomValue); // 돈 추가 (50 + 현재 웨이브 * 랜덤밸류)
             Destroy(gameObject);
         }
         else if (collision.CompareTag("UnitPortal"))

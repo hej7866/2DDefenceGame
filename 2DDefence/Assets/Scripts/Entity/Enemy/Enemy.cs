@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
 {
     public static Enemy Instance;
 
-    private int waveNumber;
+    private int _waveNumber;
 
     // 에너미 스텟
     public float speed = 2f; // 적의 이동 속도
@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
     public float currentHealth = 100f; // 현재 체력
     public float armor = 1.0f;
 
-    private float originalSpeed = 2f;  // 원래 속도
+    private float _originalSpeed = 2f;  // 원래 속도
 
     private Coroutine lowerArmorCoroutine; // 방깎 효과 관리 코루틴
     private Coroutine stunCoroutine; // 스턴 효과 관리 코루틴
@@ -29,7 +29,7 @@ public class Enemy : MonoBehaviour
 
     // 웨이포인트 시스템
     protected Transform target; // 현재 목표 웨이포인트
-    private int waypointIndex = 0; // 웨이포인트 인덱스
+    private int _waypointIndex = 0; // 웨이포인트 인덱스
 
     public bool isDead = false;
 
@@ -44,9 +44,9 @@ public class Enemy : MonoBehaviour
     {
         animator = GetComponent<Animator>();
 
-        waveNumber = EnemySpawnSyetem.Instance.waveNumber;
+        _waveNumber = EnemySpawnSyetem.Instance.waveNumber;
         target = WayPointManager.Instance.waypoints[0]; // 첫 번째 웨이포인트 설정
-        EnemyStatSetting(waveNumber);
+        EnemyStatSetting(_waveNumber);
         UpdateHealthBar();
     }
 
@@ -64,13 +64,13 @@ public class Enemy : MonoBehaviour
 
     protected void GetNextWaypoint()
     {
-        waypointIndex = (waypointIndex + 1) % WayPointManager.Instance.waypoints.Length;
-        target = WayPointManager.Instance.waypoints[waypointIndex];
+        _waypointIndex = (_waypointIndex + 1) % WayPointManager.Instance.waypoints.Length;
+        target = WayPointManager.Instance.waypoints[_waypointIndex];
 
-        if(waypointIndex == 1) animator.SetTrigger("Foward");
-        else if(waypointIndex == 2) animator.SetTrigger("Right");
-        else if(waypointIndex == 3) animator.SetTrigger("Back");
-        else if(waypointIndex == 0) animator.SetTrigger("Left");
+        if(_waypointIndex == 1) animator.SetTrigger("Foward");
+        else if(_waypointIndex == 2) animator.SetTrigger("Right");
+        else if(_waypointIndex == 3) animator.SetTrigger("Back");
+        else if(_waypointIndex == 0) animator.SetTrigger("Left");
     }
 
     // 에너미 스텟 설정
@@ -228,7 +228,7 @@ public class Enemy : MonoBehaviour
         isDead = true;
         int randomValue = UnityEngine.Random.Range(1, 4);
 
-        GameManager.Instance.AddGold(waveNumber * randomValue); // 디테일한 값 할당 필요 (임시로 기능확인용)
+        GameManager.Instance.AddGold(_waveNumber * randomValue); // 디테일한 값 할당 필요 (임시로 기능확인용)
         if (this.CompareTag("Boss"))
         {
             GameManager.Instance.EarnSkillPoint(1);
@@ -297,7 +297,7 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(duration);
 
         // 속도를 원래 값으로 복원
-        speed = originalSpeed;
+        speed = _originalSpeed;
         Debug.Log($"스턴 효과 종료: 속도 복원 {speed}");
 
         // 슬로우 효과 종료 시 코루틴 참조 해제
@@ -321,14 +321,14 @@ public class Enemy : MonoBehaviour
     public IEnumerator SlowCoroutine(float slowFactor, float duration)
     {
         // 속도를 감소
-        speed = originalSpeed / slowFactor;
+        speed = _originalSpeed / slowFactor;
         Debug.Log($"슬로우 효과 적용됨: 현재 속도 {speed}");
 
         // 지정된 시간만큼 대기
         yield return new WaitForSeconds(duration);
 
         // 속도를 원래 값으로 복원
-        speed = originalSpeed;
+        speed = _originalSpeed;
         Debug.Log($"슬로우 효과 종료: 속도 복원 {speed}");
 
         // 슬로우 효과 종료 시 코루틴 참조 해제

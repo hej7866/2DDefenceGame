@@ -21,8 +21,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject losePanel;
     [SerializeField] private GameObject winPanel;
     [SerializeField] private GameObject pausePanel;
-    private bool isWin = false;
-    private bool isLose = false;
+    private bool _isWin = false;
+    private bool _isLose = false;
 
 
     // 정령 프리팹 및 스포너 세팅
@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float waveDuration;
     [SerializeField] private float waveBreakDuration;
     public int currentWave = 0;
-    private bool waveActive = false;
+    private bool _waveActive = false;
 
     // 웨이브 UI 관련
     [Header("웨이브 UI 세팅")]
@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     public Text wavePanelText;
     public Text waveTimerText;
     public Text unitCount;
-    private int enemyCount;
+    private int _enemyCount;
 
     // 재화 UI 관련
     [Header("재화 UI 세팅")]
@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         UpdateEnemyCount();
-        if(enemyCount >= enemyCountLimit) LoseGame(); // 게임 종료조건 (유카사)
+        if(_enemyCount >= enemyCountLimit) LoseGame(); // 게임 종료조건 (유카사)
     }
 
     // 게임 첫 시작시 실행
@@ -188,7 +188,7 @@ public class GameManager : MonoBehaviour
     // Wave System
     public void StartNextWave()
     {
-        if (!waveActive && (currentWave + 1) % 10 != 0) // 일반 웨이브
+        if (!_waveActive && (currentWave + 1) % 10 != 0) // 일반 웨이브
         {
             // 일반시스템에서 보스시스템으로 전환
             if(enemySpawnSyetem.enabled == false) 
@@ -196,7 +196,7 @@ public class GameManager : MonoBehaviour
                 enemySpawnSyetem.enabled = true;
                 bossSpawnSystem.enabled = false;
             }
-            waveActive = true;
+            _waveActive = true;
             currentWave++;
     
             // UI 업데이트
@@ -215,19 +215,19 @@ public class GameManager : MonoBehaviour
 
                 if(!isChallenge) // 베이직 모드 일때 즉, 챌린지 모드가 아닐때 (챌린지 모드는 승리조건이 없다!)
                 {
-                    if(bossObject == null && currentWave >= 61) isWin = true;
+                    if(bossObject == null && currentWave >= 61) _isWin = true;
                 }
 
-                if(bossObject != null)  isLose = true; // 챌린지 모드와 베이직 모두 패배조건은 존재
+                if(bossObject != null)  _isLose = true; // 챌린지 모드와 베이직 모두 패배조건은 존재
 
-                CheckGame(isWin, isLose);
+                CheckGame(_isWin, _isLose);
             }
 
     
 
             StartCoroutine(WaveTimer());
         }
-        else if(!waveActive && (currentWave + 1) % 10 == 0) // 보스웨이브
+        else if(!_waveActive && (currentWave + 1) % 10 == 0) // 보스웨이브
         {
             // 보스시스템에서 일반시스템으로 전환
             if(bossSpawnSystem.enabled == false) 
@@ -235,7 +235,7 @@ public class GameManager : MonoBehaviour
                 enemySpawnSyetem.enabled = false;
                 bossSpawnSystem.enabled = true;
             }
-            waveActive = true;
+            _waveActive = true;
             currentWave++;
 
             // UI 업데이트
@@ -262,7 +262,7 @@ public class GameManager : MonoBehaviour
         }
 
         Debug.Log($"[웨이브 완료] {currentWave} 웨이브가 완료되었습니다!");
-        waveActive = false;
+        _waveActive = false;
         StartCoroutine(WaveBreakTimer());
     }
 
@@ -294,7 +294,7 @@ public class GameManager : MonoBehaviour
 
     public void CheckWaveStatus()
     {
-        if (waveActive)
+        if (_waveActive)
         {
             Debug.Log($"[웨이브 상태] 현재 {currentWave} 웨이브가 진행 중입니다.");
         }
@@ -316,12 +316,12 @@ public class GameManager : MonoBehaviour
     public void UpdateEnemyCount()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy"); // "Enemy" 태그로 오브젝트 검색
-        enemyCount = enemies.Length; // Enemy 수 계산
+        _enemyCount = enemies.Length; // Enemy 수 계산
 
         // UI 업데이트
         if (unitCount != null)
         {
-            unitCount.text = $"유닛 카운트 : {enemyCount}";
+            unitCount.text = $"유닛 카운트 : {_enemyCount}";
         }
         else
         {

@@ -6,7 +6,7 @@ public class DragBoxUI : MonoBehaviour
 {
     private Vector3 dragStartPos;
     private Vector3 dragEndPos;
-    private bool isDragging = false;
+    private bool _isDragging = false;
 
     void Update()
     {
@@ -17,24 +17,24 @@ public class DragBoxUI : MonoBehaviour
             {
                 return;
             }
-            isDragging = true;
+            _isDragging = true;
             dragStartPos = Input.mousePosition; // 마우스 시작 위치
         }
 
-        if (Input.GetMouseButton(0) && isDragging)
+        if (Input.GetMouseButton(0) && _isDragging)
         {
             dragEndPos = Input.mousePosition; // 드래그 중 마우스 끝 위치
         }
 
         if (Input.GetMouseButtonUp(0))
         {
-            isDragging = false; // 드래그 종료
+            _isDragging = false; // 드래그 종료
         }
     }
 
     void OnGUI()
     {
-        if (isDragging)
+        if (_isDragging)
         {
             // 드래그 박스의 테두리를 계산
             float x = Mathf.Min(dragStartPos.x, dragEndPos.x);

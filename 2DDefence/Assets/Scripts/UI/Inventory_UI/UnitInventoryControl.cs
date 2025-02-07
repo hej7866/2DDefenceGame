@@ -7,7 +7,7 @@ public class UnitInventoryControl : MonoBehaviour
 {
     public GameObject unitInventory;
 
-    private bool inventoryState = false; // 현재 인벤토리 상태 추적
+    private bool _inventoryState = false; // 현재 인벤토리 상태 추적
 
     void Update()
     {
@@ -34,11 +34,11 @@ public class UnitInventoryControl : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab)) // Tab 키가 눌린 순간만 처리
         {
-            inventoryState = !inventoryState; // 상태 반전
-            Debug.Log("Tab key toggled: " + inventoryState);
+            _inventoryState = !_inventoryState; // 상태 반전
+            Debug.Log("Tab key toggled: " + _inventoryState);
 
             // 상태에 따라 UI 활성화/비활성화
-            unitInventory.SetActive(inventoryState);
+            unitInventory.SetActive(_inventoryState);
         }
     }
 }
