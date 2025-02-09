@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int enemyCountLimit;
     [SerializeField] private GameObject losePanel;
     [SerializeField] private GameObject winPanel;
+    [SerializeField] private GameObject challengePanel;
     [SerializeField] private GameObject pausePanel;
     private bool _isWin = false;
     private bool _isLose = false;
@@ -331,8 +332,18 @@ public class GameManager : MonoBehaviour
 
 
     private void LoseGame() // 게임 종료시 패널 띄우기
-    {        
-        losePanel.SetActive(true);
+    {
+        if(isChallenge) // 챌린지 모드일때
+        {
+            Text challengeText = challengePanel.GetComponentInChildren<Text>();
+            challengeText.text = $"{currentWave}웨이브까지 막아내셨습니다!!";
+
+            challengePanel.SetActive(true);
+        }   
+        else if(!isChallenge) // 베이직 모드일때
+        {
+            losePanel.SetActive(true);
+        }     
     }
 
     private void WinGame()

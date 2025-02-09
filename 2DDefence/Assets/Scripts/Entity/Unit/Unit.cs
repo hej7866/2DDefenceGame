@@ -372,8 +372,6 @@ public class Unit : Move
 
     // 패시브 스킬 활성화
     private bool p_skill_01 = false;
-    private bool p_skill_02 = false;
-    private bool p_skill_03 = false;
     public void OnPassiveSkill_01()
     {
         if(SkillManager.Instance.p_skill_01) 
@@ -386,6 +384,7 @@ public class Unit : Move
         }
     }
 
+    private bool p_skill_02 = false;
     public void OnPassiveSkill_02()
     {
         if(SkillManager.Instance.p_skill_02)
@@ -398,6 +397,8 @@ public class Unit : Move
         }
     }
 
+
+    private bool p_skill_03 = false;
     public void OnPassiveSkill_03()
     {
         if(SkillManager.Instance.p_skill_03)

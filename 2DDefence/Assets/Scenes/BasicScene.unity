@@ -5867,6 +5867,7 @@ MonoBehaviour:
   enemyCountLimit: 1000
   losePanel: {fileID: 820988829}
   winPanel: {fileID: 1490056181}
+  challengePanel: {fileID: 0}
   pausePanel: {fileID: 932637046}
   spiritPrefab: {fileID: 2661833736949709387, guid: 0356ffabdfc805c4cab5f8df97e0aeb9, type: 3}
   spiritSpawnPoint: {fileID: 1898278603}
@@ -15352,7 +15353,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 261708460}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9975267
+  m_Size: 0.999991
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -35337,7 +35338,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0005874634}
+  m_AnchoredPosition: {x: 0, y: 0.000015258789}
   m_SizeDelta: {x: 0, y: 180}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1905877321

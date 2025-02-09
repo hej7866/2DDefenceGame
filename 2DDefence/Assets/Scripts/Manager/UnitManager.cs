@@ -14,7 +14,7 @@ public class UnitManager : MonoBehaviour
 
     public event Action OnInventoryUpdated; // 인벤토리 변경 이벤트
 
-    private int previousUnitCount = 0; // 이전 유닛 수 감지용
+    private int _previousUnitCount = 0; // 이전 유닛 수 감지용
 
     public int unitPopulation = 0;
     public int populationLimit = 20;
@@ -40,12 +40,12 @@ public class UnitManager : MonoBehaviour
         int currentUnitCount = CountAllUnits();
 
         // 유닛 수가 변했으면 인벤토리 업데이트
-        if (currentUnitCount != previousUnitCount)
+        if (currentUnitCount != _previousUnitCount)
         {
             UpdateUnitLists();
             UnitPopulationUIUpdate();
             unitPopulation = CountAllUnits();
-            previousUnitCount = currentUnitCount; // 이전 유닛 수 업데이트
+            _previousUnitCount = currentUnitCount; // 이전 유닛 수 업데이트
         }
     }
 
