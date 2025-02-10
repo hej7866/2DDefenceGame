@@ -140,6 +140,10 @@ public class Unit : Move
         {
             currentTarget = target;
         }
+        else
+        {
+            currentTarget = null; // 사거리 내에 적이 없으면 타겟 초기화
+        }
         
 
         // 공격 로직
