@@ -249,6 +249,7 @@ public class Unit : Move
     * 예를 들면 궁수는 강화된 화살을 쏜다던지, 스킬이 차징된 방패병의 평타를 맞으면 슬로우에 걸린다던지 하는 방식이다.
     * 스킬의 차징상태는 ManaSystem 스크립트에서 관리하며 bool 변수인 skillCharged의 상태에 따라 결정된다. 
     */
+    
 
 
     /// <summary>
