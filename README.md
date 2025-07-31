@@ -49,7 +49,7 @@ Assets/
 - 시너지 추가    
 
 ## 개발자
-
+황은중
 | 황은중 | Unity C# 기반 전략 게임 개발자<br>시스템 설계와 전투 구조 구현을 담당 |
 
 - 포트폴리오: [https://www.notion.so/182fb37d62d180458cfdf44070e77d54?p=1e8fb37d62d180028519f30f6a4f2289&pm=c](https://www.notion.so/Unit-Defence-Defend-or-Die-1-C-Unity-PC-199fb37d62d180e194b0efff52b3abe3?source=copy_link)
