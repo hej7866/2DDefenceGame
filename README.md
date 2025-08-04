@@ -18,6 +18,7 @@
 
 - **Engine**: Unity2022.3.45
 - **Language** : C#
+- **IDE** : Visual Studio Code
 
 ## 디자인 패턴
 - **싱글톤 패턴**
